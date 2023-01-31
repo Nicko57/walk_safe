@@ -1,20 +1,13 @@
 var mongoose = require("mongoose");
+require("dotenv").config();
 
-beforeAll(function (done) {
-  mongoose.connect("mongodb://0.0.0.0/acebook_test", {
+beforeAll(async () => {
+  await mongoose.connect(process.env.TEST, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });
-
-  var db = mongoose.connection;
-  db.on("error", console.error.bind(console, "MongoDB connection error:"));
-  db.on("open", function () {
-    done();
-  });
 });
 
-afterAll(function (done) {
-  mongoose.connection.close(true, function () {
-    done();
-  });
+afterAll(async () => {
+  await mongoose.connection.close();
 });

@@ -1,13 +1,9 @@
-const mongoose = require("mongoose");
-
+const User = require("../../models/userModel");
 require("../mongodb_helper");
-const User = require("../../models/user");
 
 describe("User model", () => {
-  beforeEach((done) => {
-    mongoose.connection.collections.users.drop(() => {
-      done();
-    });
+  beforeEach( async () => {
+    await User.deleteMany({});
   });
 
   it("has an email address", () => {
@@ -74,8 +70,6 @@ describe("User model", () => {
           "John Doe",
           "johndoe@example",
           "ABCabc123!",
-          "profilePictureUrl",
-          "coverPictureUrl"
         );
       } catch (err) {
         expect(err).toEqual(Error("Email is not valid"));
@@ -87,16 +81,12 @@ describe("User model", () => {
         "Will Jones",
         "will@will.com",
         "ABCabc123!",
-        "profilePictureUrl",
-        "coverPictureUrl"
       );
       try {
         await User.signup(
           "John Doe",
           "will@will.com",
-          "password12345!",
-          "profilePictureUrl",
-          "coverPictureUrl"
+          "ABCabc123!",
         );
       } catch (err) {
         expect(err).toEqual(Error("Email already in use"));
@@ -109,7 +99,7 @@ describe("User model", () => {
       } catch (err) {
         expect(err).toEqual(
           Error(
-            "Password not strong enough - must include uppercase, lowercase, numbers, punctuation - min 8 chars"
+            "Password not strong enough"
           )
         );
       }
