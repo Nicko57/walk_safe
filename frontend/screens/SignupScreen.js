@@ -76,13 +76,17 @@ function SignupScreen({ navigation }) {
         onChangeText={passwordInputHandler}
         value={password}
       />
+        {error &&
+          <View style={styles.errorContainer}>
+            <Text style={styles.errorText}>{error}</Text>
+          </View>
+        }
         <View style={styles.button}>
           <Pressable onPress={handleSignup}>
             <Text style={styles.inputLabel}>Sign up</Text>
           </Pressable>
           {/* <Button title="Sign up" onPress={handleSignup} /> */}
         </View>
-        {error && <View><Text>{error}</Text></View>}
     </View>
   );
 }
@@ -129,5 +133,18 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     alignItems: 'center',
     justifyContent: 'center'
+  },
+  errorContainer: {
+    marginTop: 24,
+    padding: 8,
+    borderWidth: 1,
+    borderColor: '#dddddd',
+    borderRadius: 8,
+    backgroundColor: '#dddddd'
+  },
+  errorText: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#D238FF',
   },
 });
