@@ -45,6 +45,8 @@ function SignupScreen({ navigation }) {
       AsyncStorage.setItem("token", data.token);
       // AsyncStorage.setItem("user_id", data.user_id);
         // above doesn't work as only email and token are provided in the data, not user_id
+        // though user_id might not be necessary, will likely only be necessary if we want
+        // to built in more social functionality, e.g., viewing other users' profiles
       setName('');
       setEmail('');
       setPassword('');
