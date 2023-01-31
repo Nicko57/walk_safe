@@ -1,21 +1,23 @@
 import * as React from 'react';
 import { useState } from 'react';
-import { Text, View, Button, TextInput, Pressable } from 'react-native';
+import { StyleSheet, Text, View, Button, TextInput, Pressable } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 function HomeScreen({ navigation }) {
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+    <View style={styles.globalContainer}>
       <Text>Home Screen</Text>
-      <Button
-        title="Log in"
-        onPress={() => navigation.navigate('Login')}
-      />
-      <Button
-        title="Sign Up"
-        onPress={() => navigation.navigate('Signup')}
-      />
+      <View style={styles.homeButtonContainer}>
+        <Button
+          title="Log in"
+          onPress={() => navigation.navigate('Login')}
+        />
+        <Button
+          title="Sign Up"
+          onPress={() => navigation.navigate('Signup')}
+        />
+      </View>
     </View>
   );
 }
@@ -33,22 +35,26 @@ function LoginScreen() {
   }
   
   return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text>Login</Text>
-        <Text>Email address</Text>
+      <View style={styles.globalContainer}>
+        <Text style={styles.inputTitle}>Login</Text>
+        <Text style={styles.inputLabel}>Email address</Text>
         <TextInput 
-          placeholder="Enter your email here!"
+          style={styles.textInput}
+          placeholder="Your email here!"
           onChangeText={emailInputHandler}
           value={emailAddress}
         />
-        <Text>Password</Text>
+        <Text style={styles.inputLabel}>Password</Text>
         <TextInput 
-          placeholder="Enter your password here!"
+          style={styles.textInput}
+          placeholder="Your password here!"
           secureTextEntry={true}
           onChangeText={passwordInputHandler}
           value={password}
         />
-        <Pressable></Pressable>
+        <View style={styles.inputButtonContainer}>
+          <Button title="Log in" />
+        </View>
       </View>
   );
 }
@@ -69,27 +75,33 @@ function SignupScreen() {
   }
 
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Signup Screen</Text>
-      <Text>Name</Text>
+    <View style={styles.globalContainer}>
+      <Text style={styles.inputTitle}>Signup</Text>
+      <Text style={styles.inputLabel}>Name</Text>
       <TextInput
+        style={styles.textInput}
         placeholder="Your name here!"
         onChangeText={nameInputHandler}
         value={name}
       />
-      <Text>Email address</Text>
+      <Text style={styles.inputLabel}>Email address</Text>
       <TextInput
+        style={styles.textInput}
         placeholder="Your email here!"
         onChangeText={emailInputHandler}
         value={emailAddress}
       />
-      <Text>Password</Text>
+      <Text style={styles.inputLabel}>Password</Text>
       <TextInput
+        style={styles.textInput}
         secureTextEntry={true}
         placeholder="Your password here!"
         onChangeText={passwordInputHandler}
         value={password}
       />
+        <View style={styles.inputButtonContainer}>
+          <Button title="Sign up" />
+        </View>
     </View>
   );
 }
@@ -110,3 +122,40 @@ function App() {
 }
 
 export default App;
+
+const styles = StyleSheet.create({
+  globalContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingBottom: 60,
+    backgroundColor: "#64C5F0",
+  },
+  inputTitle: {
+    padding: 10,
+    fontSize: 22,
+    fontWeight: '600',
+    color: '#ffffff',
+  },
+  inputLabel: {
+    padding: 16,
+    fontSize: 18,
+    color: '#ffffff',
+  },
+  textInput: {
+    borderWidth: 1,
+    borderColor: '#e4d0ff',
+    backgroundColor: "#ADDEF3",
+    color: '#ffffff',
+    borderRadius: 8,
+    width: '75%',
+    padding: 16,
+  },
+  inputButtonContainer: {
+    padding: 16,
+  },
+  homeButtonContainer: {
+    marginTop: 16,
+    flexDirection: 'row',
+  },
+});
