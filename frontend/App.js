@@ -11,6 +11,10 @@ function HomeScreen({ navigation }) {
         title="Log in"
         onPress={() => navigation.navigate('Login')}
       />
+      <Button
+        title="Sign Up"
+        onPress={() => navigation.navigate('Signup')}
+      />
     </View>
   );
 }
@@ -19,6 +23,14 @@ function LoginScreen() {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       <Text>Login Screen</Text>
+    </View>
+  );
+}
+
+function SignupScreen() {
+  return (
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <Text>Signup Screen</Text>
     </View>
   );
 }
@@ -32,22 +44,10 @@ function App() {
       <Stack.Navigator initialRouteName="Home">
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Login" component={LoginScreen} options={{ title: 'Login' }} />
+        <Stack.Screen name="Signup" component={SignupScreen} options={{ title: 'Signup' }} />
       </Stack.Navigator>
     </NavigationContainer>
   );
 }
 
 export default App;
-
-
-
-
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: '#fff',
-//     alignItems: 'center',
-//     justifyContent: 'center',
-//   },
-// });
