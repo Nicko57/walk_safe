@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { StyleSheet, Text, View, Button, TextInput, Pressable } from 'react-native';
-
+import { StyleSheet, Text, View, Pressable } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 function HomeScreen({ navigation }) {
   return (
