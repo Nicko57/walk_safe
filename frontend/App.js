@@ -22,7 +22,7 @@ function HomeScreen({ navigation }) {
   );
 }
 
-function LoginScreen() {
+function LoginScreen({ navigation }) {
   const [emailAddress, setEmailAddress] = useState('');
   const [password, setPassword] = useState('');
 
@@ -32,6 +32,13 @@ function LoginScreen() {
 
   function passwordInputHandler(enteredPassword) {
     setPassword(enteredPassword);
+  }
+
+  const handleLogin = () => {
+    // add code for handling sign up: validate token, navigate to home page, etc.
+    setEmailAddress('');
+    setPassword('');
+    navigation.navigate('Home');
   }
   
   return (
@@ -53,13 +60,13 @@ function LoginScreen() {
           value={password}
         />
         <View style={styles.inputButtonContainer}>
-          <Button title="Log in" />
+          <Button title="Log in" onPress={handleLogin} />
         </View>
       </View>
   );
 }
 
-function SignupScreen() {
+function SignupScreen({ navigation }) {
   const [name, setName] = useState('');
   const [emailAddress, setEmailAddress] = useState('');
   const [password, setPassword] = useState('');
@@ -67,11 +74,21 @@ function SignupScreen() {
   const nameInputHandler = (enteredName) => {
     setName(enteredName);
   }
+
   const emailInputHandler = (enteredEmail) => {
     setEmailAddress(enteredEmail);
   }
+
   const passwordInputHandler = (enteredPassword) => {
     setPassword(enteredPassword);
+  }
+
+  const handleSignup = () => {
+    // add code for handling sign up: trigger post request, navigate to home page, etc.
+    setName('');
+    setEmailAddress('');
+    setPassword('');
+    navigation.navigate('Home');
   }
 
   return (
@@ -100,7 +117,7 @@ function SignupScreen() {
         value={password}
       />
         <View style={styles.inputButtonContainer}>
-          <Button title="Sign up" />
+          <Button title="Sign up" onPress={handleSignup} />
         </View>
     </View>
   );
