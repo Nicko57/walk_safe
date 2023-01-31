@@ -7,16 +7,26 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 function HomeScreen({ navigation }) {
   return (
     <View style={styles.globalContainer}>
-      <Text>Home Screen</Text>
-      <View style={styles.homeButtonContainer}>
-        <Button
-          title="Log in"
-          onPress={() => navigation.navigate('Login')}
-        />
-        <Button
-          title="Sign Up"
-          onPress={() => navigation.navigate('Signup')}
-        />
+      <Text style={styles.title}>Get Home Safe</Text>
+      <View style={styles.homeButtonsContainer}>
+        <View style={styles.button}>
+          <Pressable onPress={() => navigation.navigate('Login')}>
+            <Text style={styles.inputLabel}>Log in</Text>
+          </Pressable>
+          {/* <Button
+            title="Log in"
+            onPress={() => navigation.navigate('Login')}
+          /> */}
+        </View>
+        <View style={styles.button}>
+          <Pressable onPress={() => navigation.navigate('Signup')}>
+            <Text style={styles.inputLabel}>Sign up</Text>
+          </Pressable>
+            {/* <Button
+              title="Sign Up"
+              onPress={() => navigation.navigate('Signup')}
+            /> */}
+        </View>
       </View>
     </View>
   );
@@ -43,7 +53,7 @@ function LoginScreen({ navigation }) {
   
   return (
       <View style={styles.globalContainer}>
-        <Text style={styles.inputTitle}>Login</Text>
+        <Text style={styles.title}>Login</Text>
         <Text style={styles.inputLabel}>Email address</Text>
         <TextInput 
           style={styles.textInput}
@@ -59,8 +69,11 @@ function LoginScreen({ navigation }) {
           onChangeText={passwordInputHandler}
           value={password}
         />
-        <View style={styles.inputButtonContainer}>
-          <Button title="Log in" onPress={handleLogin} />
+        <View style={styles.button}>
+          <Pressable onPress={handleLogin}>
+            <Text style={styles.inputLabel}>Log in</Text>
+          </Pressable>
+          {/* <Button title="Log in" onPress={handleLogin} /> */}
         </View>
       </View>
   );
@@ -93,7 +106,7 @@ function SignupScreen({ navigation }) {
 
   return (
     <View style={styles.globalContainer}>
-      <Text style={styles.inputTitle}>Signup</Text>
+      <Text style={styles.title}>Signup</Text>
       <Text style={styles.inputLabel}>Name</Text>
       <TextInput
         style={styles.textInput}
@@ -116,8 +129,11 @@ function SignupScreen({ navigation }) {
         onChangeText={passwordInputHandler}
         value={password}
       />
-        <View style={styles.inputButtonContainer}>
-          <Button title="Sign up" onPress={handleSignup} />
+        <View style={styles.button}>
+          <Pressable onPress={handleSignup}>
+            <Text style={styles.inputLabel}>Sign up</Text>
+          </Pressable>
+          {/* <Button title="Sign up" onPress={handleSignup} /> */}
         </View>
     </View>
   );
@@ -148,7 +164,7 @@ const styles = StyleSheet.create({
     paddingBottom: 60,
     backgroundColor: "#64C5F0",
   },
-  inputTitle: {
+  title: {
     padding: 10,
     fontSize: 22,
     fontWeight: '600',
@@ -163,16 +179,21 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#e4d0ff',
     backgroundColor: "#ADDEF3",
-    color: '#ffffff',
+    color: '#000000',
     borderRadius: 8,
     width: '75%',
     padding: 16,
   },
-  inputButtonContainer: {
-    padding: 16,
-  },
-  homeButtonContainer: {
-    marginTop: 16,
+  homeButtonsContainer: {
     flexDirection: 'row',
+  },
+  button: {
+    width: 120,
+    marginVertical: 24,
+    marginHorizontal: 12,
+    backgroundColor: '#348EC5',
+    borderRadius: 8,
+    alignItems: 'center',
+    justifyContent: 'center'
   },
 });
