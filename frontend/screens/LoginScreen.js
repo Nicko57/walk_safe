@@ -1,25 +1,46 @@
 import * as React from 'react';
 import { useState } from 'react';
-import { StyleSheet, Text, View, Button, TextInput, Pressable } from 'react-native';
-
+import { StyleSheet, Text, View, TextInput, Pressable } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 function LoginScreen({ navigation }) {
-  const [emailAddress, setEmailAddress] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState(null);
 
   function emailInputHandler(enteredEmail) {
-    setEmailAddress(enteredEmail);
+    setEmail(enteredEmail);
   };
 
   function passwordInputHandler(enteredPassword) {
     setPassword(enteredPassword);
   }
 
-  const handleLogin = () => {
-    // add code for handling sign up: validate token, navigate to home page, etc.
-    setEmailAddress('');
-    setPassword('');
-    navigation.navigate('Home');
+  const handleLogin = async () => {
+    setError(null);
+
+    let response = await fetch( 'http://localhost:8080/api/user/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email: email, password: password })
+    })
+
+    let data = await response.json()
+    console.log('token:', data.token);
+    console.log('token:', data.user_id);
+
+    if(response.status === 200) {
+      AsyncStorage.setItem("token", data.token);
+      AsyncStorage.setItem("user_id", data.user_id);      
+      setEmail('');
+      setPassword('');
+      navigation.navigate('Home');
+    } else {
+      setError(data.message);
+      console.log('Error:', error);
+    }
   }
   
   return (
@@ -30,7 +51,7 @@ function LoginScreen({ navigation }) {
           style={styles.textInput}
           placeholder="Your email here!"
           onChangeText={emailInputHandler}
-          value={emailAddress}
+          value={email}
         />
         <Text style={styles.inputLabel}>Password</Text>
         <TextInput 
@@ -40,6 +61,11 @@ function LoginScreen({ navigation }) {
           onChangeText={passwordInputHandler}
           value={password}
         />
+        {error &&
+          <View style={styles.errorContainer}>
+            <Text style={styles.errorText}>{error}</Text>
+          </View>
+        }
         <View style={styles.button}>
           <Pressable onPress={handleLogin}>
             <Text style={styles.inputLabel}>Log in</Text>
@@ -91,5 +117,18 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     alignItems: 'center',
     justifyContent: 'center'
+  },
+  errorContainer: {
+    marginTop: 24,
+    padding: 8,
+    borderWidth: 1,
+    borderColor: '#dddddd',
+    borderRadius: 8,
+    backgroundColor: '#dddddd'
+  },
+  errorText: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#D238FF',
   },
 });
