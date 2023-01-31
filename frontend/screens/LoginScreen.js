@@ -33,7 +33,7 @@ function LoginScreen({ navigation }) {
 
     if(response.status === 200) {
       AsyncStorage.setItem("token", data.token);
-      AsyncStorage.setItem("user_id", data.user_id);      
+      // AsyncStorage.setItem("user_id", data.user_id);
       setEmail('');
       setPassword('');
       navigation.navigate('Home');
