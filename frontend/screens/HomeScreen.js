@@ -3,29 +3,43 @@ import { StyleSheet, Text, View, Pressable } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 function HomeScreen({ navigation }) {
+  // const token = (async () => {
+  //   const value = await AsyncStorage.getItem('token');
+  //   console.log(value);
+  //   return value;
+  // })();
+
+  // const handleLogout = () => {
+  //   AsyncStorage.removeItem('token');
+  //   console.log(AsyncStorage.getItem('token'));
+  // }
+
   return (
     <View style={styles.globalContainer}>
       <Text style={styles.title}>Get Home Safe</Text>
       <View style={styles.homeButtonsContainer}>
-        <View style={styles.button}>
-          <Pressable onPress={() => navigation.navigate('Login')}>
-            <Text style={styles.inputLabel}>Log in</Text>
-          </Pressable>
-          {/* <Button
-            title="Log in"
-            onPress={() => navigation.navigate('Login')}
-          /> */}
-        </View>
-        <View style={styles.button}>
-          <Pressable onPress={() => navigation.navigate('Signup')}>
-            <Text style={styles.inputLabel}>Sign up</Text>
-          </Pressable>
-            {/* <Button
-              title="Sign Up"
-              onPress={() => navigation.navigate('Signup')}
-            /> */}
-        </View>
+        {/* {!token && */}
+          <View style={styles.button}>
+            <Pressable onPress={() => navigation.navigate('Login')}>
+              <Text style={styles.inputLabel}>Log in</Text>
+            </Pressable>
+          </View>
+        {/* } */}
+        {/* {!token && */}
+          <View style={styles.button}>
+            <Pressable onPress={() => navigation.navigate('Signup')}>
+              <Text style={styles.inputLabel}>Sign up</Text>
+            </Pressable>
+          </View>
+        {/* } */}
       </View>
+        {/* {token &&
+          <View style={styles.button}>
+            <Pressable onPress={handleLogout}>
+              <Text style={styles.inputLabel}>Log out</Text>
+            </Pressable>
+          </View>
+        } */}
     </View>
   );
 }
