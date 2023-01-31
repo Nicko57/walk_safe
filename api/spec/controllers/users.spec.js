@@ -1,79 +1,119 @@
 const app = require("../../server");
 const request = require("supertest");
-const User = require('../../models/userModel');
+const User = require("../../models/userModel");
 require("../mongodb_helper");
 
 describe("/users", () => {
-  beforeEach( async () => {
+  beforeEach(async () => {
+    await User.deleteMany({});
+  });
+
+  afterEach(async () => {
     await User.deleteMany({});
   });
 
   describe("POST, when name, email and password are provided", () => {
     test("the response code is 201", async () => {
-      let response = await request(app)
-        .post("/api/user/signup")
-        .send({name: 'poppy', email: "poppy@email.com", password: "passwordQ123!"})
-      expect(response.statusCode).toBe(200)
-    })
+      let response = await request(app).post("/api/user/signup").send({
+        name: "poppy",
+        email: "poppy@email.com",
+        password: "passwordQ123!",
+      });
+      expect(response.statusCode).toBe(200);
+    });
 
     test("a user is created", async () => {
-      await request(app)
-        .post("/api/user/signup")
-        .send({name: 'scarlett', email: "scarlett@email.com", password: "passwordQ123!"})
-      let users = await User.find()
-      let newUser = users[users.length - 1]
-      expect(newUser.email).toEqual("scarlett@email.com")
-    })
-  })
+      await request(app).post("/api/user/signup").send({
+        name: "scarlett",
+        email: "scarlett@email.com",
+        password: "passwordQ123!",
+      });
+      let users = await User.find();
+      let newUser = users[users.length - 1];
+      expect(newUser.email).toEqual("scarlett@email.com");
+    });
+  });
 
   describe("POST, when password is missing", () => {
     test("response code is 400", async () => {
       let response = await request(app)
         .post("/api/user/signup")
-        .send({name: 'skye', email: "skye@email.com"})
-      expect(response.statusCode).toBe(400)
+        .send({ name: "skye", email: "skye@email.com" });
+      expect(response.statusCode).toBe(400);
     });
 
     test("does not create a user", async () => {
       await request(app)
         .post("/api/user/signup")
-        .send({name: 'skye', email: "skye@email.com"})
-        let users = await User.find()
-        expect(users.length).toEqual(0)
+        .send({ name: "skye", email: "skye@email.com" });
+      let users = await User.find();
+      expect(users.length).toEqual(0);
     });
-  })
-  
+  });
+
   describe("POST, when email is missing", () => {
     test("response code is 400", async () => {
       let response = await request(app)
         .post("/api/user/signup")
-        .send({name: 'skye', password: "passwordQWERT123!"})
-      expect(response.statusCode).toBe(400)
+        .send({ name: "skye", password: "passwordQWERT123!" });
+      expect(response.statusCode).toBe(400);
     });
 
     test("does not create a user", async () => {
       await request(app)
         .post("/api/user/signup")
-        .send({name: 'skye', password: "passwordQWERT123!"})
-      let users = await User.find()
-      expect(users.length).toEqual(0)
+        .send({ name: "skye", password: "passwordQWERT123!" });
+      let users = await User.find();
+      expect(users.length).toEqual(0);
     });
-  })
+  });
 
   describe("POST, when name is missing", () => {
     test("response code is 400", async () => {
       let response = await request(app)
         .post("/api/user/signup")
-        .send({email: 'skye@skye.com', password: "passwordQWERT123!"})
-      expect(response.statusCode).toBe(400)
+        .send({ email: "skye@skye.com", password: "passwordQWERT123!" });
+      expect(response.statusCode).toBe(400);
     });
 
     test("does not create a user", async () => {
       await request(app)
         .post("/api/user/signup")
-        .send({email: 'skye@skye.com', password: "passwordQWERT123!"})
-      let users = await User.find()
-      expect(users.length).toEqual(0)
+        .send({ email: "skye@skye.com", password: "passwordQWERT123!" });
+      let users = await User.find();
+      expect(users.length).toEqual(0);
     });
-  })
-})
+  });
+});
+
+
+describe("/users/login", () => {
+  beforeEach(async () => {
+    let response = await request(app).post("/api/user/signup").send({
+      name: "poppy",
+      email: "poppy@email.com",
+      password: "passwordQ123!",
+    });
+  });
+  afterEach(async () => {
+    await User.deleteMany({});
+  });
+  test("response code is 400 when email is wrong", async () => {
+    let response = await request(app)
+      .post("/api/user/login")
+      .send({ email: "jadgcjac@shjbfk.com", password: "passwordQ123!" });
+    expect(response.statusCode).toBe(400);
+  });
+  test("response code is 400 when password is wrong", async () => {
+    let response = await request(app)
+      .post("/api/user/login")
+      .send({ email: "poppy@email.com", password: "sdjghcajshc" });
+    expect(response.statusCode).toBe(400);
+  });
+  test("response code is 200 when both correct", async () => {
+    let response = await request(app)
+      .post("/api/user/login")
+      .send({ email: "poppy@email.com", password: "passwordQ123!" });
+    expect(response.statusCode).toBe(200);
+  });
+});
