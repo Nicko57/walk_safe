@@ -5,27 +5,50 @@ import { StyleSheet, Text, View, Button, TextInput, Pressable } from 'react-nati
 
 function SignupScreen({ navigation }) {
   const [name, setName] = useState('');
-  const [emailAddress, setEmailAddress] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState(null);
 
   const nameInputHandler = (enteredName) => {
     setName(enteredName);
   }
 
   const emailInputHandler = (enteredEmail) => {
-    setEmailAddress(enteredEmail);
+    setEmail(enteredEmail);
   }
 
   const passwordInputHandler = (enteredPassword) => {
     setPassword(enteredPassword);
   }
 
-  const handleSignup = () => {
-    // add code for handling sign up: trigger post request, navigate to home page, etc.
-    setName('');
-    setEmailAddress('');
-    setPassword('');
-    navigation.navigate('Home');
+  const handleSignup = async () => {
+    setError(null);
+    
+    let response = await fetch('http://localhost:8080/api/user/signup', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        name: name,
+        email: email,
+        password: password
+      }),
+    })
+    
+    let data = await response.json();
+    console.log(data);
+
+    if (response === 200) {
+      console.log('Success:', data);
+      setName('');
+      setEmail('');
+      setPassword('');
+      navigation.navigate('Home');
+    } else {
+      setError(data.error);
+      console.log('Error:', error);
+    }
   }
 
   return (
@@ -43,7 +66,7 @@ function SignupScreen({ navigation }) {
         style={styles.textInput}
         placeholder="Your email here!"
         onChangeText={emailInputHandler}
-        value={emailAddress}
+        value={email}
       />
       <Text style={styles.inputLabel}>Password</Text>
       <TextInput
@@ -59,6 +82,7 @@ function SignupScreen({ navigation }) {
           </Pressable>
           {/* <Button title="Sign up" onPress={handleSignup} /> */}
         </View>
+        {error && <View><Text>{error}</Text></View>}
     </View>
   );
 }
