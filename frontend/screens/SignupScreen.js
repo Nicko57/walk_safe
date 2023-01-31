@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useState } from 'react';
-import { StyleSheet, Text, View, Button, TextInput, Pressable } from 'react-native';
-
+import { StyleSheet, Text, View, TextInput, Pressable } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 function SignupScreen({ navigation }) {
   const [name, setName] = useState('');
@@ -39,8 +39,12 @@ function SignupScreen({ navigation }) {
     let data = await response.json();
     console.log(data);
 
-    if (response === 200) {
-      console.log('Success:', data);
+    if (response.status === 200) {
+      console.log(data.token);
+      console.log(data.user_id);
+      AsyncStorage.setItem("token", data.token);
+      // AsyncStorage.setItem("user_id", data.user_id);
+        // above doesn't work as only email and token are provided in the data, not user_id
       setName('');
       setEmail('');
       setPassword('');
