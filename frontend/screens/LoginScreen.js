@@ -19,7 +19,7 @@ function LoginScreen({ navigation }) {
   const handleLogin = async () => {
     setError(null);
 
-    let response = await fetch( 'http://localhost:8080/api/user/login', {
+    let response = await fetch('http://localhost:8080/api/user/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -38,7 +38,7 @@ function LoginScreen({ navigation }) {
       setPassword('');
       navigation.navigate('Home');
     } else {
-      setError(data.message);
+      setError(data.error);
       console.log('Error:', error);
     }
   }
