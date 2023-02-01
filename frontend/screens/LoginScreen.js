@@ -29,8 +29,8 @@ function LoginScreen({ navigation }) {
 
     let data = await response.json()
     console.log('token:', data.token);
-    console.log('token:', data.user_id);
-
+    // console.log('user_id:', data.user_id);
+    
     if(response.status === 200) {
       AsyncStorage.setItem("token", data.token);
       // AsyncStorage.setItem("user_id", data.user_id);
@@ -44,35 +44,38 @@ function LoginScreen({ navigation }) {
   }
   
   return (
-      <View style={styles.globalContainer}>
-        <Text style={styles.title}>Login</Text>
-        <Text style={styles.inputLabel}>Email address</Text>
-        <TextInput 
-          style={styles.textInput}
-          placeholder="Your email here!"
-          onChangeText={emailInputHandler}
-          value={email}
-        />
-        <Text style={styles.inputLabel}>Password</Text>
-        <TextInput 
-          style={styles.textInput}
-          placeholder="Your password here!"
-          secureTextEntry={true}
-          onChangeText={passwordInputHandler}
-          value={password}
-        />
-        {error &&
-          <View style={styles.errorContainer}>
-            <Text style={styles.errorText}>{error}</Text>
-          </View>
-        }
-        <View style={styles.button}>
-          <Pressable onPress={handleLogin}>
-            <Text style={styles.inputLabel}>Log in</Text>
-          </Pressable>
-          {/* <Button title="Log in" onPress={handleLogin} /> */}
+    <View style={styles.globalContainer}>
+      <Text style={styles.title}>Login</Text>
+      <Text style={styles.inputLabel}>Email address</Text>
+      <TextInput 
+        style={styles.textInput}
+        placeholder="Your email here!"
+        onChangeText={emailInputHandler}
+        value={email}
+      />
+      <Text style={styles.inputLabel}>Password</Text>
+      <TextInput 
+        style={styles.textInput}
+        placeholder="Your password here!"
+        secureTextEntry={true}
+        onChangeText={passwordInputHandler}
+        value={password}
+      />
+      {error &&
+        <View style={styles.errorContainer}>
+          <Text style={styles.errorText}>{error}</Text>
         </View>
+      }
+      <View style={styles.button}>
+        <Pressable onPress={handleLogin}>
+          <Text style={styles.inputLabel}>Log in</Text>
+        </Pressable>
+        {/* <Button title="Log in" onPress={handleLogin} /> */}
       </View>
+      <Pressable onPress={(() => navigation.navigate('Signup'))}>
+        <Text style={styles.signupButtonText} >Or sign up here</Text>
+      </Pressable>
+    </View>
   );
 }
 
@@ -117,6 +120,9 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     alignItems: 'center',
     justifyContent: 'center'
+  },
+  signupButtonText: {
+    color: '#ffffff',
   },
   errorContainer: {
     marginTop: 24,
