@@ -133,7 +133,7 @@ const Map = () => {
             </View>
             <View style={styles.button}>
               {started ? (
-                <Timer duration={duration} isRunning={isRunning} />
+                <Timer duration={duration} isRunning={isRunning} setIsRunning={setIsRunning}/>
               ) : (
                 <Button
                   color="white"
@@ -148,20 +148,7 @@ const Map = () => {
           </View>
         </View>
         <View style={styles.bottomContainerChild}>
-          <View style={styles.buttons}>
-            <View style={styles.button}>
-              {started && (
-                <Button
-                  color="white"
-                  title={isRunning ? 'Pause' : 'Play'}
-                  onPress={() => setIsRunning(!isRunning)}
-                />
-              )}
-            </View>
-          </View>
-          <View style={styles.bottomContainerChild}>
-            <Text>NAv bar will go in here</Text>
-          </View>
+          
         </View>
       </View>
     </View>
@@ -173,6 +160,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     flex: 1,
     width: '100%',
+    paddingTop: 40,
+    marginBottom: 10
   },
   searchContainer: {
     height: Constant.statusBarHeight,
@@ -180,7 +169,7 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
   mapContainer: {
-    flex: 1,
+    flex: 3,
     width: '100%',
   },
   map: {
@@ -200,7 +189,7 @@ const styles = StyleSheet.create({
   button: {
     flex: 1,
     width: '30%',
-    height: '80%',
+    height: '170%',
     backgroundColor: '#348EC5',
     borderRadius: 15,
     margin: 5,
@@ -211,7 +200,7 @@ const styles = StyleSheet.create({
   },
   journeyDetails: {
     fontSize: 22,
-    margin: 12
+    marginHorizontal: 12,
   },
 })
 
