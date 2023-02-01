@@ -1,31 +1,66 @@
 import * as React from 'react';
-import { StyleSheet, Text, View, Button, TextInput, Pressable } from 'react-native';
-
+import { useState, useEffect } from 'react';
+import { StyleSheet, Text, View, Pressable } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 function HomeScreen({ navigation }) {
+  const [token, setToken] = useState(null);
+  // const [userId, setUserId] = useState(null);
+  
+  useEffect(() => {
+    const retrieveToken = async () => {
+      const value = await AsyncStorage.getItem('token');
+      setToken(value);
+    };
+    retrieveToken();
+
+    // const retrieveUserId = async () => {
+    //   const value = await AsyncStorage.getItem('user_id');
+    //   setUserId(value);
+    // };
+    // retrieveUserId();
+
+    const changedScreen = navigation.addListener('focus', () => {
+      retrieveToken();
+    });
+
+    console.log('useEffect triggered');
+  }, [token]);
+
+  const handleLogout = async () => {
+    await AsyncStorage.removeItem('token');
+    setToken(null);
+    // await AsyncStorage.removeItem('user_id');
+    // setUserId(null);
+  };
+
   return (
     <View style={styles.globalContainer}>
+      {/* {token && <Text>Logged in as {userId}</Text>} */}
       <Text style={styles.title}>Get Home Safe</Text>
       <View style={styles.homeButtonsContainer}>
-        <View style={styles.button}>
-          <Pressable onPress={() => navigation.navigate('Login')}>
-            <Text style={styles.inputLabel}>Log in</Text>
-          </Pressable>
-          {/* <Button
-            title="Log in"
-            onPress={() => navigation.navigate('Login')}
-          /> */}
-        </View>
-        <View style={styles.button}>
-          <Pressable onPress={() => navigation.navigate('Signup')}>
-            <Text style={styles.inputLabel}>Sign up</Text>
-          </Pressable>
-            {/* <Button
-              title="Sign Up"
-              onPress={() => navigation.navigate('Signup')}
-            /> */}
-        </View>
+        {!token &&
+          <View style={styles.button}>
+            <Pressable onPress={() => navigation.navigate('Login')}>
+              <Text style={styles.inputLabel}>Log in</Text>
+            </Pressable>
+          </View>
+        }
+        {!token &&
+          <View style={styles.button}>
+            <Pressable onPress={() => navigation.navigate('Signup')}>
+              <Text style={styles.inputLabel}>Sign up</Text>
+            </Pressable>
+          </View>
+        }
       </View>
+        {token &&
+          <View style={styles.button}>
+            <Pressable onPress={handleLogout}>
+              <Text style={styles.inputLabel}>Log out</Text>
+            </Pressable>
+          </View>
+        }
     </View>
   );
 }

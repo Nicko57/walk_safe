@@ -31,6 +31,7 @@ const signupUser = async (req, res) => {
     // create a token
     const token = createToken(user._id)
 
+    // if 'email' is changed to 'user_id: user._id', email is still passed in the response, not user_id
     res.status(200).json({email, token})
   } catch (error) {
     res.status(400).json({error: error.message})
