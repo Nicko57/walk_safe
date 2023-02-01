@@ -1,45 +1,56 @@
 import * as React from 'react';
+import { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, Pressable } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 function HomeScreen({ navigation }) {
-  // const token = (async () => {
-  //   const value = await AsyncStorage.getItem('token');
-  //   console.log(value);
-  //   return value;
-  // })();
+  const [token, setToken] = useState(null);
 
-  // const handleLogout = () => {
-  //   AsyncStorage.removeItem('token');
-  //   console.log(AsyncStorage.getItem('token'));
-  // }
+  useEffect(() => {
+    const retrieveToken = async () => {
+      const value = await AsyncStorage.getItem('token');
+      setToken(value);
+    };
+    retrieveToken();
+
+    const changedScreen = navigation.addListener('focus', () => {
+      retrieveToken();
+    });
+
+    console.log('useEffect triggered');
+  }, [token]);
+
+  const handleLogout = async () => {
+    await AsyncStorage.removeItem('token');
+    setToken(null);
+  };
 
   return (
     <View style={styles.globalContainer}>
       <Text style={styles.title}>Get Home Safe</Text>
       <View style={styles.homeButtonsContainer}>
-        {/* {!token && */}
+        {!token &&
           <View style={styles.button}>
             <Pressable onPress={() => navigation.navigate('Login')}>
               <Text style={styles.inputLabel}>Log in</Text>
             </Pressable>
           </View>
-        {/* } */}
-        {/* {!token && */}
+        }
+        {!token &&
           <View style={styles.button}>
             <Pressable onPress={() => navigation.navigate('Signup')}>
               <Text style={styles.inputLabel}>Sign up</Text>
             </Pressable>
           </View>
-        {/* } */}
+        }
       </View>
-        {/* {token &&
+        {token &&
           <View style={styles.button}>
             <Pressable onPress={handleLogout}>
               <Text style={styles.inputLabel}>Log out</Text>
             </Pressable>
           </View>
-        } */}
+        }
     </View>
   );
 }
