@@ -122,7 +122,7 @@ const Map = () => {
             {distance
               ? `Duration: ${Math.round(
                   duration,
-                )}mins      Distance: ${Math.round(distance)}km`
+                )}mins      Distance: ${Math.round(10*distance)/10}km`
               : 'Search for a destination to start'}
           </Text>
         </View>
@@ -133,7 +133,7 @@ const Map = () => {
             </View>
             <View style={styles.button}>
               {started ? (
-                <Timer style={styles.timerContainter} duration={duration} isRunning={isRunning} />
+                <Timer duration={duration} isRunning={isRunning} />
               ) : (
                 <Button
                   color="white"
@@ -200,6 +200,7 @@ const styles = StyleSheet.create({
   button: {
     flex: 1,
     width: '30%',
+    height: '80%',
     backgroundColor: '#348EC5',
     borderRadius: 15,
     margin: 5,
@@ -209,12 +210,9 @@ const styles = StyleSheet.create({
     flex: 0.3,
   },
   journeyDetails: {
-    fontSize: 25,
-    marginTop: 10,
+    fontSize: 22,
+    margin: 12
   },
-  // timerContainter: {
-  //   width: "10%"
-  // }
 })
 
 export default Map
