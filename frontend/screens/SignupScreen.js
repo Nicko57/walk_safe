@@ -40,8 +40,8 @@ function SignupScreen({ navigation }) {
     console.log(data);
 
     if (response.status === 200) {
-      console.log(data.token);
-      console.log(data.user_id);
+      console.log("token:", data.token);
+      // console.log('user_id:', data.user_id);
       AsyncStorage.setItem("token", data.token);
       // AsyncStorage.setItem("user_id", data.user_id);
         // above doesn't work as only email and token are provided in the data, not user_id
@@ -93,6 +93,9 @@ function SignupScreen({ navigation }) {
           </Pressable>
           {/* <Button title="Sign up" onPress={handleSignup} /> */}
         </View>
+        <Pressable onPress={(() => navigation.navigate('Login'))}>
+        <Text style={styles.loginButtonText}>Or log in here</Text>
+      </Pressable>
     </View>
   );
 }
@@ -139,6 +142,9 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     alignItems: 'center',
     justifyContent: 'center'
+  },
+  loginButtonText: {
+    color: '#ffffff',
   },
   errorContainer: {
     marginTop: 24,
