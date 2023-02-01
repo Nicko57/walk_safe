@@ -13,7 +13,7 @@ function SettingsContainer() {
     <NavigationContainer independent={true}>
       <Stack.Navigator
         initialRouteName="Settings"
-        screenOptions={{headerShown: false}}
+        screenOptions={{headerShown: true}}
       >
         <Stack.Screen name="Settings" component={SettingsScreen} />
         <Stack.Screen name="Login" component={LoginScreen} options={{ title: 'Login' }} />
