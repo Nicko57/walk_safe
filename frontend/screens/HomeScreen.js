@@ -1,11 +1,19 @@
-import * as React from 'react';
-import { StyleSheet, Text, View, Button, TextInput, Pressable } from 'react-native';
-
+import * as React from 'react'
+import {
+  StyleSheet,
+  Text,
+  View,
+  Button,
+  TextInput,
+  Pressable,
+} from 'react-native'
 
 function HomeScreen({ navigation }) {
   return (
     <View style={styles.globalContainer}>
       <Text style={styles.title}>Get Home Safe</Text>
+      <Button title="Map" onPress={() => navigation.navigate('Map')} />
+      <Button title="Search" onPress={() => navigation.navigate('Search')} />
       <View style={styles.homeButtonsContainer}>
         <View style={styles.button}>
           <Pressable onPress={() => navigation.navigate('Login')}>
@@ -20,18 +28,17 @@ function HomeScreen({ navigation }) {
           <Pressable onPress={() => navigation.navigate('Signup')}>
             <Text style={styles.inputLabel}>Sign up</Text>
           </Pressable>
-            {/* <Button
+          {/* <Button
               title="Sign Up"
               onPress={() => navigation.navigate('Signup')}
             /> */}
         </View>
       </View>
     </View>
-  );
+  )
 }
 
-export default HomeScreen;
-
+export default HomeScreen
 
 const styles = StyleSheet.create({
   globalContainer: {
@@ -39,7 +46,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     paddingBottom: 60,
-    backgroundColor: "#64C5F0",
+    backgroundColor: '#64C5F0',
   },
   title: {
     padding: 10,
@@ -55,7 +62,7 @@ const styles = StyleSheet.create({
   textInput: {
     borderWidth: 1,
     borderColor: '#e4d0ff',
-    backgroundColor: "#ADDEF3",
+    backgroundColor: '#ADDEF3',
     color: '#000000',
     borderRadius: 8,
     width: '75%',
@@ -71,6 +78,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#348EC5',
     borderRadius: 8,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
-});
+})
