@@ -1,31 +1,60 @@
 import * as React from 'react';
 import { useState } from 'react';
-import { StyleSheet, Text, View, Button, TextInput, Pressable } from 'react-native';
-
+import { StyleSheet, Text, View, TextInput, Pressable } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 function SignupScreen({ navigation }) {
   const [name, setName] = useState('');
-  const [emailAddress, setEmailAddress] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState(null);
 
   const nameInputHandler = (enteredName) => {
     setName(enteredName);
   }
 
   const emailInputHandler = (enteredEmail) => {
-    setEmailAddress(enteredEmail);
+    setEmail(enteredEmail);
   }
 
   const passwordInputHandler = (enteredPassword) => {
     setPassword(enteredPassword);
   }
 
-  const handleSignup = () => {
-    // add code for handling sign up: trigger post request, navigate to home page, etc.
-    setName('');
-    setEmailAddress('');
-    setPassword('');
-    navigation.navigate('Home');
+  const handleSignup = async () => {
+    setError(null);
+    
+    let response = await fetch('http://localhost:8080/api/user/signup', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        name: name,
+        email: email,
+        password: password
+      }),
+    })
+    
+    let data = await response.json();
+    console.log(data);
+
+    if (response.status === 200) {
+      console.log("token:", data.token);
+      // console.log('user_id:', data.user_id);
+      AsyncStorage.setItem("token", data.token);
+      // AsyncStorage.setItem("user_id", data.user_id);
+        // above doesn't work as only email and token are provided in the data, not user_id
+        // though user_id might not be necessary, will likely only be necessary if we want
+        // to built in more social functionality, e.g., viewing other users' profiles
+      setName('');
+      setEmail('');
+      setPassword('');
+      navigation.navigate('Home');
+    } else {
+      setError(data.error);
+      console.log('Error:', error);
+    }
   }
 
   return (
@@ -43,7 +72,7 @@ function SignupScreen({ navigation }) {
         style={styles.textInput}
         placeholder="Your email here!"
         onChangeText={emailInputHandler}
-        value={emailAddress}
+        value={email}
       />
       <Text style={styles.inputLabel}>Password</Text>
       <TextInput
@@ -53,12 +82,20 @@ function SignupScreen({ navigation }) {
         onChangeText={passwordInputHandler}
         value={password}
       />
+        {error &&
+          <View style={styles.errorContainer}>
+            <Text style={styles.errorText}>{error}</Text>
+          </View>
+        }
         <View style={styles.button}>
           <Pressable onPress={handleSignup}>
             <Text style={styles.inputLabel}>Sign up</Text>
           </Pressable>
           {/* <Button title="Sign up" onPress={handleSignup} /> */}
         </View>
+        <Pressable onPress={(() => navigation.navigate('Login'))}>
+        <Text style={styles.loginButtonText}>Or log in here</Text>
+      </Pressable>
     </View>
   );
 }
@@ -105,5 +142,21 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     alignItems: 'center',
     justifyContent: 'center'
+  },
+  loginButtonText: {
+    color: '#ffffff',
+  },
+  errorContainer: {
+    marginTop: 24,
+    padding: 8,
+    borderWidth: 1,
+    borderColor: '#dddddd',
+    borderRadius: 8,
+    backgroundColor: '#dddddd'
+  },
+  errorText: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#D238FF',
   },
 });
