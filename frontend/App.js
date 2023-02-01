@@ -3,8 +3,11 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import HomeScreen from './screens/HomeScreen';
+import LoginScreen from './screens/LoginScreen';
+import SignupScreen from './screens/SignupScreen';
+import Map from './screens/Map';
+import Search from './screens/Search';
 import SettingsContainer from './navigation/SettingsContainer';
-
 
 const Tab = createBottomTabNavigator();
 

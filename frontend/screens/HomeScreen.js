@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, Pressable } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+
 function HomeScreen({ navigation }) {
 
   return (
@@ -10,11 +11,10 @@ function HomeScreen({ navigation }) {
       <Text style={styles.title}>Get Home Safe</Text>
       <Text>Home screen with map</Text>
     </View>
-  );
+  )
 }
 
-export default HomeScreen;
-
+export default HomeScreen
 
 const styles = StyleSheet.create({
   globalContainer: {
@@ -31,3 +31,4 @@ const styles = StyleSheet.create({
     color: '#ffffff',
   },
 });
+
