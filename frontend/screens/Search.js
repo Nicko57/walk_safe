@@ -2,7 +2,7 @@ import React from 'react'
 import { Dimensions, StyleSheet, TextInput, View } from 'react-native'
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete'
 
-const GooglePlacesInput = ({setDestination, setStart}) => {
+const GooglePlacesInput = ({setDestination, setStarted, setIsRunning}) => {
 
   return (
     <View style={styles.searchContainer}>
@@ -19,8 +19,8 @@ const GooglePlacesInput = ({setDestination, setStart}) => {
           console.log("details", details);
           console.log(JSON.stringify(details?.geometry?.location));
           setDestination(details?.geometry?.location)
-          setStart(false)
-          setStart(true)
+          setStarted(false)
+          setIsRunning(false)
         }}
         onFail={(error) => console.error(error)} />
     </View>
@@ -30,7 +30,7 @@ const GooglePlacesInput = ({setDestination, setStart}) => {
 const styles = StyleSheet.create({
   searchContainer: {
     position: 'absolute',
-    width: '90%',
+    width: '100%',
     backgroundColor: 'white',
     shadowColor: 'black',
     shadowOffset: { width: 2, height: 2 },
