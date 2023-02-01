@@ -41,7 +41,7 @@ function App() {
           ]
         })}
       >
-        <Tab.Screen name="Home" component={HomeScreen} />
+        <Tab.Screen name="Home" component={Map} />
         <Tab.Screen name="Settings" component={SettingsContainer} options={{ title: 'Settings' }} />
       </Tab.Navigator>
     </NavigationContainer>

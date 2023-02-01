@@ -19,44 +19,50 @@
 
 // })
 
-import { Text, View, StyleSheet, Button } from 'react-native';
+import { Text, View, StyleSheet, Button, TouchableOpacity } from 'react-native'
 import { CountdownCircleTimer } from 'react-native-countdown-circle-timer'
 import { useState } from 'react'
 
-const Timer = ({isRunning, duration}) => {
-
-  
+const Timer = ({ isRunning, setIsRunning, duration }) => {
   const timeFormatter = ({ remainingTime }) => {
     const hours = Math.floor(remainingTime / 3600)
-    const minutes = Math.floor((remainingTime % 3600) / 60).toString().padStart(2,'0')
-    const seconds = (remainingTime % 60).toString().padStart(2,'0')
-    return hours > 0 ? `${hours}:${minutes}:${seconds}` : `${minutes}:${seconds}`
+    const minutes = Math.floor((remainingTime % 3600) / 60)
+      .toString()
+      .padStart(2, '0')
+    const seconds = (remainingTime % 60).toString().padStart(2, '0')
+    return hours > 0
+      ? `${hours}:${minutes}:${seconds}`
+      : `${minutes}:${seconds}`
   }
 
   return (
     <View style={styles.timerContainer}>
-      <CountdownCircleTimer
-        isPlaying={isRunning}
-        duration={duration*60}
-        colors={["#004777", "#F7B801", "#A30000", "#A30000"]}
-        colorsTime={[duration * 60, duration * 45, duration * 30, duration * 15]}
-        updateInterval={1}
-        size={120}
-    >
-      {({ remainingTime, color }) => (
-        <Text style={{ color: "white", fontSize: 20 }}>
-          {timeFormatter({remainingTime})}
-        </Text>
-      )}
-    </CountdownCircleTimer>
-  </View>
+      <TouchableOpacity onPress={() => setIsRunning((prev) => !prev)}>
+        <CountdownCircleTimer
+          isPlaying={isRunning}
+          duration={duration * 60}
+          colors={['#004777', '#F7B801', '#A30000', '#A30000']}
+          colorsTime={[
+            duration * 60,
+            duration * 45,
+            duration * 30,
+            duration * 15,
+          ]}
+          updateInterval={1}
+          size={120}
+        >
+          {({ remainingTime, color }) => (
+            <Text style={{ color: 'white', fontSize: 20 }}>
+              {timeFormatter({ remainingTime })}
+            </Text>
+          )}
+        </CountdownCircleTimer>
+      </TouchableOpacity>
+    </View>
   )
 }
 
 const styles = StyleSheet.create({
-  timerContainer: {
-    
-  }
+  timerContainer: {},
 })
 export default Timer
-
