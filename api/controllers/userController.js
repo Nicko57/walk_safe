@@ -31,11 +31,27 @@ const signupUser = async (req, res) => {
     // create a token
     const token = createToken(user._id)
 
-    // if 'email' is changed to 'user_id: user._id', email is still passed in the response, not user_id
     res.status(200).json({email, token})
   } catch (error) {
     res.status(400).json({error: error.message})
   }
 }
 
-module.exports = { signupUser, loginUser }
+const emergencyContact = async (req, res) => {
+  const {user_id, emergencyContactEmail, field} = req.body
+  if (field === 'add') {
+    const user = await User.findOne({_id: user_id})
+    const emergencyContacts = user.emergencyContacts
+    if (!emergencyContacts.includes(emergencyContactEmail)) {
+      update = await User.findOneAndUpdate({_id: user_id}, {$push: {emergencyContacts: emergencyContactEmail}})
+    }
+  } else if (field === 'delete') {
+    update = await User.findOneAndUpdate({_id: user_id}, {$pull: {emergencyContacts: emergencyContactEmail}})
+  } else {
+    res.status(400).json({ message: error.message})
+  }
+  const token = await createToken(user_id)
+  res.status(200).json({ message: 'OK', token: token });
+}
+
+module.exports = { signupUser, loginUser, emergencyContact}
