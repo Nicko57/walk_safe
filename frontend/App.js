@@ -4,6 +4,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Map from './screens/Map';
 import Search from './screens/Search';
+import ContactsScreen from './screens/ContactsScreen';
 import AuthContainer from './navigation/AuthContainer';
 import SettingsContainer from './navigation/SettingsContainer';
 
@@ -31,6 +32,9 @@ function App() {
               iconName = focused ? 'settings' : 'settings-outline';
             }
 
+            else if (rn === "Contacts") {
+              iconName = focused ? 'person-circle' : 'person-circle-outline';
+            }
 
 
             // You can return any component that you like here!
@@ -48,6 +52,8 @@ function App() {
         <Tab.Screen name="Home" component={Map} />
         <Tab.Screen name="Auth" component={AuthContainer} options={{ title: 'Auth' }} />
         <Tab.Screen name="Settings" component={SettingsContainer} options={{ title: 'Settings' }} />
+        <Tab.Screen name="Contacts" component={ContactsScreen} options={{ title: 'Contacts' }} />
+
       </Tab.Navigator>
     </NavigationContainer>
   );
