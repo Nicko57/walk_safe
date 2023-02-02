@@ -50,7 +50,7 @@ function SignupScreen({ navigation }) {
       setName('');
       setEmail('');
       setPassword('');
-      navigation.navigate('Auth');
+      navigation.replace('NavbarContainer');
     } else {
       setError(data.error);
       console.log('Error:', error);
