@@ -36,7 +36,7 @@ function LoginScreen({ navigation }) {
       // AsyncStorage.setItem("user_id", data.user_id);
       setEmail('');
       setPassword('');
-      navigation.navigate('Auth');
+      navigation.replace('NavbarContainer');
     } else {
       setError(data.error);
       console.log('Error:', error);
