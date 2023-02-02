@@ -15,28 +15,16 @@ import Contact from '../components/contact'
 const ContactsScreen = () => {
   const [error, setError] = useState(null)
   const [contacts, setContacts] = useState(null)
-
+  const [updated, setUpdated] = useState(null)
 
   useEffect(() => {
-    console.log('Hello')
       let response = fetch('http://localhost:8080/api/user/contacts/63dbf2dbe7c83add97179bf9', {
-      // headers: {
-      //   'Content-Type': 'application/json',
-      // },
     }).then(response => response.json() )
     .then(async data => {
-    //   console.log(data);
-    //   if(response.status !== 200) {
-    //     setError(response);
-    //     console.log('Error:', error);
-    //   } else {
-    //   console.log(data.emergencyContacts)
-    //   setContacts(data.emergencyContacts)
-    // }
-    console.log(data.emergencyContacts);
+    setUpdated(false)
     setContacts(data.emergencyContacts)
     })
-  },[])
+  },[updated])
 
 
 
@@ -59,7 +47,7 @@ const ContactsScreen = () => {
         <SafeAreaView style={styles.contactsListContainer}>
           {contacts && <FlatList
             data={contacts}
-            renderItem={({ item }) => <Contact item={item} />}
+            renderItem={({ item }) => <Contact item={item} setUpdated={setUpdated}/>}
             keyExtractor={(item) => item.id}
           />}
         </SafeAreaView>
@@ -91,15 +79,8 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: '#ffffff',
     flex: 5,
-    width: '100%',
+    width: 350,
     alignItems: 'center',
-  },
-  contact: {
-    backgroundColor: '#f9c2ff',
-    padding: 20,
-    marginVertical: 8,
-    marginHorizontal: 16,
-    width: 700,
   },
   title: {
     fontSize: 32,
@@ -114,7 +95,7 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   contactsListContainer: {
-    flex: 1
+    flex: 1,
   }
 })
 

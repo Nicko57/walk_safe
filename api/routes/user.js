@@ -12,7 +12,7 @@ router.post("/login", loginUser);
 router.post("/signup", signupUser);
 
 // add / delete emergency contact route
-router.post("/contact", emergencyContact);
+router.patch("/contact", emergencyContact);
 
 // get emergency contacts route
 router.get("/contacts/:id", getEmergencyContacts)
