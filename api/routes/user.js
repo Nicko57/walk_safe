@@ -1,7 +1,7 @@
 const express = require("express");
 
 // controller functions
-const { loginUser, signupUser, emergencyContact } = require("../controllers/userController");
+const { loginUser, signupUser, emergencyContact, getEmergencyContacts} = require("../controllers/userController");
 
 const router = express.Router();
 
@@ -13,5 +13,8 @@ router.post("/signup", signupUser);
 
 // add / delete emergency contact route
 router.post("/contact", emergencyContact);
+
+// get emergency contacts route
+router.get("/contacts/:id", getEmergencyContacts)
 
 module.exports = router;

@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import {
   StyleSheet,
   Text,
@@ -12,10 +13,30 @@ import {
 import Contact from '../components/contact'
 
 const ContactsScreen = () => {
+  const [error, setError] = useState(null)
+  const [contacts, setContacts] = useState(null)
 
-  const contacts = [
-    {name: 'bill', _id: '1'},{name:'Bob', _id:'2'}
-  ]
+
+  useEffect(() => {
+    console.log('Hello')
+      let response = fetch('http://localhost:8080/api/user/contacts/63dbf2dbe7c83add97179bf9', {
+      // headers: {
+      //   'Content-Type': 'application/json',
+      // },
+    }).then(response => response.json() )
+    .then(async data => {
+    //   console.log(data);
+    //   if(response.status !== 200) {
+    //     setError(response);
+    //     console.log('Error:', error);
+    //   } else {
+    //   console.log(data.emergencyContacts)
+    //   setContacts(data.emergencyContacts)
+    // }
+    console.log(data.emergencyContacts);
+    setContacts(data.emergencyContacts)
+    })
+  },[])
 
 
 
@@ -36,11 +57,11 @@ const ContactsScreen = () => {
       </View>
       <View style={styles.contactsList}>
         <SafeAreaView style={styles.contactsListContainer}>
-          <FlatList
+          {contacts && <FlatList
             data={contacts}
-            renderItem={({ item }) => <Contact name={item.name} />}
-            keyExtractor={(item) => item._id}
-          />
+            renderItem={({ item }) => <Contact item={item} />}
+            keyExtractor={(item) => item.id}
+          />}
         </SafeAreaView>
       </View>
     </View>
@@ -98,21 +119,6 @@ const styles = StyleSheet.create({
 })
 
 export default ContactsScreen
-
-const DATA = [
-  {
-    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    title: 'Contact A',
-  },
-  {
-    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-    title: 'Contact B',
-  },
-  {
-    id: '58694a0f-3da1-471f-bd96-145571e29d72',
-    title: 'Contact C',
-  },
-]
 
 
 
