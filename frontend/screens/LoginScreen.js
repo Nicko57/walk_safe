@@ -29,11 +29,11 @@ function LoginScreen({ navigation }) {
 
     let data = await response.json()
     console.log('token:', data.token);
-    // console.log('user_id:', data.user_id);
+    console.log('user_id:', data.user_id);
     
     if(response.status === 200) {
       AsyncStorage.setItem("token", data.token);
-      // AsyncStorage.setItem("user_id", data.user_id);
+      AsyncStorage.setItem("user_id", data.user_id);
       setEmail('');
       setPassword('');
       navigation.navigate('Auth');
