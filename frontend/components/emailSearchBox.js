@@ -6,7 +6,7 @@ const AutocompleteSearchBox = () => {
   const [emailList, setEmailList] = useState([]);
 
   useEffect(() => {
-    if (!searchTerm) {
+    if (!searchTerm || searchTerm.length < 3) {
       setEmailList([]);
       return;
     }
