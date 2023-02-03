@@ -14,6 +14,7 @@ const AutocompleteSearchBox = ({ userId, setUpdated }) => {
   const [emailList, setEmailList] = useState([])
   const [newContact, setNewContact] = useState(null)
   const [viewModal, setViewModal] = useState(false)
+  const [error, setError] = useState(null)
   useEffect(() => {
     if (!searchTerm || searchTerm.length < 3) {
       setEmailList([])
@@ -24,14 +25,10 @@ const AutocompleteSearchBox = ({ userId, setUpdated }) => {
     )
       .then((res) => res.json())
       .then((data) => {
-        console.log(data)
-        console.log(data.data)
-        console.log(data.emailList)
         setEmailList(data.data)
       })
 
       .catch((err) => console.error(err))
-    console.log(emailList)
   }, [searchTerm])
 
   const handleEmailPress = (email) => {
@@ -51,8 +48,12 @@ const AutocompleteSearchBox = ({ userId, setUpdated }) => {
         emergencyContactEmail: email,
         field: 'add',
       }),
-    }).then((response) => {
-      console.log(response)
+    }).then(response => response.json())
+    .then((data) => {
+      if (data.error) {
+        setError(data.error)
+        setTimeout(() => setError(false), 2000)
+      }
       setUpdated(true)
       setViewModal(false)
     })
@@ -68,13 +69,13 @@ const AutocompleteSearchBox = ({ userId, setUpdated }) => {
           <View style={styles.buttonContainer}>
             <View style={styles.button}>
               <Pressable onPress={() => handleAdd(newContact)}>
-                <Text>Yes</Text>
+                <Text style={styles.buttonText}>Yes</Text>
               </Pressable>
             </View>
 
             <View style={styles.button}>
               <Pressable onPress={() => setViewModal(false)}>
-                <Text>No</Text>
+                <Text style={styles.buttonText}>No</Text>
               </Pressable>
             
           </View>
@@ -85,6 +86,7 @@ const AutocompleteSearchBox = ({ userId, setUpdated }) => {
         onChangeText={setSearchTerm}
         placeholder="Search email"
       />
+      {error && <View><Text style={styles.errorText}>{error}</Text></View>}
       <View style={styles.suggestionList}>
       <FlatList
         data={emailList}
@@ -130,9 +132,18 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   button: {
+    margin: 10,
     flex: 1,
     height: 50,
     width: 50,
+    backgroundColor: 'purple',
+    borderRadius: 20,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  buttonText: {
+    fontWeight: 'bold',
+    color: 'white'
   },
   modalContent: {
     flex: 1,
@@ -146,6 +157,9 @@ const styles = StyleSheet.create({
   suggestionList: {
     zIndex: 2,
     position: 'relative'
+  },
+  errorText: {
+    color: 'red',
   }
 })
 export default AutocompleteSearchBox
