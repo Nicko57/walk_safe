@@ -6,6 +6,7 @@ import Map from "../screens/Map";
 import AuthContainer from "./AuthContainer";
 import SettingsContainer from "./SettingsContainer";
 import NotificationsScreen from "../screens/NotificationsScreen";
+import ContactsScreen from "../screens/ContactsScreen"
 
 const Tab = createBottomTabNavigator();
 
@@ -27,6 +28,8 @@ function NavbarContainer() {
             iconName = focused ? "person-circle" : "person-circle-outline";
           } else if (rn === "Settings") {
             iconName = focused ? "settings" : "settings-outline";
+          } else if (rn === "Contacts") {
+            iconName = focused ? "people-circle-outline" : "people-circle";
           }
 
           // You can return any component that you like here!
@@ -48,6 +51,11 @@ function NavbarContainer() {
         component={NotificationsScreen}
         options={{ title: "" }}
       />
+      <Tab.Screen 
+       name="Contacts" 
+       component={ContactsScreen} 
+       options={{ title: '' }}
+      />
       <Tab.Screen
         name="Auth"
         component={AuthContainer}
@@ -58,6 +66,7 @@ function NavbarContainer() {
         component={SettingsContainer}
         options={{ title: "" }}
       />
+
     </Tab.Navigator>
   );
 }
