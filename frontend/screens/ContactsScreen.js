@@ -50,7 +50,7 @@ const ContactsScreen = () => {
   return (
     <View style={styles.container}>
       <View style={styles.searchBar}>
-        <AutoCompleteSearchBox />
+        <AutoCompleteSearchBox userId={userId} setUpdated={setUpdated}/>
         {/* <TextInput
           style={styles.textInput}
           placeholder="Search by email..."
@@ -62,7 +62,7 @@ const ContactsScreen = () => {
         <SafeAreaView style={styles.contactsListContainer}>
           {contacts && <FlatList
             data={contacts}
-            renderItem={({ item }) => <Contact item={item} setUpdated={setUpdated}/>}
+            renderItem={({ item }) => <Contact userId={userId} item={item} setUpdated={setUpdated}/>}
             keyExtractor={(item) => item.id}
           />}
         </SafeAreaView>

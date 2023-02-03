@@ -97,7 +97,7 @@ const getEmergencyContacts = async (req, res) => {
 const getSearchResults = async (req, res) => {
   const query = req.params.query;
   console.log(query)
-  const emailList = await User.find({ email: { $regex: `.*${query}.*`, $options: 'i' } });
+  const emailList = await User.find({ email: { $regex: `.*${query}.*`, $options: 'i' } }).limit(3);
   console.log(emailList)
     res.status(200).json({data: emailList})
 }
