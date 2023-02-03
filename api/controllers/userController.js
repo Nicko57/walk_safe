@@ -50,7 +50,8 @@ const emergencyContact = async (req, res) => {
   if (field === 'add') {
     const user = await User.findOne({ _id: user_id })
     const currentContacts = user.emergencyContacts.toObject()
-    if (currentContacts.some(contact => contact.id === reqContact._id)) {
+    console.log(currentContacts)
+    if (!currentContacts.some(contact => contact.email === emergencyContactEmail)) {
       update = await User.findOneAndUpdate(
         { _id: user_id },
         { $push: { emergencyContacts: {id: reqContact._id, name: reqContact.name, email: reqContact.email} } },
