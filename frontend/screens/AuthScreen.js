@@ -5,7 +5,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 function HomeScreen({ navigation }) {
   const [token, setToken] = useState(null);
-  // const [userId, setUserId] = useState(null);
+  const [userId, setUserId] = useState(null);
 
   useEffect(() => {
     const retrieveToken = async () => {
@@ -14,11 +14,11 @@ function HomeScreen({ navigation }) {
     };
     retrieveToken();
 
-    // const retrieveUserId = async () => {
-    //   const value = await AsyncStorage.getItem('user_id');
-    //   setUserId(value);
-    // };
-    // retrieveUserId();
+    const retrieveUserId = async () => {
+      const value = await AsyncStorage.getItem('user_id');
+      setUserId(value);
+    };
+    retrieveUserId();
 
     const changedScreen = navigation.addListener("focus", () => {
       retrieveToken();
@@ -34,7 +34,6 @@ function HomeScreen({ navigation }) {
 
   return (
     <View style={styles.globalContainer}>
-      {/* {token && <Text>Logged in as {userId}</Text>} */}
       <Text style={styles.title}>Get Home Safe</Text>
       <View style={styles.homeButtonsContainer}>
         {!token && (
