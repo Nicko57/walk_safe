@@ -43,8 +43,12 @@ const signupUser = async (req, res) => {
 const emergencyContact = async (req, res) => {
   const { user_id, emergencyContactEmail, field } = req.body
   const reqContact = await User.findOne({ email: emergencyContactEmail })
+  console.log(reqContact._id.toString(), user_id)
   if (!reqContact) {
     res.status(400).json({error: 'This user does not exist'})
+    return
+  } else if (user_id === reqContact._id.toString()) {
+    res.status(400).json({error: "You can't add yourself as an emergency contact"})
     return
   } else {
   if (field === 'add') {
