@@ -11,6 +11,7 @@ import {
   Button,
 } from 'react-native'
 import Contact from '../components/contact'
+import AutoCompleteSearchBox from '../components/emailSearchBox'
 
 const ContactsScreen = () => {
   const [error, setError] = useState(null)
@@ -36,6 +37,7 @@ const ContactsScreen = () => {
   return (
     <View style={styles.container}>
       <View style={styles.searchBar}>
+        <AutoCompleteSearchBox />
         <TextInput
           style={styles.textInput}
           placeholder="Search by email..."

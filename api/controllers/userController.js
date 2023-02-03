@@ -90,6 +90,14 @@ const getEmergencyContacts = async (req, res) => {
   }
 }
 
-module.exports = { signupUser, loginUser, emergencyContact, getEmergencyContacts }
+
+const getSearchResults = async (req, res) => {
+  const query = req.params.query;
+  console.log(query)
+  const emailList = await User.find({ email: { $regex: `.*${query}.*` } })
+    console.log(emailList)
+    res.status(200).json({data: emailList})
+}
+module.exports = { signupUser, loginUser, emergencyContact, getEmergencyContacts, getSearchResults }
 
 

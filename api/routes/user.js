@@ -1,7 +1,7 @@
 const express = require("express");
 
 // controller functions
-const { loginUser, signupUser, emergencyContact, getEmergencyContacts} = require("../controllers/userController");
+const { loginUser, signupUser, emergencyContact, getEmergencyContacts, getSearchResults} = require("../controllers/userController");
 
 const router = express.Router();
 
@@ -16,5 +16,8 @@ router.patch("/contact", emergencyContact);
 
 // get emergency contacts route
 router.get("/contacts/:id", getEmergencyContacts)
+
+
+router.get("/contacts/search/:query", getSearchResults)
 
 module.exports = router;
