@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react'
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 import {
   StyleSheet,
   Text,
@@ -17,9 +19,20 @@ const ContactsScreen = () => {
   const [error, setError] = useState(null)
   const [contacts, setContacts] = useState(null)
   const [updated, setUpdated] = useState(null)
+  const [userId, setUserId] = useState(null)
+
 
   useEffect(() => {
-      let response = fetch('http://localhost:8080/api/user/contacts/63dbf2dbe7c83add97179bf9', {
+    const retrieveUserId = async () => {
+      const value = await AsyncStorage.getItem('user_id');
+      setUserId(value);
+      console.log(value)
+    };
+    retrieveUserId();
+  },[])
+
+  useEffect(() => {
+      let response = fetch('http://localhost:8080/api/user/contacts/' + userId, {
     }).then(response => response.json() )
     .then(async data => {
     setUpdated(false)
@@ -38,12 +51,12 @@ const ContactsScreen = () => {
     <View style={styles.container}>
       <View style={styles.searchBar}>
         <AutoCompleteSearchBox />
-        <TextInput
+        {/* <TextInput
           style={styles.textInput}
           placeholder="Search by email..."
           // onChangeText={contactInputHandler}
           // value={contactEmail}
-        />
+        /> */}
       </View>
       <View style={styles.contactsList}>
         <SafeAreaView style={styles.contactsListContainer}>
@@ -86,15 +99,6 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 32,
-  },
-  textInput: {
-    borderWidth: 1,
-    borderColor: '#e4d0ff',
-    backgroundColor: '#ADDEF3',
-    color: '#000000',
-    borderRadius: 8,
-    width: '75%',
-    padding: 16,
   },
   contactsListContainer: {
     flex: 1,

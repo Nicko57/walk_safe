@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, TextInput, FlatList, Text } from 'react-native';
+import { View, TextInput, FlatList, Text, StyleSheet } from 'react-native';
 
 const AutocompleteSearchBox = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -10,16 +10,6 @@ const AutocompleteSearchBox = () => {
       setEmailList([]);
       return;
     }
-  //   useEffect(() => {
-  //     let response = fetch(, {
-  //   }).then(response => response.json() )
-  //   .then(async data => {
-  //   setUpdated(false)
-  //   setContacts(data.emergencyContacts)
-  //   })
-  // },[updated])
-
-      console.log(searchTerm)
       let response = fetch(`http://localhost:8080/api/user/contacts/search/${searchTerm}`)
       .then(res => res.json()).then(data => {
 
@@ -33,21 +23,44 @@ const AutocompleteSearchBox = () => {
   }, [searchTerm]);
 
   return (
-    <View>
+    <View style={styles.searchBar}>
       <TextInput
+      style={styles.textInput}
         value={searchTerm}
         onChangeText={setSearchTerm}
         placeholder="Search email"
       />
-      {emailList.length > 0 && <FlatList
+      <FlatList
         data={emailList}
         keyExtractor={item => item._id}
         renderItem={({ item }) => (
           <Text>{item.email}</Text>
         )}
-      />}
+      />
     </View>
   );
 };
 
+
+
+const styles = StyleSheet.create({
+  textInput: {
+    borderWidth: 1,
+    borderColor: '#e4d0ff',
+    backgroundColor: '#ADDEF3',
+    color: '#000000',
+    borderRadius: 8,
+    width: '75%',
+    padding: 16,
+  },
+  searchBar: {
+    padding: 10,
+    fontSize: 22,
+    fontWeight: '600',
+    color: '#ffffff',
+    flex: 1,
+    width: 450,
+    alignItems: 'center',
+  }
+})
 export default AutocompleteSearchBox;
