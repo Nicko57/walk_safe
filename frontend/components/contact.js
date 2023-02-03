@@ -29,7 +29,7 @@ const Contact = ({ item, setUpdated, userId }) => {
         <Text style={styles.contactName}>{item.name}</Text>
         <Text>{item.email}</Text>
       </View>
-      <View style={styles.deleteButton}>
+      <View>
         <Pressable onPress={() => handleDelete(item.email)}>
           <Ionicons name="trash-outline" style={styles.deleteButton} />
         </Pressable>

@@ -8,6 +8,7 @@ import {
   Pressable,
   Modal,
 } from 'react-native'
+import Ionicons from 'react-native-vector-icons/Ionicons'
 
 const AutocompleteSearchBox = ({ userId, setUpdated }) => {
   const [searchTerm, setSearchTerm] = useState('')
@@ -48,55 +49,60 @@ const AutocompleteSearchBox = ({ userId, setUpdated }) => {
         emergencyContactEmail: email,
         field: 'add',
       }),
-    }).then(response => response.json())
-    .then((data) => {
-      if (data.error) {
-        setError(data.error)
-        setTimeout(() => setError(false), 2000)
-      }
-      setUpdated(true)
-      setViewModal(false)
     })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.error) {
+          setError(data.error)
+          setTimeout(() => setError(false), 2000)
+        }
+        setUpdated(true)
+        setViewModal(false)
+      })
   }
 
   return (
     <View style={styles.searchBar}>
       <View>
-      <Modal visible={viewModal}>
-        <View style={styles.modalContent}>
-          <Text>Add {newContact} as an emergency contact?</Text>
-
-          <View style={styles.buttonContainer}>
-            <View style={styles.button}>
-              <Pressable onPress={() => handleAdd(newContact)}>
-                <Text style={styles.buttonText}>Yes</Text>
-              </Pressable>
+        <Modal visible={viewModal}>
+          <View style={styles.modalContent}>
+            <View style={styles.modalInnerContent}>
+              <Text style={styles.modalText}>
+                Add {newContact} as an emergency contact?
+              </Text>
+              <View style={styles.buttonContainer}>
+                <Pressable onPress={() => handleAdd(newContact)}>
+                  <Ionicons name="thumbs-up" style={styles.upButton} />
+                </Pressable>
+                <Pressable onPress={() => setViewModal(false)}>
+                  <Ionicons name="thumbs-down" style={styles.downButton} />
+                </Pressable>
+              </View>
             </View>
-
-            <View style={styles.button}>
-              <Pressable onPress={() => setViewModal(false)}>
-                <Text style={styles.buttonText}>No</Text>
-              </Pressable>
-            
           </View>
-        </View></View></Modal></View>
+        </Modal>
+      </View>
       <TextInput
         style={styles.textInput}
         value={searchTerm}
         onChangeText={setSearchTerm}
         placeholder="Search email"
       />
-      {error && <View><Text style={styles.errorText}>{error}</Text></View>}
+      {error && (
+        <View>
+          <Text style={styles.errorText}>{error}</Text>
+        </View>
+      )}
       <View style={styles.suggestionList}>
-      <FlatList
-        data={emailList}
-        keyExtractor={(item) => item._id}
-        renderItem={({ item }) => (
-          <Pressable onPress={() => handleEmailPress(item.email)}>
-            <Text>{item.email}</Text>
-          </Pressable>
-        )}
-      />
+        <FlatList
+          data={emailList}
+          keyExtractor={(item) => item._id}
+          renderItem={({ item }) => (
+            <Pressable onPress={() => handleEmailPress(item.email)}>
+              <Text>{item.email}</Text>
+            </Pressable>
+          )}
+        />
       </View>
     </View>
   )
@@ -130,20 +136,19 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     flexDirection: 'row',
+    justifyContent: 'space-around',
   },
-  button: {
-    margin: 10,
-    flex: 1,
-    height: 50,
-    width: 50,
-    backgroundColor: 'purple',
-    borderRadius: 20,
-    alignItems: 'center',
-    justifyContent: 'center'
+  upButton: {
+    fontSize: '100px',
+    color: 'green',
+  },
+  downButton: {
+    fontSize: '100px',
+    color: 'red',
   },
   buttonText: {
     fontWeight: 'bold',
-    color: 'white'
+    color: 'blue',
   },
   modalContent: {
     flex: 1,
@@ -152,14 +157,24 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     padding: 20,
     borderRadius: 10,
-    marginTop: 100
+    marginTop: 100,
   },
   suggestionList: {
     zIndex: 2,
-    position: 'relative'
+    position: 'relative',
   },
   errorText: {
     color: 'red',
-  }
+  },
+  modalText: {
+    fontSize: 25,
+    fontWeight: 'bold',
+    color: '#525252',
+  },
+  modalInnerContent: {
+    backgroundColor: '#64C5F0',
+    borderRadius: 10,
+    padding: 10,
+  },
 })
 export default AutocompleteSearchBox
