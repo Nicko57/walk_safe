@@ -2,6 +2,7 @@ import "react-native-gesture-handler";
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
+import registerNNPushToken from 'native-notify';
 
 // screens
 import SplashScreen from "./screens/SplashScreen";
@@ -29,6 +30,7 @@ const Auth = () => {
 };
 
 const App = () => {
+  registerNNPushToken(6193, 'rWR1WMqaI8HcWYDUZQFStS');
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="SplashScreen">
