@@ -75,65 +75,78 @@ const App = () => {
   ];
 
   return (
-    <ScrollView>
-      <View style={styles.container}>
-        <View style={styles.titleContainer}>
-          <Text style={styles.titleText}>Notifications</Text>
-        </View>
-        <Swipelist
-          data={data}
-          renderRightItem={(data, index) => (
-            <View key={index} style={styles.innerContainer}>
-              <View style={styles.textContainer}>
-                <Text style={styles.notificationTitle}>{data.title}</Text>
-                <Text style={styles.notificationMessage}>{data.message}</Text>
-              </View>
-              <View style={styles.timeContainer}>
-                <Text style={styles.notificationTime}>
-                  {moment
-                    .utc(data.timeSent)
-                    .local()
-                    .startOf("seconds")
-                    .fromNow()}
-                </Text>
-              </View>
-            </View>
-          )}
-          renderHiddenItem={(data, index) => (
-            <View style={{ flexDirection: "row" }}>
-              <TouchableOpacity
-                style={styles.rightAction}
-                onPress={() => {
-                  // delete notification
-                }}
-              >
-                <Text style={styles.rightActionText}>Delete</Text>
-              </TouchableOpacity>
-            </View>
-          )}
-          rightOpenValue={200}
-        />
+    <View>
+      <View style={styles.titleContainer}>
+        <Text style={styles.titleText}>Notifications</Text>
       </View>
-    </ScrollView>
+      <ScrollView>
+        <View style={styles.scrollViewContainer}>
+          <Swipelist
+            data={data}
+            renderRightItem={(data, index) => (
+              <View key={index} style={styles.notificationContainer}>
+                <View style={styles.textContainer}>
+                  <Text style={styles.notificationTitle}>{data.title}</Text>
+                  <Text style={styles.notificationMessage}>{data.message}</Text>
+                </View>
+                <View style={styles.timeContainer}>
+                  <Text style={styles.notificationTime}>
+                    {moment
+                      .utc(data.timeSent)
+                      .local()
+                      .startOf("seconds")
+                      .fromNow()}
+                  </Text>
+                </View>
+              </View>
+            )}
+            renderHiddenItem={(data, index) => (
+              <View style={{ flexDirection: "row" }}>
+                <TouchableOpacity
+                  style={styles.rightAction}
+                  onPress={() => {
+                    // delete notification
+                  }}
+                >
+                  <Text style={styles.rightActionText}>Delete</Text>
+                </TouchableOpacity>
+              </View>
+            )}
+            rightOpenValue={200}
+          />
+        </View>
+      </ScrollView>
+    </View>
   );
 };
 
 export default App;
 
 const styles = StyleSheet.create({
-  container: {
-    marginTop: 50,
-  },
   titleContainer: {
+    position: 'absolute',
+    alignContent: 'center',
+    justifyContent: 'center',
+    width: '100%',
+    paddingTop: 50,
     borderBottomWidth: 1,
     borderColor: "#64C5F0",
+    backgroundColor: 'white',
+    zIndex: 1,
   },
   titleText: {
+    alignContent: 'center',
+    justifyContent: 'center',
     textAlign: "center",
     fontSize: 20,
+    fontWeight: '500',
     margin: 16,
   },
-  innerContainer: {
+  scrollViewContainer: {
+    marginTop: 106,
+    zIndex: 0,
+  },
+  notificationContainer: {
     height: 80,
     flexDirection: "row",
     alignItems: "center",
