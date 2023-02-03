@@ -77,7 +77,9 @@ const App = () => {
   return (
     <ScrollView>
       <View style={styles.container}>
-        <Text style={styles.title}>Notifications</Text>
+        <View style={styles.titleContainer}>
+          <Text style={styles.titleText}>Notifications</Text>
+        </View>
         <Swipelist
           data={data}
           renderRightItem={(data, index) => (
@@ -122,7 +124,11 @@ const styles = StyleSheet.create({
   container: {
     marginTop: 50,
   },
-  title: {
+  titleContainer: {
+    borderBottomWidth: 1,
+    borderColor: "#64C5F0",
+  },
+  titleText: {
     textAlign: "center",
     fontSize: 20,
     margin: 16,
@@ -131,20 +137,19 @@ const styles = StyleSheet.create({
     height: 80,
     flexDirection: "row",
     alignItems: "center",
-    // margingVertical: 10,
     backgroundColor: "#fff",
     justifyContent: "center",
     paddingHorizontal: 24,
-    borderWidth: 1,
+    borderBottomWidth: 1,
     borderColor: "#64C5F0",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.85,
-    elevation: 5,
+    // shadowColor: "#000",
+    // shadowOffset: {
+    //   width: 0,
+    //   height: 2,
+    // },
+    // shadowOpacity: 0.25,
+    // shadowRadius: 3.85,
+    // elevation: 5,
   },
   textContainer: {
     marginRight: 'auto',
@@ -156,10 +161,12 @@ const styles = StyleSheet.create({
   },
   notificationTitle: {
     paddingVertical: 4,
+    fontSize: 16,
     fontWeight: "600",
   },
   notificationMessage: {
     paddingVertical: 4,
+    fontSize: 16,
   },
   notificationTime: {
     float: "right",
@@ -171,14 +178,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flex: 1,
     justifyContent: "center",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.85,
-    elevation: 5,
+    // shadowColor: "#000",
+    // shadowOffset: {
+    //   width: 0,
+    //   height: 2,
+    // },
+    // shadowOpacity: 0.25,
+    // shadowRadius: 3.85,
+    // elevation: 5,
   },
   rightActionText: {
     color: "white",
