@@ -25,7 +25,7 @@ const loginUser = async (req, res) => {
 
 // signup a user
 const signupUser = async (req, res) => {
-  const {name, email, password} = req.body
+  const { name, email, password } = req.body
 
   try {
     const user = await User.signup(name, email, password)
@@ -33,12 +33,15 @@ const signupUser = async (req, res) => {
     // create a token
     const token = createToken(user._id)
 
+    const userWithId = await User.findOne({email: email})
+
     // if 'email' is changed to 'user_id: user._id', email is still passed in the response, not user_id
-    res.status(200).json({email, token})
+    res.status(200).json({user_id: userWithId._id, token})
   } catch (error) {
-    res.status(400).json({error: error.message})
+    res.status(400).json({ error: error.message })
   }
 }
+
   // get a user
   const getUser = async (req, res) => {
     const user_id = req.params
