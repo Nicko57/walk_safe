@@ -20,6 +20,9 @@ const userSchema = new Schema({
   },
   emergencyContacts: {
     type: Array
+  },
+  notifications: {
+    type: Array
   }
 });
 
