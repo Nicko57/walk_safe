@@ -11,6 +11,7 @@ function SettingsScreen({ navigation }) {
   const [retypedPassword, setRetypedPassword] = useState(null);
   const [error, setError] = useState(null);
   const [changePasswordModalVisible, setChangePasswordModalVisible] = useState(false);
+  const [deleteAccountModalVisible, setDeleteAccountModalVisible] = useState(false);
   
   const retrieveUserId = async () => {
     const value = await AsyncStorage.getItem('user_id');
@@ -80,6 +81,11 @@ function SettingsScreen({ navigation }) {
     navigation.navigate('Auth');
   }
 
+  const handleDeleteAccountModal = () => {
+    setError(null);
+    setDeleteAccountModalVisible(!deleteAccountModalVisible);
+  }
+
   const handleDeleteAccount = async () => {
     // Implement confirmation screen to make sure user doesn't delete their account
     // by accident.
@@ -99,6 +105,7 @@ function SettingsScreen({ navigation }) {
 
       if(response.status === 200) {
         console.log(data.message);
+        handleDeleteAccountModal();
       } else {
         console.log('Delete unsuccessful');
       }
@@ -141,6 +148,30 @@ function SettingsScreen({ navigation }) {
           </View>
         </Modal>
       }
+      {deleteAccountModalVisible &&
+        <Modal>
+          <View style={styles.changePasswordModal}>
+            <Pressable style={styles.closeButton} onPress={handleDeleteAccountModal}>
+              <Ionicons name={'close'} size={36} color={'white'} />
+            </Pressable>
+            <View style={styles.modalMainContents}>
+              <Text style={styles.passwordLabel}>
+                Are you sure you want to delete your account?
+              </Text>
+              <View style={styles.confirmButtonContainer}>
+                <Pressable style={styles.confirmButton} onPress={handleDeleteAccount}>
+                  <Text style={styles.confirmButtonText}>Yes</Text>
+                </Pressable>
+              </View>
+              <View style={styles.confirmButtonContainer}>
+                <Pressable style={styles.confirmButton} onPress={handleDeleteAccountModal}>
+                  <Text style={styles.confirmButtonText}>No</Text>
+                </Pressable>
+              </View>
+            </View>
+          </View>
+        </Modal>
+      }
       <View style={styles.titleContainer}>
         <Text style={styles.titleText}>Settings</Text>
       </View>
@@ -160,7 +191,7 @@ function SettingsScreen({ navigation }) {
       <Pressable style={styles.button} onPress={handleLogout}>
         <Text style={styles.buttonText}>Log out</Text>
       </Pressable>
-      <Pressable onPress={handleDeleteAccount}>
+      <Pressable onPress={handleDeleteAccountModal}>
         <Text style={styles.deleteAccountText}>
           Delete Account
         </Text>
