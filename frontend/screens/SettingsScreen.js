@@ -37,12 +37,17 @@ function SettingsScreen({ navigation }) {
   }
 
   const handleChangePassword = async () => {      
-    if (newPassword !== retypedPassword) {
+    // checks for errors not handled in backend (maybe move these to backend)
+    if (newPassword === null) {
+      setError('All fields must be filled');
+      console.log(error);
+      return;
+    } else if (newPassword !== retypedPassword) {
       setError('Passwords do not match');
       console.log(error);
       return;
     }
-    
+
     setError(null);
 
     let response = await fetch(`http://localhost:8080/api/user/${userId}`, {
