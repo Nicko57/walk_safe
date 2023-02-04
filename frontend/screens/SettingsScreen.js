@@ -39,7 +39,7 @@ function SettingsScreen({ navigation }) {
   }
 
   const checkPasswordsAreValid = () => {
-    // checks for errors not handled in backend (maybe move these to backend)
+    // checks for errors not handled in backend (maybe move first one to backend)
     if (newPassword === null) {
       setError('All fields must be filled');
       console.log(error);
@@ -87,8 +87,6 @@ function SettingsScreen({ navigation }) {
   }
 
   const handleDeleteAccount = async () => {
-    // Implement confirmation screen to make sure user doesn't delete their account
-    // by accident.
     handleLogout();
     setError(null);
 
