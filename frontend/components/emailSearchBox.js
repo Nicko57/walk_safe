@@ -20,7 +20,7 @@ const AutocompleteSearchBox = () => {
   // },[updated])
 
       console.log(searchTerm)
-      let response = fetch(`http://localhost:8080/api/user/contacts/search/${searchTerm}`)
+      let response = fetch(`http://192.168.1.110:8080/api/user/contacts/search/${searchTerm}`)
       .then(res => res.json()).then(data => {
 
         console.log(data) 

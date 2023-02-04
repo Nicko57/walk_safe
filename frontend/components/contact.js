@@ -9,7 +9,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 const Contact = ({ item, setUpdated }) => {
   const handleDelete = (email) => {
     console.log(email)
-    fetch(`http://localhost:8080/api/user/contact`, {
+    fetch(`http://192.168.1.110:8080/api/user/contact`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
