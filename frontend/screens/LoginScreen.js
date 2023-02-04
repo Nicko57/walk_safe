@@ -20,7 +20,7 @@ function LoginScreen({ navigation }) {
   const handleLogin = async () => {
     setError(null);
 
-    let response = await fetch("http://localhost:8080/api/user/login", {
+    let response = await fetch("http://192.168.1.110:8080/api/user/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -37,7 +37,7 @@ function LoginScreen({ navigation }) {
       AsyncStorage.setItem("user_id", data.user_id);
       setEmail("");
       setPassword("");
-      // await registerIndieID(`${data.user_id}`, 6193, "rWR1WMqaI8HcWYDUZQFStS");
+      await registerIndieID(`${data.user_id}`, 6193, "rWR1WMqaI8HcWYDUZQFStS");
       // await fetch("https://app.nativenotify.com/api/indie/notification", {
       //   method: "POST",
       //   headers: {
