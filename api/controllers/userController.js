@@ -130,7 +130,7 @@ const addNotification = async (req, res) => {
   if (!receiver) {
     return res.status(400).json({ error: "User not found" });
   }
-  receiver.notifications.push(notification);
+  receiver.notifications.unshift(notification);
   await receiver.save();
   res.status(200).json({
     message: "Notification added!",
