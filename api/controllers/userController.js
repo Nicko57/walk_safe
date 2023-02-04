@@ -146,21 +146,19 @@ const deleteNotification = async (req, res) => {
   }
   user.notifications.splice(notification_index, 1);
   await user.save();
-  res
-    .status(200)
-    .json({
-      message: "Notification deleted",
-      updatedNotifications: user.notifications,
-    });
+  res.status(200).json({
+    message: "Notification deleted",
+    updatedNotifications: user.notifications,
+  });
 };
 
 const getNotifications = async (req, res) => {
-  const user_id = req.params.id;
+  const { user_id } = req.params;
   try {
-    const user = await User.findById(user_id);
-    res.status(200).json({ emergencyContacts: user.emergencyContacts });
+    const user = await User.findOne({ _id: user_id });
+    res.status(200).json({ notifications: user.notifications });
   } catch (error) {
-    res.status(404).json({ error: "This user no longer exists" });
+    res.status(404).json({ error: "User not found" });
   }
 };
 
