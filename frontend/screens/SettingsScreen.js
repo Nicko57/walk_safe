@@ -110,7 +110,6 @@ function SettingsScreen({ navigation }) {
                 onChangeText={retypedPasswordInputHandler}
                 value={retypedPassword}
               />
-              {/* Add a conditional error div here for if there is an error when changing password, e.g., doesn't match or not strong enough */}
               {error &&
                 <View style={styles.errorContainer}>
                   <Text style={styles.errorText}>{error}</Text>
