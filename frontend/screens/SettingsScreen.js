@@ -99,6 +99,9 @@ function SettingsScreen({ navigation }) {
           </View>
         </Modal>
       }
+      <View style={styles.titleContainer}>
+        <Text style={styles.titleText}>Settings</Text>
+      </View>
       <Text style={styles.name}>Will Jones</Text>
       <View style={styles.aboutUsContainer}>
         <Text style={styles.aboutUsText}>About us:</Text>
@@ -125,9 +128,66 @@ const styles = StyleSheet.create({
   globalContainer: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
-    paddingBottom: 60,
     backgroundColor: "#64C5F0",
+  },
+  titleContainer: {
+    alignContent: 'center',
+    justifyContent: 'center',
+    width: '100%',
+    paddingTop: 50,
+    borderBottomWidth: 1,
+    borderColor: "#64C5F0",
+    backgroundColor: 'white',
+  },
+  titleText: {
+    alignContent: 'center',
+    justifyContent: 'center',
+    textAlign: "center",
+    fontSize: 20,
+    fontWeight: '500',
+    margin: 16,
+  },
+  name: {
+    padding: 10,
+    fontSize: 38,
+    fontWeight: '600',
+    color: '#ffffff',
+  },
+  aboutUsContainer: {
+    borderWidth: 1,
+    borderColor: '#000000',
+    backgroundColor: '#ffffff',
+    paddingVertical: 140,
+    paddingBottom: 155,
+    marginBottom: 10,
+    paddingHorizontal: 120,
+    borderRadius: 30,
+    justifyContent: 'space-between',
+  },
+  aboutUsText: {
+    width: '100%',
+    textAlign: 'right'
+  },
+  changePasswordButton: {
+    width: 250,
+    marginVertical: 6,
+    marginHorizontal: 12,
+    backgroundColor: 'red',
+    borderRadius: 8,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  logoutButton: {
+    width: 250,
+    marginVertical: 6,
+    marginHorizontal: 12,
+    backgroundColor: '#348EC5',
+    borderRadius: 8,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  deleteAccountText: {
+    color: 'red',
   },
   changePasswordModal: {
     flex: 1,
@@ -180,46 +240,4 @@ const styles = StyleSheet.create({
   confirmButtonText: {
     color: 'white',
   },
-  name: {
-    padding: 10,
-    fontSize: 38,
-    fontWeight: '600',
-    color: '#ffffff',
-  },
-  aboutUsContainer: {
-    borderWidth: 1,
-    borderColor: '#000000',
-    backgroundColor: '#ffffff',
-    paddingVertical: 140,
-    paddingBottom: 155,
-    marginBottom: 10,
-    paddingHorizontal: 120,
-    borderRadius: 30,
-    justifyContent: 'space-between',
-  },
-  aboutUsText: {
-    width: '100%',
-    textAlign: 'right'
-  },
-  changePasswordButton: {
-    width: 250,
-    marginVertical: 6,
-    marginHorizontal: 12,
-    backgroundColor: 'red',
-    borderRadius: 8,
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  logoutButton: {
-    width: 250,
-    marginVertical: 6,
-    marginHorizontal: 12,
-    backgroundColor: '#348EC5',
-    borderRadius: 8,
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  deleteAccountText: {
-    color: 'red',
-  }
 });
