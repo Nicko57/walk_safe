@@ -1,8 +1,9 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, Pressable, Button, Modal } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { TextInput } from 'react-native-gesture-handler';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import Ionicons from "react-native-vector-icons/Ionicons";
 
 function SettingsScreen({ navigation }) {
   const [userId, setUserId] = useState(null);
@@ -78,7 +79,7 @@ function SettingsScreen({ navigation }) {
         <Modal>
           <View style={styles.changePasswordModal}>
             <Pressable style={styles.closeButton} onPress={handleChangePasswordModal}>
-              <Text style={styles.confirmButtonText}>Close</Text>
+              <Ionicons name={'close'} size={36} color={'white'} />
             </Pressable>
             <View style={styles.modalMainContents}>
               <Text style={styles.passwordLabel}>New password</Text>
