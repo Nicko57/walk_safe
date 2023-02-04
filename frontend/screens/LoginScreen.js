@@ -38,19 +38,6 @@ function LoginScreen({ navigation }) {
       setEmail("");
       setPassword("");
       await registerIndieID(`${data.user_id}`, 6193, "rWR1WMqaI8HcWYDUZQFStS");
-      // await fetch("https://app.nativenotify.com/api/indie/notification", {
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      //   body: JSON.stringify({
-      //     subID: `${data.user_id}`,
-      //     appId: 6193,
-      //     appToken: "rWR1WMqaI8HcWYDUZQFStS",
-      //     title: "You've logged in",
-      //     message: "Nice one",
-      //   }),
-      // });
       navigation.replace("NavbarContainer");
 
     } else {
