@@ -19,6 +19,7 @@ function SettingsScreen({ navigation }) {
   retrieveUserId();
 
   const handleChangePasswordModal = () => {
+    setNewPassword(null);
     setChangePasswordModalVisible(!changePasswordModalVisible);
   }
 
@@ -82,15 +83,15 @@ function SettingsScreen({ navigation }) {
               <Ionicons name={'close'} size={36} color={'white'} />
             </Pressable>
             <View style={styles.modalMainContents}>
-              <Text style={styles.passwordLabel}>New password</Text>
+              <Text style={styles.passwordLabel}>New password:</Text>
               <TextInput
                 style={styles.passwordInput}
                 secureTextEntry={true}
                 onChangeText={passwordInputHandler}
                 value={newPassword}
               ></TextInput>
-              {/* <Text style={styles.passwordLabel}>Re-type password</Text>
-              <TextInput style={styles.passwordInput} secureTextEntry={true}></TextInput> */}
+              <Text style={styles.passwordLabel}>Re-type password:</Text>
+              <TextInput style={styles.passwordInput} secureTextEntry={true}></TextInput>
               <View style={styles.confirmButtonContainer}>
                 <Pressable style={styles.confirmButton} onPress={handleChangePassword}>
                   <Text style={styles.confirmButtonText}>Confirm</Text>
@@ -218,26 +219,28 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: '500',
     color: 'white',
-    marginVertical: 10
+    marginBottom: 10,
+    alignSelf: 'center',
   },
   passwordInput: {
     backgroundColor: 'white',
+    borderWidth: 1,
+    borderColor: '#dddddd',
     borderRadius: 8,
     height: 40,
     width: 200,
-    marginVertical: 10,
+    paddingHorizontal: 10,
+    marginBottom: 30,
     fontSize: 20,
-    type: 'password',
   },
   confirmButtonContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
   },
   confirmButton: {
-    height: 40,
+    height: 44,
     width: 120,
-    marginVertical: 24,
-    marginHorizontal: 12,
+    marginTop: 10,
     backgroundColor: '#348EC5',
     borderRadius: 8,
     alignItems: 'center',
@@ -245,5 +248,6 @@ const styles = StyleSheet.create({
   },
   confirmButtonText: {
     color: 'white',
+    fontSize: 16,
   },
 });
