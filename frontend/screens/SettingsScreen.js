@@ -103,7 +103,7 @@ function SettingsScreen({ navigation }) {
         <Text style={styles.titleText}>Settings</Text>
       </View>
       <View style={styles.nameContainer}>
-        <Text style={styles.nameText}>Will Jones</Text>
+        <Text style={styles.nameText}>Get Home Safe</Text>
       </View>
       <View style={styles.aboutUsContainer}>
         <Text style={styles.aboutUsTitle}>About the app</Text>
@@ -111,12 +111,12 @@ function SettingsScreen({ navigation }) {
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Congue mauris rhoncus aenean vel elit scelerisque mauris. Risus nec feugiat in fermentum posuere urna. Id nibh tortor id aliquet lectus proin. Nisl purus in mollis nunc sed id. Neque vitae tempus quam pellentesque nec nam aliquam.
         </Text>
       </View>
-      <View style={styles.changePasswordButton}>
-        <Button title="Change Password" onPress={handleChangePasswordModal}></Button>
-      </View>
-      <View style={styles.logoutButton}>
-        <Button title="Logout" onPress={handleLogout}></Button>
-      </View>
+      <Pressable style={styles.button} onPress={handleChangePasswordModal}>
+        <Text style={styles.buttonText}>Change password</Text>
+      </Pressable>
+      <Pressable style={styles.button} onPress={handleLogout}>
+        <Text style={styles.buttonText}>Log out</Text>
+      </Pressable>
       <Pressable>
         <Text style={styles.deleteAccountText}>
           Delete Account
@@ -133,6 +133,8 @@ const styles = StyleSheet.create({
   globalContainer: {
     flex: 1,
     alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingBottom: 50,
     backgroundColor: "#64C5F0",
   },
   titleContainer: {
@@ -153,7 +155,6 @@ const styles = StyleSheet.create({
     margin: 16,
   },
   nameContainer: {
-    marginVertical: 30
   },
   nameText: {
     fontSize: 38,
@@ -163,7 +164,6 @@ const styles = StyleSheet.create({
   aboutUsContainer: {
     height: 300,
     width: 300,
-    marginBottom: 30,
     padding: 20,
     borderWidth: 1,
     borderColor: '#dddddd',
@@ -171,37 +171,33 @@ const styles = StyleSheet.create({
     borderRadius: 30,
   },
   aboutUsTitle: {
+    alignSelf: 'center',
     fontSize: 20,
     marginBottom: 14,
   },
   aboutUsText: {
     fontSize: 16
   },
-  changePasswordButton: {
-    width: 250,
-    marginVertical: 6,
-    marginHorizontal: 12,
-    backgroundColor: 'red',
-    borderRadius: 8,
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  logoutButton: {
-    width: 250,
-    marginVertical: 6,
-    marginHorizontal: 12,
+  button: {
+    width: 300,
+    height: 44,
     backgroundColor: '#348EC5',
     borderRadius: 8,
     alignItems: 'center',
     justifyContent: 'center'
   },
+  buttonText: {
+    color: 'white',
+    fontSize: 16,
+  },
   deleteAccountText: {
     color: 'red',
+    fontSize: 16,
   },
   changePasswordModal: {
     flex: 1,
     marginBottom: 100,
-    marginTop: 103,
+    marginTop: 106,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: "#64C5F0",
