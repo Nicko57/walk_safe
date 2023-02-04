@@ -8,14 +8,14 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 function SettingsScreen({ navigation }) {
   const [userId, setUserId] = useState(null);
   const [newPassword, setNewPassword] = useState(null);
-  // add one for reTypedPassword
+  const [retypedPassword, setRetypedPassword] = useState(null);
   const [error, setError] = useState(null);
   const [changePasswordModalVisible, setChangePasswordModalVisible] = useState(false);
   
   const retrieveUserId = async () => {
     const value = await AsyncStorage.getItem('user_id');
     setUserId(value);
-    console.log('userId: ', value);
+    // console.log('userId: ', value);
   };
   // retrieveUserId() currently runs every time the user types a character in the
   // new password field - probably best to put this function call in a useEffect
@@ -24,21 +24,26 @@ function SettingsScreen({ navigation }) {
 
   const handleChangePasswordModal = () => {
     setNewPassword(null);
-    // set the retyped password to null
+    setRetypedPassword(null);
     setChangePasswordModalVisible(!changePasswordModalVisible);
   }
 
-  const passwordInputHandler = (enteredPassword) => {
-    setNewPassword(enteredPassword);
+  const passwordInputHandler = (enteredText) => {
+    setNewPassword(enteredText);
   }
-  // add a similar function for retypedPassword
 
-  const handleChangePassword = async () => {
-  // Implement 'confirm password' so user has to enter their new password twice.
-      // Add an error check in here for this, which will set the error to e.g.,
-      // 'Passwords do not match'
+  const retypedPasswordInputHandler = (enteredText) => {
+    setRetypedPassword(enteredText);
+  }
+
+  const handleChangePassword = async () => {      
+    if (newPassword !== retypedPassword) {
+      setError('Passwords do not match');
+      console.log(error);
+      return;
+    }
+    
     setError(null);
-    console.log('userId:', userId)
 
     let response = await fetch(`http://localhost:8080/api/user/${userId}`, {
       method: 'PATCH',
@@ -52,10 +57,11 @@ function SettingsScreen({ navigation }) {
 
       let data = await response.json()
       
+      console.log('Fetch request ran');
+
       if(response.status === 200) {
         console.log(data.message);
-        setNewPassword('');
-        navigation.navigate('Settings');
+        handleChangePasswordModal();
       } else {
         setError(data.error);
         console.log('Error:', error);
@@ -96,10 +102,20 @@ function SettingsScreen({ navigation }) {
                 secureTextEntry={true}
                 onChangeText={passwordInputHandler}
                 value={newPassword}
-              ></TextInput>
+              />
               <Text style={styles.passwordLabel}>Re-type password:</Text>
-              <TextInput style={styles.passwordInput} secureTextEntry={true}></TextInput>
+              <TextInput
+                style={styles.passwordInput}
+                secureTextEntry={true}
+                onChangeText={retypedPasswordInputHandler}
+                value={retypedPassword}
+              />
               {/* Add a conditional error div here for if there is an error when changing password, e.g., doesn't match or not strong enough */}
+              {error &&
+                <View style={styles.errorContainer}>
+                  <Text style={styles.errorText}>{error}</Text>
+                </View>
+              }
               <View style={styles.confirmButtonContainer}>
                 <Pressable style={styles.confirmButton} onPress={handleChangePassword}>
                   <Text style={styles.confirmButtonText}>Confirm</Text>
@@ -113,7 +129,8 @@ function SettingsScreen({ navigation }) {
         <Text style={styles.titleText}>Settings</Text>
       </View>
       <View style={styles.nameContainer}>
-        <Text style={styles.nameText}>Get Home Safe</Text>
+        {/* Or add our app logo instead of name */}
+        <Text style={styles.nameText}>Will Jones</Text>
       </View>
       <View style={styles.aboutUsContainer}>
         <Text style={styles.aboutUsTitle}>About the app</Text>
@@ -201,8 +218,9 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   deleteAccountText: {
-    color: 'red',
+    color: 'salmon',
     fontSize: 16,
+    fontWeight: '600',
   },
   changePasswordModal: {
     flex: 1,
@@ -231,6 +249,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   passwordInput: {
+    alignSelf: 'center',
     backgroundColor: 'white',
     borderWidth: 1,
     borderColor: '#dddddd',
@@ -240,6 +259,19 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     marginBottom: 30,
     fontSize: 20,
+  },
+  errorContainer: {
+    marginBottom: 20,
+    padding: 8,
+    borderWidth: 1,
+    borderColor: '#dddddd',
+    borderRadius: 8,
+    backgroundColor: '#eeeeee'
+  },
+  errorText: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#D238FF',
   },
   confirmButtonContainer: {
     flexDirection: 'row',
