@@ -66,8 +66,6 @@ function SettingsScreen({ navigation }) {
 
       let data = await response.json()
       
-      console.log('Fetch request ran');
-
       if(response.status === 200) {
         console.log(data.message);
         handleChangePasswordModal();
@@ -82,19 +80,29 @@ function SettingsScreen({ navigation }) {
     navigation.navigate('Auth');
   }
 
-  // const handleDeleteAccount = () => {
-  
-  // We want to fetch user, then delete that user from the database.
-  
-  // Check how we can find users. 
-  
-  // Once found user, delete this.
-  
-  
-  // Implement confirmation screen to make sure user doesn't delete their account
-  // by accident.
-  
-  // }
+  const handleDeleteAccount = async () => {
+    // Implement confirmation screen to make sure user doesn't delete their account
+    // by accident.
+    handleLogout();
+    setError(null);
+
+    let response = await fetch(`http://localhost:8080/api/user/${userId}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-type': 'application/json',
+      },
+    })
+
+      let data = await response.json()
+      
+      console.log('Fetch request ran');
+
+      if(response.status === 200) {
+        console.log(data.message);
+      } else {
+        console.log('Delete unsuccessful');
+      }
+  }
 
   return (
     <View style={styles.globalContainer}>
@@ -152,7 +160,7 @@ function SettingsScreen({ navigation }) {
       <Pressable style={styles.button} onPress={handleLogout}>
         <Text style={styles.buttonText}>Log out</Text>
       </Pressable>
-      <Pressable>
+      <Pressable onPress={handleDeleteAccount}>
         <Text style={styles.deleteAccountText}>
           Delete Account
         </Text>
