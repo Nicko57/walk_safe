@@ -5,7 +5,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import Map from './screens/Map';
 import Search from './screens/Search';
 import AuthContainer from './navigation/AuthContainer';
-import SettingsContainer from './navigation/SettingsContainer';
+import SettingsScreen from './screens/SettingsScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -47,7 +47,7 @@ function App() {
       >
         <Tab.Screen name="Home" component={Map} />
         <Tab.Screen name="Auth" component={AuthContainer} options={{ title: 'Auth' }} />
-        <Tab.Screen name="Settings" component={SettingsContainer} options={{ title: 'Settings' }} />
+        <Tab.Screen name="Settings" component={SettingsScreen} options={{ title: 'Settings' }} />
       </Tab.Navigator>
     </NavigationContainer>
   );
