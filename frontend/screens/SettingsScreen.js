@@ -8,6 +8,7 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 function SettingsScreen({ navigation }) {
   const [userId, setUserId] = useState(null);
   const [newPassword, setNewPassword] = useState(null);
+  // add one for reTypedPassword
   const [error, setError] = useState(null);
   const [changePasswordModalVisible, setChangePasswordModalVisible] = useState(false);
   
@@ -16,20 +17,26 @@ function SettingsScreen({ navigation }) {
     setUserId(value);
     console.log('userId: ', value);
   };
+  // retrieveUserId() currently runs every time the user types a character in the
+  // new password field - probably best to put this function call in a useEffect
+  // hook once merged and the full logout code is put in this file
   retrieveUserId();
 
   const handleChangePasswordModal = () => {
     setNewPassword(null);
+    // set the retyped password to null
     setChangePasswordModalVisible(!changePasswordModalVisible);
   }
 
   const passwordInputHandler = (enteredPassword) => {
     setNewPassword(enteredPassword);
   }
+  // add a similar function for retypedPassword
 
   const handleChangePassword = async () => {
-  // We want to fetch user, then update their password in the database.
   // Implement 'confirm password' so user has to enter their new password twice.
+      // Add an error check in here for this, which will set the error to e.g.,
+      // 'Passwords do not match'
     setError(null);
     console.log('userId:', userId)
 
@@ -92,6 +99,7 @@ function SettingsScreen({ navigation }) {
               ></TextInput>
               <Text style={styles.passwordLabel}>Re-type password:</Text>
               <TextInput style={styles.passwordInput} secureTextEntry={true}></TextInput>
+              {/* Add a conditional error div here for if there is an error when changing password, e.g., doesn't match or not strong enough */}
               <View style={styles.confirmButtonContainer}>
                 <Pressable style={styles.confirmButton} onPress={handleChangePassword}>
                   <Text style={styles.confirmButtonText}>Confirm</Text>
