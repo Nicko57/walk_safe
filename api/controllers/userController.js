@@ -93,7 +93,8 @@ const signupUser = async (req, res) => {
 
     const token = createToken(user._id)
 
-    res.status(200).json({ message: 'OK', token: token })
+    // maybe delete the token from below response
+    res.status(200).json({ message: 'User deleted successfully', token: token })
   }
 
   
