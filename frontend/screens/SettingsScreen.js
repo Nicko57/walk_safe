@@ -25,6 +25,7 @@ function SettingsScreen({ navigation }) {
   const handleChangePasswordModal = () => {
     setNewPassword(null);
     setRetypedPassword(null);
+    setError(null);
     setChangePasswordModalVisible(!changePasswordModalVisible);
   }
 
@@ -36,18 +37,21 @@ function SettingsScreen({ navigation }) {
     setRetypedPassword(enteredText);
   }
 
-  const handleChangePassword = async () => {      
+  const checkPasswordsAreValid = () => {
     // checks for errors not handled in backend (maybe move these to backend)
     if (newPassword === null) {
       setError('All fields must be filled');
       console.log(error);
-      return;
+      return true;
     } else if (newPassword !== retypedPassword) {
       setError('Passwords do not match');
       console.log(error);
-      return;
+      return true;
     }
+  }
 
+  const handleChangePassword = async () => {      
+    if (checkPasswordsAreValid() === true) return;
     setError(null);
 
     let response = await fetch(`http://localhost:8080/api/user/${userId}`, {
