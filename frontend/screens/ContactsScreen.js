@@ -19,7 +19,7 @@ const ContactsScreen = () => {
   const [updated, setUpdated] = useState(null)
 
   useEffect(() => {
-      let response = fetch('http://localhost:8080/api/user/contacts/63dbf2dbe7c83add97179bf9', {
+      let response = fetch('http://192.168.1.110:8080/api/user/contacts/63dbf2dbe7c83add97179bf9', {
     }).then(response => response.json() )
     .then(async data => {
     setUpdated(false)
