@@ -155,17 +155,19 @@ function SettingsScreen({ navigation }) {
               <Ionicons name={'close'} size={36} color={'white'} />
             </Pressable>
             <View style={styles.modalMainContents}>
-              <Text style={styles.passwordLabel}>
-                Are you sure you want to delete your account?
-              </Text>
+              <View style={styles.warningMessageContainer}>
+                <Text style={styles.warningText}>
+                  Are you sure you want to delete your account?
+                </Text>
+              </View>
               <View style={styles.confirmButtonContainer}>
-                <Pressable style={styles.confirmButton} onPress={handleDeleteAccount}>
-                  <Text style={styles.confirmButtonText}>Yes</Text>
+                <Pressable style={styles.yesButton} onPress={handleDeleteAccount}>
+                  <Text style={styles.yesNoButtonText}>Yes</Text>
                 </Pressable>
               </View>
               <View style={styles.confirmButtonContainer}>
-                <Pressable style={styles.confirmButton} onPress={handleDeleteAccountModal}>
-                  <Text style={styles.confirmButtonText}>No</Text>
+                <Pressable style={styles.noButton} onPress={handleDeleteAccountModal}>
+                  <Text style={styles.yesNoButtonText}>No</Text>
                 </Pressable>
               </View>
             </View>
@@ -176,8 +178,8 @@ function SettingsScreen({ navigation }) {
         <Text style={styles.titleText}>Settings</Text>
       </View>
       <View style={styles.nameContainer}>
-        {/* Or add our app logo instead of name */}
-        <Text style={styles.nameText}>Will Jones</Text>
+        {/* Add logo instead of text below once finalised */}
+        <Text style={styles.nameText}>Get Home Safe</Text>
       </View>
       <View style={styles.aboutUsContainer}>
         <Text style={styles.aboutUsTitle}>About the app</Text>
@@ -336,5 +338,39 @@ const styles = StyleSheet.create({
   confirmButtonText: {
     color: 'white',
     fontSize: 16,
+  },
+  warningMessageContainer: {
+    height: 60,
+    width: 250,
+  },
+  warningText: {
+    fontSize: 20,
+    fontWeight: '500',
+    color: 'white',
+    marginBottom: 10,
+    textAlign: 'center',
+  },
+  yesButton: {
+    height: 44,
+    width: 120,
+    marginVertical: 10,
+    backgroundColor: '#FF5151',
+    borderRadius: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  noButton: {
+    height: 44,
+    width: 120,
+    marginTop: 10,
+    backgroundColor: '#33F18A',
+    borderRadius: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  yesNoButtonText: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: '600',
   },
 });
