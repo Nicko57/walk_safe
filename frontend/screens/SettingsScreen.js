@@ -54,8 +54,8 @@ function SettingsScreen({ navigation }) {
   }
 
   const handleLogout = () => {
-    AsyncStorage.removeItem('token');
-    navigation.navigate("Settings");
+    AsyncStorage.clear();
+    navigation.navigate('Auth');
   }
 
   // const handleDeleteAccount = () => {
