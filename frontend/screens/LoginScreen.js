@@ -4,8 +4,8 @@ import { StyleSheet, Text, View, TextInput, Pressable } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 function LoginScreen({ navigation }) {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState(null);
+  const [password, setPassword] = useState(null);
   const [error, setError] = useState(null);
 
   function emailInputHandler(enteredEmail) {
@@ -34,8 +34,8 @@ function LoginScreen({ navigation }) {
     if(response.status === 200) {
       AsyncStorage.setItem("token", data.token);
       AsyncStorage.setItem("user_id", data.user_id);
-      setEmail('');
-      setPassword('');
+      setEmail(null);
+      setPassword(null);
       navigation.navigate('Auth');
     } else {
       setError(data.error);
@@ -86,7 +86,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    paddingBottom: 60,
     backgroundColor: "#64C5F0",
   },
   title: {
@@ -130,7 +129,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#dddddd',
     borderRadius: 8,
-    backgroundColor: '#dddddd'
+    backgroundColor: '#eeeeee'
   },
   errorText: {
     fontSize: 18,
