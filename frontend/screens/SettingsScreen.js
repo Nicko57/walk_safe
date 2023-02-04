@@ -102,9 +102,14 @@ function SettingsScreen({ navigation }) {
       <View style={styles.titleContainer}>
         <Text style={styles.titleText}>Settings</Text>
       </View>
-      <Text style={styles.name}>Will Jones</Text>
+      <View style={styles.nameContainer}>
+        <Text style={styles.nameText}>Will Jones</Text>
+      </View>
       <View style={styles.aboutUsContainer}>
-        <Text style={styles.aboutUsText}>About us:</Text>
+        <Text style={styles.aboutUsTitle}>About the app</Text>
+        <Text style={styles.aboutUsText}>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Congue mauris rhoncus aenean vel elit scelerisque mauris. Risus nec feugiat in fermentum posuere urna. Id nibh tortor id aliquet lectus proin. Nisl purus in mollis nunc sed id. Neque vitae tempus quam pellentesque nec nam aliquam.
+        </Text>
       </View>
       <View style={styles.changePasswordButton}>
         <Button title="Change Password" onPress={handleChangePasswordModal}></Button>
@@ -147,26 +152,30 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     margin: 16,
   },
-  name: {
-    padding: 10,
+  nameContainer: {
+    marginVertical: 30
+  },
+  nameText: {
     fontSize: 38,
     fontWeight: '600',
     color: '#ffffff',
   },
   aboutUsContainer: {
+    height: 300,
+    width: 300,
+    marginBottom: 30,
+    padding: 20,
     borderWidth: 1,
-    borderColor: '#000000',
+    borderColor: '#dddddd',
     backgroundColor: '#ffffff',
-    paddingVertical: 140,
-    paddingBottom: 155,
-    marginBottom: 10,
-    paddingHorizontal: 120,
     borderRadius: 30,
-    justifyContent: 'space-between',
+  },
+  aboutUsTitle: {
+    fontSize: 20,
+    marginBottom: 14,
   },
   aboutUsText: {
-    width: '100%',
-    textAlign: 'right'
+    fontSize: 16
   },
   changePasswordButton: {
     width: 250,
