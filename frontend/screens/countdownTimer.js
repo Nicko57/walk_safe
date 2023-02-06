@@ -24,7 +24,7 @@ import { CountdownCircleTimer } from "react-native-countdown-circle-timer";
 import { useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const Timer = ({ isRunning, setIsRunning, duration }) => {
+const Timer = ({ isRunning, setIsRunning, duration, setStarted }) => {
   const timeFormatter = ({ remainingTime }) => {
     const hours = Math.floor(remainingTime / 3600);
     const minutes = Math.floor((remainingTime % 3600) / 60)
@@ -80,6 +80,7 @@ const Timer = ({ isRunning, setIsRunning, duration }) => {
         }
       );
       setIsRunning(false)
+      setStarted(false)
     }
   };
 

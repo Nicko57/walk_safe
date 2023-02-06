@@ -15,9 +15,6 @@ const GooglePlacesInput = ({setDestination, setStarted, setIsRunning}) => {
           language: "en", // language of the results
         }}
         onPress={(data, details = null) => {
-          console.log("data", data);
-          console.log("details", details);
-          console.log(JSON.stringify(details?.geometry?.location));
           setDestination(details?.geometry?.location)
           setStarted(false)
           setIsRunning(false)

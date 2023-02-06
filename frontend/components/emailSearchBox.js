@@ -9,6 +9,7 @@ import {
   Modal,
 } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
+import AddEmergencyContact from '../modals/addEmergencyContact'
 const AutocompleteSearchBox = ({ userId, setUpdated }) => {
   const [searchTerm, setSearchTerm] = useState('')
   const [emailList, setEmailList] = useState([])
@@ -60,21 +61,7 @@ const AutocompleteSearchBox = ({ userId, setUpdated }) => {
     <View style={styles.searchBar}>
       <View>
         <Modal visible={viewModal}>
-          <View style={styles.modalContent}>
-            <View style={styles.modalInnerContent}>
-              <Text style={styles.modalText}>
-                Add {newContact} as an emergency contact?
-              </Text>
-              <View style={styles.buttonContainer}>
-                <Pressable onPress={() => handleAdd(newContact)}>
-                  <Ionicons name="thumbs-up" style={styles.upButton} />
-                </Pressable>
-                <Pressable onPress={() => setViewModal(false)}>
-                  <Ionicons name="thumbs-down" style={styles.downButton} />
-                </Pressable>
-              </View>
-            </View>
-          </View>
+          <AddEmergencyContact setViewModal={setViewModal} handleAdd={handleAdd} newContact={newContact}/>
         </Modal>
       </View>
       <TextInput
