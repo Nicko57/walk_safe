@@ -40,7 +40,7 @@ const Timer = ({ isRunning, setIsRunning, duration }) => {
     const userId = await AsyncStorage.getItem("user_id");
     // got to map through emergency contacts
     let response = await fetch(
-      `http://192.168.1.110:8080/api/user/contacts/${userId}`
+      `http://localhost:8080/api/user/contacts/${userId}`
     );
     let data = await response.json();
     if (response.status === 200) {
