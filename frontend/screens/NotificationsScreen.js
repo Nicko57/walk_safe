@@ -19,7 +19,7 @@ const NotificationsScreen = () => {
   const loadNotifications = async () => {
     const userId = await AsyncStorage.getItem("user_id");
     let response = await fetch(
-      `http://192.168.1.110:8080/api/user/notifications/${userId}`
+      `http://localhost:8080/api/user/notifications/${userId}`
     );
 
     let data = await response.json();
@@ -40,7 +40,7 @@ const NotificationsScreen = () => {
   const deleteNotification = async (index) => {
     const userId = await AsyncStorage.getItem("user_id");
     let response = await fetch(
-      `http://192.168.1.110:8080/api/user/notifications/${userId}/${index}/delete`,
+      `http://localhost:8080/api/user/notifications/${userId}/${index}/delete`,
       {
         method: "DELETE",
         headers: {

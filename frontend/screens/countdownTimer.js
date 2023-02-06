@@ -64,7 +64,7 @@ const Timer = ({ isRunning, setIsRunning, duration }) => {
         }),
       });
       await fetch(
-        `http://192.168.1.110:8080/api/user/notifications/${contact.id}/add`,
+        `http://localhost:8080/api/user/notifications/${contact.id}/add`,
         {
           method: "POST",
           headers: {

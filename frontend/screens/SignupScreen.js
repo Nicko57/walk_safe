@@ -25,7 +25,7 @@ function SignupScreen({ navigation }) {
   const handleSignup = async () => {
     setError(null);
     
-    let response = await fetch('http://192.168.1.110:8080/api/user/signup', {
+    let response = await fetch('http://localhost:8080/api/user/signup', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

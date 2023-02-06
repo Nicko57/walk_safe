@@ -94,7 +94,7 @@ const Map = () => {
         }),
       });
       await fetch(
-        `http://192.168.1.110:8080/api/user/notifications/${contact.id}/add`,
+        `http://localhost:8080/api/user/notifications/${contact.id}/add`,
         {
           method: "POST",
           headers: {
@@ -128,7 +128,7 @@ const Map = () => {
         }),
       });
       await fetch(
-        `http://192.168.1.110:8080/api/user/notifications/${contact.id}/add`,
+        `http://localhost:8080/api/user/notifications/${contact.id}/add`,
         {
           method: "POST",
           headers: {
@@ -150,7 +150,7 @@ const Map = () => {
     const userId = await AsyncStorage.getItem("user_id");
     // got to map through emergency contacts
     let response = await fetch(
-      `http://192.168.1.110:8080/api/user/contacts/${userId}`
+      `http://localhost:8080/api/user/contacts/${userId}`
     );
     let data = await response.json();
     if (response.status === 200) {
@@ -161,7 +161,7 @@ const Map = () => {
   const handleHomeSafe = async () => {
     const userId = await AsyncStorage.getItem("user_id");
     let response = await fetch(
-      `http://192.168.1.110:8080/api/user/contacts/${userId}`
+      `http://localhost:8080/api/user/contacts/${userId}`
     );
     let data = await response.json();
     if (response.status === 200) {

@@ -20,7 +20,7 @@ function LoginScreen({ navigation }) {
   const handleLogin = async () => {
     setError(null);
 
-    let response = await fetch("http://192.168.1.110:8080/api/user/login", {
+    let response = await fetch("http://localhost:8080/api/user/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
