@@ -18,6 +18,12 @@ const userSchema = new Schema({
     type: String,
     required: true,
   },
+  emergencyContacts: {
+    type: Array
+  },
+  notifications: {
+    type: Array
+  }
 });
 
 // static signup method

@@ -2,6 +2,7 @@ import * as React from 'react';
 import { useState } from 'react';
 import { StyleSheet, Text, View, TextInput, Pressable } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { registerIndieID } from "native-notify";
 
 function SignupScreen({ navigation }) {
   const [name, setName] = useState(null);
@@ -42,7 +43,7 @@ function SignupScreen({ navigation }) {
       },
       body: JSON.stringify({
         name: name,
-        email: email,
+        email: email.toLowerCase(),
         password: password
       }),
     })
@@ -58,7 +59,8 @@ function SignupScreen({ navigation }) {
       setName(null);
       setEmail(null);
       setPassword(null);
-      navigation.navigate('Auth');
+      await registerIndieID(`${data.user_id}`, 6193, "rWR1WMqaI8HcWYDUZQFStS");
+      navigation.replace('NavbarContainer');
     } else {
       setError(data.error);
       console.log('Error:', error);
