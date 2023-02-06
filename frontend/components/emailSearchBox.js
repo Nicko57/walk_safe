@@ -9,7 +9,6 @@ import {
   Modal,
 } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
-
 const AutocompleteSearchBox = ({ userId, setUpdated }) => {
   const [searchTerm, setSearchTerm] = useState('')
   const [emailList, setEmailList] = useState([])
@@ -28,16 +27,13 @@ const AutocompleteSearchBox = ({ userId, setUpdated }) => {
       .then((data) => {
         setEmailList(data.data)
       })
-
       .catch((err) => console.error(err))
   }, [searchTerm])
-
   const handleEmailPress = (email) => {
     setSearchTerm('')
     setNewContact(email)
     setViewModal(true)
   }
-
   const handleAdd = (email) => {
     fetch(`http://localhost:8080/api/user/contact`, {
       method: 'PATCH',
@@ -60,7 +56,6 @@ const AutocompleteSearchBox = ({ userId, setUpdated }) => {
         setViewModal(false)
       })
   }
-
   return (
     <View style={styles.searchBar}>
       <View>
@@ -107,11 +102,10 @@ const AutocompleteSearchBox = ({ userId, setUpdated }) => {
     </View>
   )
 }
-
 const styles = StyleSheet.create({
   textInput: {
     borderWidth: 1,
-    borderColor: '#e4d0ff',
+    borderColor: '#E4D0FF',
     backgroundColor: '#ADDEF3',
     color: '#000000',
     borderRadius: 8,
@@ -122,7 +116,7 @@ const styles = StyleSheet.create({
     padding: 10,
     fontSize: 22,
     fontWeight: '600',
-    color: '#ffffff',
+    color: '#FFFFFF',
     flex: 1,
     width: 450,
     alignItems: 'center',
@@ -178,3 +172,15 @@ const styles = StyleSheet.create({
   },
 })
 export default AutocompleteSearchBox
+
+
+
+
+
+
+
+
+
+
+
+

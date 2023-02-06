@@ -41,89 +41,6 @@ const signupUser = async (req, res) => {
   }
 };
 
-const emergencyContact = async (req, res) => {
-  const { user_id, emergencyContactEmail, field } = req.body;
-  const reqContact = await User.findOne({ email: emergencyContactEmail });
-  console.log("hello");
-  console.log(reqContact);
-  if (!reqContact) {
-    res.status(400).json({ error: "This user does not exist" });
-    return;
-  } else {
-    if (field === "add") {
-      const user = await User.findOne({ _id: user_id });
-      const currentContacts = user.emergencyContacts.toObject();
-      if (
-        !currentContacts.includes({
-          id: reqContact._id,
-          name: reqContact.name,
-          email: reqContact.email,
-        })
-      ) {
-        update = await User.findOneAndUpdate(
-          { _id: user_id },
-          {
-            $push: {
-              emergencyContacts: {
-                id: reqContact._id,
-                name: reqContact.name,
-                email: reqContact.email,
-              },
-            },
-          }
-        );
-        const token = await createToken(user_id);
-        res.status(200).json({ message: "OK", token: token });
-        return;
-      } else {
-        res.status(400).json({
-          error: "You already have that user in your emergency contact list",
-        });
-        return;
-      }
-    }
-    if (field === "delete") {
-      update = await User.findOneAndUpdate(
-        { _id: user_id },
-        {
-          $pull: {
-            emergencyContacts: {
-              id: reqContact._id,
-              name: reqContact.name,
-              email: reqContact.email,
-            },
-          },
-        }
-      );
-      const token = await createToken(user_id);
-      res.status(200).json({ message: "OK", token: token });
-      return;
-    } else {
-      res.status(400).json({ error: "Deleting emergency contact unsuccesful" });
-      return;
-    }
-  }
-};
-
-const getEmergencyContacts = async (req, res) => {
-  const user_id = req.params.id;
-  console.log(user_id);
-  try {
-    const user = await User.findById(user_id);
-    res.status(200).json({ emergencyContacts: user.emergencyContacts });
-  } catch (error) {
-    res.status(404).json({ error: "This user no longer exists" });
-  }
-};
-
-const getSearchResults = async (req, res) => {
-  const query = req.params.query;
-  console.log(query);
-  const emailList = await User.find({ email: { $regex: `.*${query}.*` } });
-  console.log(emailList);
-  res.status(200).json({ data: emailList });
-};
-
 // get a user
 const getUser = async (req, res) => {
   const user_id = req.params;
@@ -214,6 +131,66 @@ const deleteNotification = async (req, res) => {
     updatedNotifications: user.notifications,
   });
 };
+
+const emergencyContact = async (req, res) => {
+  const { user_id, emergencyContactEmail, field } = req.body
+  const reqContact = await User.findOne({ email: emergencyContactEmail })
+  // console.log(reqContact._id.toString(), user_id)
+  if (!reqContact) {
+    res.status(400).json({error: 'This user does not exist'})
+    return
+  } else if (user_id === reqContact._id.toString()) {
+    res.status(400).json({error: "You can't add yourself as an emergency contact"})
+    return
+  } else {
+  if (field === 'add') {
+    const user = await User.findOne({ _id: user_id })
+    const currentContacts = user.emergencyContacts.toObject()
+    console.log(currentContacts)
+    if (!currentContacts.some(contact => contact.email === emergencyContactEmail)) {
+      update = await User.findOneAndUpdate(
+        { _id: user_id },
+        { $push: { emergencyContacts: {id: reqContact._id, name: reqContact.name, email: reqContact.email} } },
+      )
+      const token = await createToken(user_id)
+      res.status(200).json({ message: 'OK', token: token })
+      return
+    } else {
+      res.status(400).json({
+        error: 'You already have that user in your emergency contact list',
+      })
+      return
+    }
+  }
+  if (field === 'delete') {
+    update = await User.findOneAndUpdate(
+      { _id: user_id },
+      { $pull: { emergencyContacts: {id: reqContact._id, name: reqContact.name, email: reqContact.email} } },
+    )
+    const token = await createToken(user_id)
+    res.status(200).json({ message: 'OK', token: token })
+    return
+  } else {
+    res.status(400).json({ error: 'Deleting emergency contact unsuccesful' })
+    return
+  }
+}
+}
+const getEmergencyContacts = async (req, res) => {
+  const user_id = req.params.id
+  // console.log(user_id)
+  try {
+    const user = await User.findById(user_id)
+    res.status(200).json({emergencyContacts: user.emergencyContacts})
+  } catch (error) {
+    res.status(404).json({error: 'This user no longer exists'})
+  }
+}
+const getSearchResults = async (req, res) => {
+  const query = req.params.query;
+  const emailList = await User.find({ email: { $regex: `.*${query}.*`, $options: 'i' } }).limit(3);
+  res.status(200).json({data: emailList})
+}
 
 module.exports = {
   signupUser,

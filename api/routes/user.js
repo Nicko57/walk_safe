@@ -12,9 +12,6 @@ router.post("/login", loginUser);
 // signup route
 router.post("/signup", signupUser);
 
-// findUser route
-router.patch("/:id", updateUser);
-
 // deleteUser route
 router.delete("/:id", deleteUser);
 
@@ -23,11 +20,9 @@ router.get("/:id", getUser);
 
 // add / delete emergency contact route
 router.patch("/contact", emergencyContact);
-
 // get emergency contacts route
 router.get("/contacts/:id", getEmergencyContacts)
 
-// get search results
 router.get("/contacts/search/:query", getSearchResults)
 
 // create a new notification
@@ -38,5 +33,8 @@ router.delete("/notifications/:user_id/:notification_index/delete", deleteNotifi
 
 // get notifications for logged in user
 router.get("/notifications/:user_id", getNotifications)
+
+// findUser route
+router.patch("/:id", updateUser);
 
 module.exports = router;

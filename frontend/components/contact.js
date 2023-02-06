@@ -1,12 +1,8 @@
 import { StyleSheet, Text, View, Pressable } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
-
 const Contact = ({ item, setUpdated, userId }) => {
-
-
-
   const handleDelete = (email) => {
-    console.log(email)
+    // console.log(email)
     fetch(`http://localhost:8080/api/user/contact`, {
       method: 'PATCH',
       headers: {
@@ -18,11 +14,10 @@ const Contact = ({ item, setUpdated, userId }) => {
         field: 'delete',
       }),
     }).then((response) => {
-      console.log(response)
+      // console.log(response)
       setUpdated(true)
     })
   }
-
   return (
     <View style={styles.contactContainer}>
       <View style={styles.contactDetails}>
@@ -37,7 +32,6 @@ const Contact = ({ item, setUpdated, userId }) => {
     </View>
   )
 }
-
 const styles = StyleSheet.create({
   contactContainer: {
     padding: 10,

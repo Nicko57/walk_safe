@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
 import {
   StyleSheet,
   Text,
@@ -14,23 +13,19 @@ import {
 } from 'react-native'
 import Contact from '../components/contact'
 import AutoCompleteSearchBox from '../components/emailSearchBox'
-
 const ContactsScreen = () => {
   const [error, setError] = useState(null)
   const [contacts, setContacts] = useState(null)
   const [updated, setUpdated] = useState(null)
   const [userId, setUserId] = useState(null)
-
-
   useEffect(() => {
     const retrieveUserId = async () => {
       const value = await AsyncStorage.getItem('user_id');
       setUserId(value);
-      console.log(value)
+      // console.log(value)
     };
     retrieveUserId();
   },[])
-
   useEffect(() => {
       let response = fetch('http://localhost:8080/api/user/contacts/' + userId, {
     }).then(response => response.json() )
@@ -39,14 +34,6 @@ const ContactsScreen = () => {
     setContacts(data.emergencyContacts)
     })
   },[updated])
-
-
-
-
-
-
-
-
   return (
     <View style={styles.container}>
       <View style={styles.searchBar}>
@@ -70,7 +57,6 @@ const ContactsScreen = () => {
     </View>
   )
 }
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -84,7 +70,7 @@ const styles = StyleSheet.create({
     padding: 10,
     fontSize: 22,
     fontWeight: '600',
-    color: '#ffffff',
+    color: '#FFFFFF',
     flex: 1,
     width: 500,
     alignItems: 'center',
@@ -92,7 +78,7 @@ const styles = StyleSheet.create({
   contactsList: {
     fontSize: 22,
     fontWeight: '600',
-    color: '#ffffff',
+    color: '#FFFFFF',
     flex: 5,
     width: 350,
     alignItems: 'center',
@@ -104,8 +90,4 @@ const styles = StyleSheet.create({
     flex: 1,
   }
 })
-
 export default ContactsScreen
-
-
-
