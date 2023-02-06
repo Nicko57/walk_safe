@@ -1,12 +1,10 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  Pressable,
-} from 'react-native'
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import { StyleSheet, Text, View, Pressable } from 'react-native'
+import Ionicons from 'react-native-vector-icons/Ionicons'
 
-const Contact = ({ item, setUpdated }) => {
+const Contact = ({ item, setUpdated, userId }) => {
+
+
+
   const handleDelete = (email) => {
     console.log(email)
     fetch(`http://localhost:8080/api/user/contact`, {
@@ -15,33 +13,30 @@ const Contact = ({ item, setUpdated }) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        user_id: '63dbf2dbe7c83add97179bf9',
+        user_id: userId,
         emergencyContactEmail: email,
-        field: 'delete'
+        field: 'delete',
       }),
     }).then((response) => {
       console.log(response)
       setUpdated(true)
-      // setFriends((prevFriends) => {
-      //   const updatedFriends = prevFriends.filter((request) => request !== requester_id);
-      //   return updatedFriends;
-      // });
-      //   setUpdated(true)
     })
-}
+  }
 
   return (
     <View style={styles.contactContainer}>
-      <View style={styles.contactDetails}><Text style={styles.contactName}>{item.name}</Text>
-      <Text>{item.email}</Text></View>
-      <View style={styles.deleteButton}><Pressable onPress={() => handleDelete(item.email)}>
-        <Ionicons name="trash-outline" style={styles.deleteButton}/>
-      </Pressable></View>
-      
-      
+      <View style={styles.contactDetails}>
+        <Text style={styles.contactName}>{item.name}</Text>
+        <Text>{item.email}</Text>
+      </View>
+      <View>
+        <Pressable onPress={() => handleDelete(item.email)}>
+          <Ionicons name="trash-outline" style={styles.deleteButton} />
+        </Pressable>
+      </View>
     </View>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   contactContainer: {
@@ -50,21 +45,19 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     margin: 10,
     width: 320,
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   contactName: {
     fontWeight: 'bold',
-    fontSize: 25
+    fontSize: 25,
   },
   deleteButton: {
     flex: 1,
-    fontSize: '40px', 
-    color: 'red'
+    fontSize: '40px',
+    color: 'red',
   },
   contactDetails: {
-    flex: 5
-  }
+    flex: 5,
+  },
 })
 export default Contact
-
-

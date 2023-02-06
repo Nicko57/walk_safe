@@ -31,7 +31,7 @@ function SignupScreen({ navigation }) {
       },
       body: JSON.stringify({
         name: name,
-        email: email,
+        email: email.toLowerCase(),
         password: password
       }),
     })

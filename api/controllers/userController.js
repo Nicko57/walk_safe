@@ -43,16 +43,19 @@ const signupUser = async (req, res) => {
 const emergencyContact = async (req, res) => {
   const { user_id, emergencyContactEmail, field } = req.body
   const reqContact = await User.findOne({ email: emergencyContactEmail })
-  console.log('hello')
-  console.log(reqContact)
+  console.log(reqContact._id.toString(), user_id)
   if (!reqContact) {
     res.status(400).json({error: 'This user does not exist'})
+    return
+  } else if (user_id === reqContact._id.toString()) {
+    res.status(400).json({error: "You can't add yourself as an emergency contact"})
     return
   } else {
   if (field === 'add') {
     const user = await User.findOne({ _id: user_id })
     const currentContacts = user.emergencyContacts.toObject()
-    if (!currentContacts.includes({id: reqContact._id, name: reqContact.name, email: reqContact.email})) {
+    console.log(currentContacts)
+    if (!currentContacts.some(contact => contact.email === emergencyContactEmail)) {
       update = await User.findOneAndUpdate(
         { _id: user_id },
         { $push: { emergencyContacts: {id: reqContact._id, name: reqContact.name, email: reqContact.email} } },
@@ -96,10 +99,8 @@ const getEmergencyContacts = async (req, res) => {
 
 const getSearchResults = async (req, res) => {
   const query = req.params.query;
-  console.log(query)
-  const emailList = await User.find({ email: { $regex: `.*${query}.*` } })
-    console.log(emailList)
-    res.status(200).json({data: emailList})
+  const emailList = await User.find({ email: { $regex: `.*${query}.*`, $options: 'i' } }).limit(3);
+  res.status(200).json({data: emailList})
 }
 module.exports = { signupUser, loginUser, emergencyContact, getEmergencyContacts, getSearchResults }
 
