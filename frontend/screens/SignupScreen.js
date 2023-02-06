@@ -2,6 +2,7 @@ import * as React from 'react';
 import { useState } from 'react';
 import { StyleSheet, Text, View, TextInput, Pressable } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { registerIndieID } from "native-notify";
 
 function SignupScreen({ navigation }) {
   const [name, setName] = useState('');
@@ -47,6 +48,7 @@ function SignupScreen({ navigation }) {
       setName('');
       setEmail('');
       setPassword('');
+      await registerIndieID(`${data.user_id}`, 6193, "rWR1WMqaI8HcWYDUZQFStS");
       navigation.replace('NavbarContainer');
     } else {
       setError(data.error);
