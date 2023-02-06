@@ -5,9 +5,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { registerIndieID } from "native-notify";
 
 function SignupScreen({ navigation }) {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [name, setName] = useState(null);
+  const [email, setEmail] = useState(null);
+  const [password, setPassword] = useState(null);
+  const [retypedPassword, setRetypedPassword] = useState(null);
   const [error, setError] = useState(null);
 
   const nameInputHandler = (enteredName) => {
@@ -22,7 +23,17 @@ function SignupScreen({ navigation }) {
     setPassword(enteredPassword);
   }
 
+  const retypedPasswordInputHandler = (enteredText) => {
+    setRetypedPassword(enteredText);
+  }
+
   const handleSignup = async () => {
+    if (password !== retypedPassword) {
+      setError('Passwords do not match');
+      console.log(error);
+      return;
+    }
+    
     setError(null);
     
     let response = await fetch('http://localhost:8080/api/user/signup', {
@@ -45,9 +56,9 @@ function SignupScreen({ navigation }) {
       console.log('user_id:', data.user_id);
       AsyncStorage.setItem("token", data.token);
       AsyncStorage.setItem("user_id", data.user_id);
-      setName('');
-      setEmail('');
-      setPassword('');
+      setName(null);
+      setEmail(null);
+      setPassword(null);
       await registerIndieID(`${data.user_id}`, 6193, "rWR1WMqaI8HcWYDUZQFStS");
       navigation.replace('NavbarContainer');
     } else {
@@ -81,6 +92,14 @@ function SignupScreen({ navigation }) {
         onChangeText={passwordInputHandler}
         value={password}
       />
+      <Text style={styles.inputLabel}>Re-type password:</Text>
+      <TextInput
+        style={styles.textInput}
+        secureTextEntry={true}
+        placeholder="One more time!"
+        onChangeText={retypedPasswordInputHandler}
+        value={retypedPassword}
+      />
         {error &&
           <View style={styles.errorContainer}>
             <Text style={styles.errorText}>{error}</Text>
@@ -107,7 +126,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    paddingBottom: 60,
     backgroundColor: "#64C5F0",
   },
   title: {
@@ -151,7 +169,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#dddddd',
     borderRadius: 8,
-    backgroundColor: '#dddddd'
+    backgroundColor: '#eeeeee'
   },
   errorText: {
     fontSize: 18,

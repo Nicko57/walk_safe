@@ -1,6 +1,6 @@
+import * as React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
 import "react-native-gesture-handler";
-import React from "react";
-import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import registerNNPushToken from 'native-notify';
 
@@ -28,6 +28,7 @@ const Auth = () => {
     </Stack.Navigator>
   );
 };
+
 
 const App = () => {
   registerNNPushToken(6193, 'rWR1WMqaI8HcWYDUZQFStS');

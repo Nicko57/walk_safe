@@ -1,5 +1,8 @@
-const User = require("../models/userModel");
-const jwt = require("jsonwebtoken");
+const User = require('../models/userModel')
+const jwt = require('jsonwebtoken')
+const bcrypt = require("bcrypt");
+const validator = require("validator");
+
 
 const createToken = (_id) => {
   return jwt.sign({ _id }, process.env.JWT_SECRET, { expiresIn: "3d" });
@@ -23,7 +26,9 @@ const loginUser = async (req, res) => {
 
 // signup a user
 const signupUser = async (req, res) => {
+
   const { name, email, password } = req.body;
+
 
   try {
     const user = await User.signup(name, email, password);
@@ -33,7 +38,6 @@ const signupUser = async (req, res) => {
 
     const userWithId = await User.findOne({ email: email });
 
-    // if 'email' is changed to 'user_id: user._id', email is still passed in the response, not user_id
     res.status(200).json({ user_id: userWithId._id, token });
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -123,6 +127,71 @@ const getSearchResults = async (req, res) => {
   res.status(200).json({ data: emailList });
 };
 
+
+  // get a user
+  const getUser = async (req, res) => {
+    const user_id = req.params
+
+
+    try {
+      const user = await User.findById(user_id)
+
+      res.status(200).json({id: user._id})
+    } catch (error) {
+      res.status(404).json({error: 'This user does not exist'})
+    }
+  }
+
+  // patch user information
+  const updateUser = async (req, res) => {
+    const user_id = req.params.id
+    const password = req.body.password 
+    
+    if (!validator.isStrongPassword(password)) {
+      res.status(400).json({error: 'Password not strong enough'})
+    } else {
+      try {
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password, salt);
+
+        await User.findOneAndUpdate(
+          {
+            _id: user_id
+          },
+          {
+            password: hashedPassword
+          }
+        )
+        res.status(200).json({ message: "User updated successfully!"})
+      } catch (error) {
+        res.status(404).json({error: 'User does not exist'})
+      }
+    }
+    
+  }
+
+  // delete user
+  const deleteUser = async (req, res) => {
+    const { id } = req.params;
+
+    const user = await User.findByIdAndDelete({_id: id})
+
+    const token = createToken(user._id)
+
+    // maybe delete the token from below response
+    res.status(200).json({ message: 'User deleted successfully', token: token })
+  }
+
+const getNotifications = async (req, res) => {
+  const { user_id } = req.params;
+  try {
+    const user = await User.findOne({ _id: user_id });
+    res.status(200).json({ notifications: user.notifications });
+  } catch (error) {
+    res.status(404).json({ error: "User not found" });
+  }
+};
+
 const addNotification = async (req, res) => {
   const { receiver_id } = req.params;
   const { notification } = req.body;
@@ -152,15 +221,6 @@ const deleteNotification = async (req, res) => {
   });
 };
 
-const getNotifications = async (req, res) => {
-  const { user_id } = req.params;
-  try {
-    const user = await User.findOne({ _id: user_id });
-    res.status(200).json({ notifications: user.notifications });
-  } catch (error) {
-    res.status(404).json({ error: "User not found" });
-  }
-};
 
 module.exports = {
   signupUser,

@@ -5,8 +5,9 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { registerIndieID } from "native-notify";
 
 function LoginScreen({ navigation }) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState(null);
+  const [password, setPassword] = useState(null);
+
   const [error, setError] = useState(null);
 
   function emailInputHandler(enteredEmail) {
@@ -28,15 +29,15 @@ function LoginScreen({ navigation }) {
       body: JSON.stringify({ email: email.toLowerCase(), password: password })
     })
 
-    let data = await response.json();
-    console.log("token:", data.token);
-    console.log("user_id:", data.user_id);
-
-    if (response.status === 200) {
+    let data = await response.json()
+    console.log('token:', data.token);
+    console.log('user_id:', data.user_id);
+    
+    if(response.status === 200) {
       AsyncStorage.setItem("token", data.token);
       AsyncStorage.setItem("user_id", data.user_id);
-      setEmail("");
-      setPassword("");
+      setEmail(null);
+      setPassword(null);
       await registerIndieID(`${data.user_id}`, 6193, "rWR1WMqaI8HcWYDUZQFStS");
       navigation.replace("NavbarContainer");
 
@@ -87,9 +88,8 @@ export default LoginScreen;
 const styles = StyleSheet.create({
   globalContainer: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    paddingBottom: 60,
+    alignItems: 'center',
+    justifyContent: 'center',
     backgroundColor: "#64C5F0",
   },
   title: {
@@ -133,7 +133,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#dddddd",
     borderRadius: 8,
-    backgroundColor: "#dddddd",
+    backgroundColor: '#eeeeee'
+
   },
   errorText: {
     fontSize: 18,

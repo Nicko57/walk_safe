@@ -27,11 +27,13 @@ function HomeScreen({ navigation }) {
     console.log("useEffect triggered");
   }, [token]);
 
-  const handleLogout = () => {
-    AsyncStorage.clear();
+  const handleLogout = async () => {
+    await AsyncStorage.clear();
+    setToken(null);
+    setUserId(null);
     navigation.replace("Auth");
-  };
-
+  }
+ 
   return (
     <View style={styles.globalContainer}>
       <Text style={styles.title}>Get Home Safe</Text>
@@ -67,9 +69,8 @@ export default HomeScreen;
 const styles = StyleSheet.create({
   globalContainer: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    paddingBottom: 60,
+    alignItems: 'center',
+    justifyContent: 'center',
     backgroundColor: "#64C5F0",
   },
   title: {
