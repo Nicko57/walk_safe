@@ -1,10 +1,13 @@
 import * as React from "react";
+import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import Map from "../screens/Map";
+import Map from "../screens/mapScreen/Map";
+// import AuthContainer from "./AuthContainer";
+// import SettingsContainer from "./SettingsContainer";
 import NotificationsScreen from "../screens/NotificationsScreen";
-import ContactsScreen from "../screens/ContactsScreen";
-import SettingsScreen from "../screens/SettingsScreen";
+import ContactsScreen from "../screens/ContactsScreen"
+import SettingsScreen from "../screens/SettingsScreen"
 
 const Tab = createBottomTabNavigator();
 
@@ -39,22 +42,27 @@ function NavbarContainer() {
         tabBarStyle: [{ display: "flex", height: 110, padding: 10 }, null],
       })}
     >
-      <Tab.Screen name="Home" component={Map} options={{ title: "" }} />
+      <Tab.Screen
+        name="Home"
+        component={Map}
+        options={{ title: ""}}
+      />
       <Tab.Screen
         name="Notifications"
         component={NotificationsScreen}
         options={{ title: "" }}
       />
-      <Tab.Screen
-        name="Contacts"
-        component={ContactsScreen}
-        options={{ title: "" }}
+      <Tab.Screen 
+       name="Contacts" 
+       component={ContactsScreen} 
+       options={{ title: '' }}
       />
       <Tab.Screen
         name="Settings"
         component={SettingsScreen}
-        options={{ title: "Settings" }}
+        options={{ title: "" }}
       />
+
     </Tab.Navigator>
   );
 }

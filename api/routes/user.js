@@ -2,7 +2,7 @@ const express = require("express");
 
 // controller functions
 
-const { loginUser, signupUser, emergencyContact, getEmergencyContacts, getSearchResults, addNotification, deleteNotification, getNotifications, updateUser, deleteUser, getUser} = require("../controllers/userController");
+const { loginUser, signupUser, emergencyContact, getEmergencyContacts, getSearchResults, addNotification, deleteNotification, getNotifications, updateUser, deleteUser, getUser, updateWalkingSpeed} = require("../controllers/userController");
 
 const router = express.Router();
 
@@ -33,6 +33,9 @@ router.delete("/notifications/:user_id/:notification_index/delete", deleteNotifi
 
 // get notifications for logged in user
 router.get("/notifications/:user_id", getNotifications)
+
+// update walking speed
+router.patch("/walkingSpeed/:id", updateWalkingSpeed)
 
 // findUser route
 router.patch("/:id", updateUser);
