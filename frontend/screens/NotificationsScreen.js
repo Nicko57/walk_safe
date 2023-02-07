@@ -4,17 +4,19 @@ import {
   StyleSheet,
   Text,
   ScrollView,
-  TouchableOpacity,
-  Alert,
   View,
+  Modal,
+  Pressable,
+  Linking
 } from "react-native";
-
+import { TouchableOpacity } from "react-native-gesture-handler";
 import Swipelist from "react-native-swipeable-list-view";
 import moment from "moment";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
 const NotificationsScreen = () => {
   const [notifications, setNotifications] = useState(null);
+  const [notificationModalIsVisible, setNotificationModalIsVisible] = useState(false);
 
   const loadNotifications = async () => {
     const userId = await AsyncStorage.getItem("user_id");
@@ -60,6 +62,10 @@ const NotificationsScreen = () => {
     loadNotifications();
   }
 
+  const handleNotificationModal = () => {
+    setNotificationModalIsVisible(!notificationModalIsVisible);
+  }
+  
   return (
     <View>
       <View style={styles.titleContainer}>
@@ -74,24 +80,78 @@ const NotificationsScreen = () => {
             <Swipelist
               data={notifications}
               renderRightItem={(notifications, index) => (
-                <View key={index} style={styles.notificationContainer}>
-                  <View style={styles.textContainer}>
-                    <Text style={styles.notificationTitle}>
-                      {notifications.title}
-                    </Text>
-                    <Text style={styles.notificationMessage}>
-                      {notifications.message}
-                    </Text>
-                  </View>
-                  <View style={styles.timeContainer}>
-                    <Text style={styles.notificationTime}>
-                      {moment
-                        .utc(notifications.timeSent)
-                        .local()
-                        .startOf("seconds")
-                        .fromNow()}
-                    </Text>
-                  </View>
+                <View>
+                  { !notifications.title.includes('got home safe') &&
+                    <TouchableOpacity key={index} style={styles.notificationContainer} onPress={handleNotificationModal}>
+                      <View style={styles.textContainer}>
+                        <Text style={styles.notificationTitle}>
+                          {notifications.title}
+                        </Text>
+                        <Text style={styles.notificationMessage}>
+                          {notifications.message}
+                        </Text>
+                      </View>
+                      <View style={styles.timeContainer}>
+                        <Text style={styles.notificationTime}>
+                          {moment
+                            .utc(notifications.timeSent)
+                            .local()
+                            .startOf("seconds")
+                            .fromNow()}
+                        </Text>
+                      </View>
+                      {notificationModalIsVisible &&
+                        <Modal>
+                          <View style={styles.emergencyModal}>
+                            <Pressable style={styles.closeButton} onPress={handleNotificationModal}>
+                              <Ionicons name={'close'} size={36} color={'black'} />
+                            </Pressable>
+                            <View style={styles.modalMainContents}>
+                              <Text style={styles.modalText}>Joe Bloggs didn't make it home!</Text>
+                              <Text style={styles.lastLocationText}>Their last location:</Text>
+                              <View style={styles.mapContainer}>
+                                <Text>Map with latest location goes here</Text>
+                              </View>
+                              <TouchableOpacity
+                                style={styles.callButton}
+                                onPress={() => Linking.openURL('tel:07770123456')}
+                              >
+                                <Text style={styles.callButtonText}>Call Joe Bloggs</Text>
+                              </TouchableOpacity>
+                              <TouchableOpacity
+                                style={styles.callButton}
+                                onPress={() => Linking.openURL('tel:999')}
+                                // onPress={() => Linking.openURL('https://www.google.com')}
+                              >
+                                <Text style={styles.callButtonText}>Call 999</Text>
+                              </TouchableOpacity>
+                            </View>
+                          </View>
+                        </Modal>
+                      }
+                    </TouchableOpacity>
+                  }
+                  { notifications.title.includes('got home safe') &&
+                    <View key={index} style={styles.notificationContainer}>
+                      <View style={styles.textContainer}>
+                        <Text style={styles.notificationTitle}>
+                          {notifications.title}
+                        </Text>
+                        <Text style={styles.notificationMessage}>
+                          {notifications.message}
+                        </Text>
+                      </View>
+                      <View style={styles.timeContainer}>
+                        <Text style={styles.notificationTime}>
+                          {moment
+                            .utc(notifications.timeSent)
+                            .local()
+                            .startOf("seconds")
+                            .fromNow()}
+                        </Text>
+                      </View>
+                    </View>
+                  }
                 </View>
               )}
               renderHiddenItem={(notifications, index) => (
@@ -199,6 +259,65 @@ const styles = StyleSheet.create({
   rightActionText: {
     color: "white",
     fontWeight: "600",
+  },
+  emergencyModal: {
+    flex: 1,
+    marginTop: 46,
+    marginBottom: 40,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: "white",
+  },
+  closeButton: {
+    flex: 0.1,
+    justifyContent: 'flex-start',
+    paddingTop: 20,
+    paddingRight: 20,
+    marginLeft: 'auto',
+  },
+  modalMainContents: {
+    flex: 0.9,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 0,
+    marginBottom: 70,
+  },
+  modalText: {
+    fontSize: 18,
+    fontWeight: '500',
+    color: 'black',
+    marginBottom: 20,
+    alignSelf: 'center',
+  },
+  lastLocationText: {
+    fontSize: 16,
+    fontWeight: '500',
+    color: 'black',
+    marginBottom: 8,
+    // alignSelf: 'left',
+  },
+  mapContainer: {
+    height: 500,
+    width: 400,
+    margin: 10,
+    borderWidth: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  callButton: {
+    marginTop: 15,
+    marginBottom: 10,
+    padding: 10,
+    width: 400,
+    borderRadius: 6,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'black',
+  },
+  callButtonText: {
+    fontSize: 20,
+    fontWeight: '600',
+    color: 'white',
   },
 });
 
