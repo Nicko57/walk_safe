@@ -60,6 +60,9 @@ function SignupScreen({ navigation }) {
       setEmail(null);
       setPassword(null);
       await registerIndieID(`${data.user_id}`, 6193, "rWR1WMqaI8HcWYDUZQFStS");
+      let response = await fetch('http://localhost:8080/api/user/' + userId)
+      let data = await response.json();
+      await AsyncStorage.setItem("walkingSpeed", data.walkingSpeed)
       navigation.replace('NavbarContainer');
     } else {
       setError(data.error);

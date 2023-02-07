@@ -6,26 +6,44 @@ import {
   Text,
   Button,
   TouchableOpacity,
+  Modal,
 } from 'react-native'
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps'
 import MapViewDirections from 'react-native-maps-directions'
 import * as Location from 'expo-location'
 import Constant from 'expo-constants'
-import Search from './Search'
-import Timer from './countdownTimer'
+import Search from './mapComponents/Search'
+import Timer from '../countdownTimer'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import SOS from "./mapModals/sos"
+import HomeSafe from './mapModals/homeSafe'
+import TimeOut from './mapModals/timeOut'
+import Map from './mapComponents/map'
 
 const GOOGLE_MAPS_APIKEY = 'AIzaSyB01WnR0NuaVmUBTY-897JYHHizmMUc0ek'
 
-const Map = () => {
+const MapScreen = () => {
   const [destination, setDestination] = useState(null)
   const [location, setLocation] = useState(null)
   const [duration, setDuration] = useState(null)
   const [distance, setDistance] = useState(null)
   const [mapRegion, setMapRegion] = useState(null)
   const [started, setStarted] = useState(false)
-  const [addedTime, setAddedTime] = useState(null)
   const [isRunning, setIsRunning] = useState(false)
+  const [viewSOS, setViewSOS] = useState(false)
+  const [viewHomeSafe, setViewHomeSafe] = useState(false)
+  const [viewTimeOut, setViewTimeOut] = useState(false)
+  
+  const calculateDuration = async (time) => {
+    const speed = await AsyncStorage.getItem("walkingSpeed")
+    if (speed === "normal") {
+      setDuration(time)
+    } else if (speed === "slow") {
+      setDuration(time * 1.1)
+    } else {
+      setDuration(time * 0.9)
+    }
+  }
 
   useEffect(() => {
     const getPermissions = async () => {
@@ -54,7 +72,6 @@ const Map = () => {
     if (destination) {
       const { latitude, longitude } = location.coords
       const { lat, lng } = destination
-
       const minLat = Math.min(latitude, lat)
       const maxLat = Math.max(latitude, lat)
       const minLng = Math.min(longitude, lng)
@@ -67,11 +84,7 @@ const Map = () => {
         longitudeDelta: maxLng - minLng + 0.015,
       })
     }
-  }, [destination, addedTime])
-
-  const increaseDuration = (time) => {
-    setDuration((prevDuration) => prevDuration + time)
-  }
+  }, [destination])
 
   const startJourney = () => {
     setStarted(true)
@@ -79,6 +92,8 @@ const Map = () => {
   }
 
   const sendSOSNotification = async (userId, data) => {
+    let currentLocation = await Location.getCurrentPositionAsync({})
+    console.log(currentLocation)
     for (const contact of data.emergencyContacts) {
       await fetch('https://app.nativenotify.com/api/indie/notification', {
         method: 'POST',
@@ -91,6 +106,7 @@ const Map = () => {
           appToken: 'rWR1WMqaI8HcWYDUZQFStS',
           title: `${userId} hit SOS!!!`,
           message: 'Get in touch ASAP!!!',
+          location: currentLocation
         }),
       })
       await fetch(
@@ -148,7 +164,7 @@ const Map = () => {
 
   const handleSOSbutton = async () => {
     const userId = await AsyncStorage.getItem('user_id')
-    // got to map through emergency contacts
+    setViewSOS(true)
     let response = await fetch(
       `http://localhost:8080/api/user/contacts/${userId}`,
     )
@@ -161,6 +177,7 @@ const Map = () => {
 
   const handleHomeSafe = async () => {
     const userId = await AsyncStorage.getItem('user_id')
+    setViewHomeSafe(true)
     let response = await fetch(
       `http://localhost:8080/api/user/contacts/${userId}`,
     )
@@ -180,46 +197,7 @@ const Map = () => {
           setStarted={setStarted}
         />
       </View>
-      <View style={styles.mapContainer}>
-        {location && (
-          <MapView
-            style={styles.map}
-            region={mapRegion}
-            provider={PROVIDER_GOOGLE}
-            showsUserLocation
-          >
-            {destination && (
-              <>
-                <Marker
-                  coordinate={{
-                    latitude: destination.lat,
-                    longitude: destination.lng,
-                  }}
-                  title="Destination"
-                ></Marker>
-                <MapViewDirections
-                  origin={{
-                    latitude: location.coords.latitude,
-                    longitude: location.coords.longitude,
-                  }}
-                  destination={{
-                    latitude: destination.lat,
-                    longitude: destination.lng,
-                  }}
-                  apikey={GOOGLE_MAPS_APIKEY}
-                  strokeWidth={5}
-                  strokeColor="hotpink"
-                  mode="WALKING"
-                  onReady={(result) => {
-                    setDistance(result.distance)
-                    setDuration(result.duration)
-                  }}
-                />
-              </>
-            )}
-          </MapView>
-        )}
-      </View>
+      <Map mapRegion={mapRegion} location={location} destination={destination} GOOGLE_MAPS_APIKEY={GOOGLE_MAPS_APIKEY} calculateDuration={calculateDuration} setDistance={setDistance}/>
       <View style={styles.bottomContainer}>
         <View style={styles.journeyDetailsContainer}>
           <Text style={styles.journeyDetails}>
@@ -250,6 +228,7 @@ const Map = () => {
                     isRunning={isRunning}
                     setIsRunning={setIsRunning}
                     setStarted={setStarted}
+                    setViewTimeOut={setViewTimeOut}
                   />
                 </TouchableOpacity>
               ) : (
@@ -271,6 +250,15 @@ const Map = () => {
         </View>
         <View style={styles.bottomContainerChild}></View>
       </View>
+      <Modal visible={viewSOS}>
+        <SOS setViewSOS={setViewSOS}/>
+      </Modal>
+      <Modal visible={viewHomeSafe}>
+        <HomeSafe setViewHomeSafe={setViewHomeSafe}/>
+      </Modal>
+      <Modal visible={viewTimeOut}>
+        <TimeOut setViewTimeOut={setViewTimeOut} handleHomeSafe={handleHomeSafe} setViewSOS={setViewSOS}/>
+      </Modal>
     </View>
   )
 }
@@ -314,9 +302,11 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     margin: 5,
     justifyContent: 'center',
+    alignItems: "center"
   },
   journeyDetailsContainer: {
     flex: 0.3,
+    color: "white"
   },
   journeyDetails: {
     fontSize: 22,
@@ -324,4 +314,5 @@ const styles = StyleSheet.create({
   },
 })
 
-export default Map
+export default MapScreen
+

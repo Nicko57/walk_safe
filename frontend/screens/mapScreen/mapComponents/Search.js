@@ -35,12 +35,12 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 4,
     padding: 8,
-    borderRadius: 0,
+    // borderRadius: 8,
   },
   input: {
     borderColor: '#888',
     borderWidth: 1,
-  }
+  },
 })
 
 export default GooglePlacesInput

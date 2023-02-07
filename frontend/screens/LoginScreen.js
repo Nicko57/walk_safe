@@ -2,6 +2,7 @@ import * as React from 'react';
 import { useState } from 'react';
 import { StyleSheet, Text, View, TextInput, Pressable } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { registerIndieID } from "native-notify";
 
 function LoginScreen({ navigation }) {
   const [email, setEmail] = useState('');
@@ -36,6 +37,7 @@ function LoginScreen({ navigation }) {
       AsyncStorage.setItem("user_id", data.user_id);
       setEmail('');
       setPassword('');
+      await registerIndieID(`${data.user_id}`, 6193, "rWR1WMqaI8HcWYDUZQFStS");
       navigation.replace('NavbarContainer');
     } else {
       setError(data.error);
@@ -138,3 +140,5 @@ const styles = StyleSheet.create({
     color: '#D238FF',
   },
 });
+
+
