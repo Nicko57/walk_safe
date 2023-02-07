@@ -155,9 +155,8 @@ const NotificationsScreen = () => {
                 </View>
               )}
               renderHiddenItem={(notifications, index) => (
-                <View style={{ flexDirection: "row" }}>
+                <View style={styles.rightAction}>
                   <TouchableOpacity
-                    style={styles.rightAction}
                     onPress={() => {
                       deleteNotification(index);
                     }}
