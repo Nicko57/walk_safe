@@ -35,7 +35,7 @@ function LoginScreen({ navigation }) {
     })
 
     let data = await response.json()
-    console.log('date: ', data);
+    console.log('data: ', data);
     console.log('token:', data.token);
     console.log('user_id:', data.user_id);
     console.log('name: ', data.name);
