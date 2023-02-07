@@ -25,7 +25,7 @@ const MapButtons = ({
             <Text style={styles.journeyText}>{`${Math.round(10 * distance) / 10}km`}</Text>
           </>
         ) : (
-          <Text style={{fontSize: 20}}>Search for a destination to begin</Text>
+          <Text style={{fontSize: 20, color: 'white'}}>Search for a destination to begin</Text>
         )}
       </View>
       <View style={styles.bottomContainerChild}>

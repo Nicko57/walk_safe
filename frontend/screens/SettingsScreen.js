@@ -190,7 +190,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingBottom: 50,
-    backgroundColor: '#64C5F0',
+    backgroundColor: '#5680E9',
   },
   titleContainer: {
     alignContent: 'center',
