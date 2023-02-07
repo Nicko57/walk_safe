@@ -18,6 +18,12 @@ function LoginScreen({ navigation }) {
   }
 
   const handleLogin = async () => {
+    if (!email) {
+      setError('All fields must be filled');
+      console.log(error);
+      return;
+    }
+    
     setError(null);
 
     let response = await fetch('http://localhost:8080/api/user/login', {
@@ -29,15 +35,21 @@ function LoginScreen({ navigation }) {
     })
 
     let data = await response.json()
+    console.log('date: ', data);
     console.log('token:', data.token);
     console.log('user_id:', data.user_id);
+    console.log('name: ', data.name);
     
     if(response.status === 200) {
       AsyncStorage.setItem("token", data.token);
       AsyncStorage.setItem("user_id", data.user_id);
+      AsyncStorage.setItem("name", data.name);
       setEmail('');
       setPassword('');
       await registerIndieID(`${data.user_id}`, 6193, "rWR1WMqaI8HcWYDUZQFStS");
+      let response = await fetch('http://localhost:8080/api/user/' + userId)
+      let data = await response.json();
+      await AsyncStorage.setItem("walkingSpeed", data.walkingSpeed)
       navigation.replace('NavbarContainer');
     } else {
       setError(data.error);
