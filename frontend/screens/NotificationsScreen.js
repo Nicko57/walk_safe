@@ -13,7 +13,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler'
 import Swipelist from 'react-native-swipeable-list-view'
 import moment from 'moment'
 import Ionicons from 'react-native-vector-icons/Ionicons'
-import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
+import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps'
 
 const NotificationsScreen = () => {
   const [notifications, setNotifications] = useState(null)
@@ -135,13 +135,19 @@ const NotificationsScreen = () => {
                               <View style={styles.mapContainer}>
                                 <MapView
                                 style={styles.map}
+                                provider={PROVIDER_GOOGLE}
                                   initialRegion={{
                                     latitude: notifications.latitude,
                                     longitude: notifications.longitude,
                                     latitudeDelta: 0.01,
                                     longitudeDelta: 0.01,
                                   }}
-                                />
+                                >
+                                <Marker coordinate = {{latitude: notifications.latitude,longitude: notifications.longitude}}
+         pinColor = {"purple"} // any color
+         title={`${notifications.name}`}
+         />
+         </MapView>
                               </View>
                               <TouchableOpacity
                                 style={styles.callButton}
