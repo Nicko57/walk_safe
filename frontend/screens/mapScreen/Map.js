@@ -123,6 +123,7 @@ const MapScreen = () => {
               title: `${name} hit SOS!`,
               message: `Tap here to see more info`,
               timeSent: new Date(),
+              name: name
             },
           }),
         },
