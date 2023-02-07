@@ -64,22 +64,16 @@ function SignupScreen({ navigation }) {
     })
     
     let data = await response.json();
-    console.log('fetch request ran');
     
     if (response.status === 200) {
-      console.log("token:", data.token);
-      console.log('user_id:', data.user_id);
-      console.log('name: ', data.name);
       AsyncStorage.setItem("token", data.token);
       AsyncStorage.setItem("user_id", data.user_id);
       AsyncStorage.setItem("name", data.name);
+      AsyncStorage.setItem("walkingSpeed", data.walkingSpeed)
       setName(null);
       setEmail(null);
       setPassword(null);
       await registerIndieID(`${data.user_id}`, 6193, "rWR1WMqaI8HcWYDUZQFStS");
-      let response = await fetch('http://localhost:8080/api/user/' + userId)
-      let data = await response.json();
-      await AsyncStorage.setItem("walkingSpeed", data.walkingSpeed)
       navigation.replace('NavbarContainer');
     } else {
       setError(data.error);
