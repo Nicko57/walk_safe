@@ -36,7 +36,7 @@ const Timer = ({ isRunning, setIsRunning, duration, setStarted, setViewTimeOut, 
       <CountdownCircleTimer
         isPlaying={isRunning}
         duration={duration * 60}
-        colors={["#004777", "#F7B801", "#A30000", "#A30000"]}
+        colors={["#479761", "#FAED26", "#FF9900", "red"]}
         colorsTime={[
           duration * 60,
           duration * 45,
@@ -44,7 +44,7 @@ const Timer = ({ isRunning, setIsRunning, duration, setStarted, setViewTimeOut, 
           duration * 15,
         ]}
         updateInterval={1}
-        size={120}
+        size={100}
       >
         {({ remainingTime, color }) => {
           if (remainingTime === 0 && isRunning) {

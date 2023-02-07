@@ -3,22 +3,17 @@ import {
   Dimensions,
   StyleSheet,
   View,
-  Text,
-  Button,
-  TouchableOpacity,
   Modal,
 } from 'react-native'
-import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps'
-import MapViewDirections from 'react-native-maps-directions'
 import * as Location from 'expo-location'
 import Constant from 'expo-constants'
 import Search from './mapComponents/Search'
-import Timer from '../countdownTimer'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import SOS from "./mapModals/sos"
+import SOS from './mapModals/sos'
 import HomeSafe from './mapModals/homeSafe'
 import TimeOut from './mapModals/timeOut'
 import Map from './mapComponents/map'
+import MapButtons from './mapComponents/mapButtons'
 
 const GOOGLE_MAPS_APIKEY = 'AIzaSyB01WnR0NuaVmUBTY-897JYHHizmMUc0ek'
 
@@ -36,10 +31,10 @@ const MapScreen = () => {
   const [name, setName] = useState(null)
 
   const calculateDuration = async (time) => {
-    const speed = await AsyncStorage.getItem("walkingSpeed")
-    if (speed === "normal") {
+    const speed = await AsyncStorage.getItem('walkingSpeed')
+    if (speed === 'normal') {
       setDuration(time)
-    } else if (speed === "slow") {
+    } else if (speed === 'slow') {
       setDuration(time * 1.1)
     } else {
       setDuration(time * 0.9)
@@ -52,7 +47,7 @@ const MapScreen = () => {
       if (status !== 'granted') {
         return
       }
-      const userName = await AsyncStorage.getItem("name")
+      const userName = await AsyncStorage.getItem('name')
       setName(userName)
       let currentLocation = await Location.getCurrentPositionAsync({})
       setLocation(currentLocation)
@@ -108,7 +103,7 @@ const MapScreen = () => {
           appToken: 'rWR1WMqaI8HcWYDUZQFStS',
           title: `${name} hit SOS!!!`,
           message: 'Get in touch ASAP!!!',
-          location: currentLocation
+          location: currentLocation,
         }),
       })
       await fetch(
@@ -201,68 +196,42 @@ const MapScreen = () => {
           setStarted={setStarted}
         />
       </View>
-      <Map mapRegion={mapRegion} location={location} destination={destination} GOOGLE_MAPS_APIKEY={GOOGLE_MAPS_APIKEY} calculateDuration={calculateDuration} setDistance={setDistance}/>
+      <Map
+        mapRegion={mapRegion}
+        location={location}
+        destination={destination}
+        GOOGLE_MAPS_APIKEY={GOOGLE_MAPS_APIKEY}
+        calculateDuration={calculateDuration}
+        setDistance={setDistance}
+      />
       <View style={styles.bottomContainer}>
-        <View style={styles.journeyDetailsContainer}>
-          <Text style={styles.journeyDetails}>
-            {distance
-              ? `Duration: ${Math.round(duration)}mins      Distance: ${
-                  Math.round(10 * distance) / 10
-                }km`
-              : 'Search for a destination to start'}
-          </Text>
-        </View>
-        <View style={styles.bottomContainerChild}>
-          <View style={styles.buttons}>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => {
-                handleSOSbutton()
-              }}
-              disabled={!started}
-            >
-              <Text style={{ color: 'white' }}>SOS</Text>
-            </TouchableOpacity>
-
-            <View style={styles.button}>
-              {started && destination ? (
-                <TouchableOpacity onPress={() => setIsRunning(!isRunning)}>
-                  <Timer
-                    duration={duration}
-                    isRunning={isRunning}
-                    setIsRunning={setIsRunning}
-                    setStarted={setStarted}
-                    setViewTimeOut={setViewTimeOut}
-                    setDestination={setDestination}
-                  />
-                </TouchableOpacity>
-              ) : (
-                <TouchableOpacity onPress={startJourney}>
-                  <Text>Start Journey</Text>
-                </TouchableOpacity>
-              )}
-            </View>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => {
-                handleHomeSafe()
-              }}
-              disabled={!started}
-            >
-              <Text style={{ color: 'white' }}>Home Safe</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-        <View style={styles.bottomContainerChild}></View>
+        <MapButtons
+          distance={distance}
+          duration={duration}
+          handleSOSbutton={handleSOSbutton}
+          started={started}
+          setStarted={setStarted}
+          destination={destination}
+          isRunning={isRunning}
+          setIsRunning={setIsRunning}
+          setViewTimeOut={setViewTimeOut}
+          setDestination={setDestination}
+          startJourney={startJourney}
+          handleHomeSafe={handleHomeSafe}
+        />
       </View>
       <Modal visible={viewSOS}>
-        <SOS setViewSOS={setViewSOS}/>
+        <SOS setViewSOS={setViewSOS} />
       </Modal>
       <Modal visible={viewHomeSafe}>
-        <HomeSafe setViewHomeSafe={setViewHomeSafe}/>
+        <HomeSafe setViewHomeSafe={setViewHomeSafe} />
       </Modal>
       <Modal visible={viewTimeOut}>
-        <TimeOut setViewTimeOut={setViewTimeOut} handleHomeSafe={handleHomeSafe} setViewSOS={setViewSOS}/>
+        <TimeOut
+          setViewTimeOut={setViewTimeOut}
+          handleHomeSafe={handleHomeSafe}
+          setViewSOS={setViewSOS}
+        />
       </Modal>
     </View>
   )
@@ -270,54 +239,23 @@ const MapScreen = () => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'white',
+    backgroundColor: '#5680E9',
     flex: 1,
     width: '100%',
     paddingTop: 40,
-    marginBottom: 10,
   },
   searchContainer: {
     height: Constant.statusBarHeight,
+    marginTop: 10,
     width: '100%',
     zIndex: 1,
-  },
-  mapContainer: {
-    flex: 3,
-    width: '100%',
-  },
-  map: {
-    ...StyleSheet.absoluteFillObject,
   },
   bottomContainer: {
     flex: 1,
   },
   bottomContainerChild: {
     flex: 1,
-  },
-  buttons: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    flex: 1,
-  },
-  button: {
-    flex: 1,
-    width: '30%',
-    height: '170%',
-    backgroundColor: '#348EC5',
-    borderRadius: 15,
-    margin: 5,
-    justifyContent: 'center',
-    alignItems: "center"
-  },
-  journeyDetailsContainer: {
-    flex: 0.3,
-    color: "white"
-  },
-  journeyDetails: {
-    fontSize: 22,
-    marginHorizontal: 12,
-  },
+  }
 })
 
 export default MapScreen
-
