@@ -50,7 +50,7 @@ const getUser = async (req, res) => {
   try {
     const user = await User.findById(id)
 
-    res.status(200).json({ id: user._id, walkingSpeed: user.walkingSpeed })
+    res.status(200).json({ id: user._id, walkingSpeed: user.walkingSpeed, name: user.name })
   } catch (error) {
     res.status(404).json({ error: 'This user does not exist' })
   }
@@ -164,6 +164,7 @@ const emergencyContact = async (req, res) => {
                 id: reqContact._id,
                 name: reqContact.name,
                 email: reqContact.email,
+                phoneNumber: reqContact.phoneNumber
               },
             },
           },

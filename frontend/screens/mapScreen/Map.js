@@ -33,7 +33,8 @@ const MapScreen = () => {
   const [viewSOS, setViewSOS] = useState(false)
   const [viewHomeSafe, setViewHomeSafe] = useState(false)
   const [viewTimeOut, setViewTimeOut] = useState(false)
-  
+  const [name, setName] = useState(null)
+
   const calculateDuration = async (time) => {
     const speed = await AsyncStorage.getItem("walkingSpeed")
     if (speed === "normal") {
@@ -51,7 +52,8 @@ const MapScreen = () => {
       if (status !== 'granted') {
         return
       }
-
+      const userName = await AsyncStorage.getItem("name")
+      setName(userName)
       let currentLocation = await Location.getCurrentPositionAsync({})
       setLocation(currentLocation)
       const { width, height } = Dimensions.get('window')
@@ -104,7 +106,7 @@ const MapScreen = () => {
           subID: `${contact.id}`,
           appId: 6193,
           appToken: 'rWR1WMqaI8HcWYDUZQFStS',
-          title: `${userId} hit SOS!!!`,
+          title: `${name} hit SOS!!!`,
           message: 'Get in touch ASAP!!!',
           location: currentLocation
         }),
@@ -118,8 +120,8 @@ const MapScreen = () => {
           },
           body: JSON.stringify({
             notification: {
-              title: `Someone hit SOS!`,
-              message: `${contact.id} hit SOS get in touch!!`,
+              title: `${name} hit SOS!`,
+              message: `Tap here to see more info`,
               timeSent: new Date(),
             },
           }),
@@ -139,7 +141,7 @@ const MapScreen = () => {
           subID: `${contact.id}`,
           appId: 6193,
           appToken: 'rWR1WMqaI8HcWYDUZQFStS',
-          title: `${userId} got home safe`,
+          title: `${name} got home safe`,
           message: 'All good',
         }),
       })
@@ -152,8 +154,8 @@ const MapScreen = () => {
           },
           body: JSON.stringify({
             notification: {
-              title: `Someone got home safe!`,
-              message: `${contact.id} got home safe`,
+              title: `${name} got home safe!`,
+              message: `No need to worry`,
               timeSent: new Date(),
             },
           }),
@@ -164,6 +166,7 @@ const MapScreen = () => {
 
   const handleSOSbutton = async () => {
     const userId = await AsyncStorage.getItem('user_id')
+    setDestination(null)
     setViewSOS(true)
     let response = await fetch(
       `http://localhost:8080/api/user/contacts/${userId}`,
@@ -177,6 +180,7 @@ const MapScreen = () => {
 
   const handleHomeSafe = async () => {
     const userId = await AsyncStorage.getItem('user_id')
+    setDestination(null)
     setViewHomeSafe(true)
     let response = await fetch(
       `http://localhost:8080/api/user/contacts/${userId}`,
@@ -229,6 +233,7 @@ const MapScreen = () => {
                     setIsRunning={setIsRunning}
                     setStarted={setStarted}
                     setViewTimeOut={setViewTimeOut}
+                    setDestination={setDestination}
                   />
                 </TouchableOpacity>
               ) : (

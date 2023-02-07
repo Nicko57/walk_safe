@@ -16,8 +16,9 @@ const SplashScreen = ({ navigation }) => {
         let response = await fetch('http://localhost:8080/api/user/' + userId)
         let data = await response.json();
         await AsyncStorage.setItem("walkingSpeed", data.walkingSpeed)
+        await AsyncStorage.setItem("name", data.name);
       }
-      AsyncStorage.getItem('token').then((value) =>
+      AsyncStorage.getItem('user_id').then((value) =>
         navigation.replace(value === null ? 'Auth' : 'NavbarContainer'),
       )
     }, 2000)
