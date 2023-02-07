@@ -188,6 +188,7 @@ const emergencyContact = async (req, res) => {
               id: reqContact._id,
               name: reqContact.name,
               email: reqContact.email,
+              phoneNumber: reqContact.phoneNumber
             },
           },
         },

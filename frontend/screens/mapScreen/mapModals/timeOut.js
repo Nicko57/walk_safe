@@ -4,6 +4,15 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Timeout = ({ setViewTimeOut, setViewSOS, handleHomeSafe }) => {
   const [timer, setTimer] = useState(10);
+  const [name, setName] = useState(null);
+
+  // maybe put in a useEffect hook when refactoring
+  const retrieveName = async () => {
+    const userName = await AsyncStorage.getItem('name')
+    setName(userName)
+    console.log('name: ', userName)
+  }
+  retrieveName();
 
   const sendNotification = async () => {
     const userId = await AsyncStorage.getItem("user_id");
@@ -28,7 +37,7 @@ const Timeout = ({ setViewTimeOut, setViewSOS, handleHomeSafe }) => {
           subID: `${contact.id}`,
           appId: 6193,
           appToken: "rWR1WMqaI8HcWYDUZQFStS",
-          title: `${userId} didn't get home safe...`,
+          title: `${name} didn't get home safe...`,
           message: "Get in touch ASAP!!!",
         }),
       });
@@ -41,9 +50,10 @@ const Timeout = ({ setViewTimeOut, setViewSOS, handleHomeSafe }) => {
           },
           body: JSON.stringify({
             notification: {
-              title: `Someone didnt get home safe...`,
-              message: `${contact.id} get in touch!!` ,
+              title: `${name} didnt get home safe...`,
+              message: `Tap here to see more info` ,
               timeSent: new Date(),
+              name: name
             },
           }),
         }

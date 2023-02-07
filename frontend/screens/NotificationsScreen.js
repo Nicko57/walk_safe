@@ -83,6 +83,8 @@ const NotificationsScreen = () => {
                 <View>
                   { !notifications.title.includes('got home safe') &&
                     <TouchableOpacity key={index} style={styles.notificationContainer} onPress={handleNotificationModal}>
+                      { console.log('notifications.name: ', notifications.name) }
+                      { console.log('notifications: ', notifications) }
                       <View style={styles.textContainer}>
                         <Text style={styles.notificationTitle}>
                           {notifications.title}
@@ -107,7 +109,7 @@ const NotificationsScreen = () => {
                               <Ionicons name={'close'} size={36} color={'black'} />
                             </Pressable>
                             <View style={styles.modalMainContents}>
-                              <Text style={styles.modalText}>Joe Bloggs didn't make it home!</Text>
+                              <Text style={styles.modalText}>{notifications.name} didn't make it home!</Text>
                               <Text style={styles.lastLocationText}>Their last location:</Text>
                               <View style={styles.mapContainer}>
                                 <Text>Map with latest location goes here</Text>
@@ -116,7 +118,7 @@ const NotificationsScreen = () => {
                                 style={styles.callButton}
                                 onPress={() => Linking.openURL('tel:07770123456')}
                               >
-                                <Text style={styles.callButtonText}>Call Joe Bloggs</Text>
+                                <Text style={styles.callButtonText}>Call {notifications.name}</Text>
                               </TouchableOpacity>
                               <TouchableOpacity
                                 style={styles.callButton}
