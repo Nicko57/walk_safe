@@ -10,6 +10,16 @@ describe("User model", () => {
     await User.deleteMany({});
   });
 
+  it("has a name", () => {
+    const user = new User({
+      name: "Will Jones",
+      email: "someone@example.com",
+      phoneNumber: "07771777888",
+      password: "ABCabc123!",
+    });
+    expect(user.name).toEqual("Will Jones");
+  });
+
   it("has an email address", () => {
     const user = new User({
       name: "Will Jones",
