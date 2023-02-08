@@ -35,29 +35,29 @@ const DeleteAccountModal = ({
   
   return (
     <Modal>
-    <View style={styles.deleteAccountModal}>
-      <Pressable style={styles.closeButton} onPress={handleModal}>
-        <Ionicons name={'close'} size={36} color={'black'} />
-      </Pressable>
-      <View style={styles.modalMainContents}>
-        <View style={styles.warningMessageContainer}>
-          <Text style={styles.warningText}>
-            Are you sure you want to delete your account?
-          </Text>
-        </View>
-        <View style={styles.confirmButtonContainer}>
-          <Pressable style={styles.yesButton} onPress={handleDeleteAccount}>
-            <Text style={styles.yesButtonText}>YES</Text>
-          </Pressable>
-        </View>
-        <View style={styles.confirmButtonContainer}>
-          <Pressable style={styles.noButton} onPress={handleModal}>
-            <Text style={styles.noButtonText}>NO</Text>
-          </Pressable>
+      <View style={styles.deleteAccountModal}>
+        <Pressable style={styles.closeButton} onPress={handleModal}>
+          <Ionicons name={'close'} size={36} color={'black'} />
+        </Pressable>
+        <View style={styles.modalMainContents}>
+          <View style={styles.warningMessageContainer}>
+            <Text style={styles.warningText}>
+              Are you sure you want to delete your account?
+            </Text>
+          </View>
+          <View style={styles.confirmButtonContainer}>
+            <Pressable style={styles.yesButton} onPress={handleDeleteAccount}>
+              <Text style={styles.yesButtonText}>YES</Text>
+            </Pressable>
+          </View>
+          <View style={styles.confirmButtonContainer}>
+            <Pressable style={styles.noButton} onPress={handleModal}>
+              <Text style={styles.noButtonText}>NO</Text>
+            </Pressable>
+          </View>
         </View>
       </View>
-    </View>
-  </Modal>
+    </Modal>
   );
 }
  
