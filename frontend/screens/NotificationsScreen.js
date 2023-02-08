@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useEffect, useState } from 'react'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import {
   StyleSheet,
   Text,
@@ -7,12 +7,13 @@ import {
   View,
   Modal,
   Pressable,
-  Linking
-} from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import Swipelist from "react-native-swipeable-list-view";
-import moment from "moment";
-import Ionicons from "react-native-vector-icons/Ionicons";
+  Linking,
+} from 'react-native'
+import { TouchableOpacity } from 'react-native-gesture-handler'
+import Swipelist from 'react-native-swipeable-list-view'
+import moment from 'moment'
+import Ionicons from 'react-native-vector-icons/Ionicons'
+import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps'
 
 const NotificationsScreen = () => {
   const [notifications, setNotifications] = useState(null);
@@ -20,51 +21,51 @@ const NotificationsScreen = () => {
   const [selectedNotification, setSelectedNotification] = useState(null);
 
   const loadNotifications = async () => {
-    const userId = await AsyncStorage.getItem("user_id");
+    const userId = await AsyncStorage.getItem('user_id')
     let response = await fetch(
-      `http://localhost:8080/api/user/notifications/${userId}`
-    );
+      `http://localhost:8080/api/user/notifications/${userId}`,
+    )
 
-    let data = await response.json();
+    let data = await response.json()
 
     if (response.status === 200) {
-      setNotifications(data.notifications);
+      setNotifications(data.notifications)
     }
-  };
+  }
 
   useEffect(() => {
     const intervalId = setInterval(() => {
-      loadNotifications();
-    }, 60000);
-    loadNotifications();
-    return () => clearInterval(intervalId);
-  }, []);
+      loadNotifications()
+    }, 60000)
+    loadNotifications()
+    return () => clearInterval(intervalId)
+  }, [])
 
   const deleteNotification = async (index) => {
-    const userId = await AsyncStorage.getItem("user_id");
+    const userId = await AsyncStorage.getItem('user_id')
     let response = await fetch(
       `http://localhost:8080/api/user/notifications/${userId}/${index}/delete`,
       {
-        method: "DELETE",
+        method: 'DELETE',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
-      }
-    );
+      },
+    )
 
-    let data = await response.json();
+    let data = await response.json()
 
     if (response.status === 200) {
-      setNotifications(data.updatedNotifications);
+      setNotifications(data.updatedNotifications)
     }
-  };
+  }
 
   const handleRefresh = () => {
-    loadNotifications();
+    loadNotifications()
   }
 
   const handleNotificationModal = () => {
-    setNotificationModalIsVisible(!notificationModalIsVisible);
+    setNotificationModalIsVisible(!notificationModalIsVisible)
   }
 
   return (
@@ -91,6 +92,7 @@ const NotificationsScreen = () => {
                         handleNotificationModal();
                       }}
                     >
+
                       <View style={styles.textContainer}>
                         <Text style={styles.notificationTitle}>
                           {notifications.title}
@@ -98,27 +100,51 @@ const NotificationsScreen = () => {
                         <Text style={styles.notificationMessage}>
                           {notifications.message}
                         </Text>
+                        <Text style={styles.notificationMessage}>
+                          {notifications.location}
+                        </Text>
                       </View>
                       <View style={styles.timeContainer}>
                         <Text style={styles.notificationTime}>
                           {moment
                             .utc(notifications.timeSent)
                             .local()
-                            .startOf("seconds")
+                            .startOf('seconds')
                             .fromNow()}
                         </Text>
                       </View>
                       {notificationModalIsVisible && selectedNotification &&
                         <Modal>
                           <View style={styles.emergencyModal}>
-                            <Pressable style={styles.closeButton} onPress={handleNotificationModal}>
-                              <Ionicons name={'close'} size={36} color={'black'} />
+                            <Pressable
+                              style={styles.closeButton}
+                              onPress={handleNotificationModal}
+                            >
+                              <Ionicons
+                                name={'close'}
+                                size={36}
+                                color={'black'}
+                              />
                             </Pressable>
                             <View style={styles.modalMainContents}>
                               <Text style={styles.modalText}>{selectedNotification.name} didn't make it home!</Text>
                               <Text style={styles.lastLocationText}>Their last location:</Text>
                               <View style={styles.mapContainer}>
-                                <Text>Map with latest location goes here</Text>
+                                <MapView
+                                style={styles.map}
+                                provider={PROVIDER_GOOGLE}
+                                  initialRegion={{
+                                    latitude: selectedNotification.latitude,
+                                    longitude: selectedNotification.longitude,
+                                    latitudeDelta: 0.01,
+                                    longitudeDelta: 0.01,
+                                  }}
+                                >
+                                <Marker coordinate = {{latitude: selectedNotification.latitude,longitude: selectedNotification.longitude}}
+         pinColor = {"purple"} // any color
+         title={`${selectedNotification.name}`}
+         />
+         </MapView>
                               </View>
                               <TouchableOpacity
                                 style={styles.callButton}
@@ -130,15 +156,17 @@ const NotificationsScreen = () => {
                                 style={styles.callButton}
                                 onPress={() => Linking.openURL('tel:999')}
                               >
-                                <Text style={styles.callButtonText}>Call 999</Text>
+                                <Text style={styles.callButtonText}>
+                                  Call 999
+                                </Text>
                               </TouchableOpacity>
                             </View>
                           </View>
                         </Modal>
-                      }
+                      )}
                     </TouchableOpacity>
-                  }
-                  { notifications.title.includes('got home safe') &&
+                  )}
+                  {notifications.title.includes('got home safe') && (
                     <View key={index} style={styles.notificationContainer}>
                       <View style={styles.textContainer}>
                         <Text style={styles.notificationTitle}>
@@ -153,19 +181,19 @@ const NotificationsScreen = () => {
                           {moment
                             .utc(notifications.timeSent)
                             .local()
-                            .startOf("seconds")
+                            .startOf('seconds')
                             .fromNow()}
                         </Text>
                       </View>
                     </View>
-                  }
+                  )}
                 </View>
               )}
               renderHiddenItem={(notifications, index) => (
                 <View style={styles.rightAction}>
                   <TouchableOpacity
                     onPress={() => {
-                      deleteNotification(index);
+                      deleteNotification(index)
                     }}
                   >
                     <Text style={styles.rightActionText}>Delete</Text>
@@ -178,30 +206,30 @@ const NotificationsScreen = () => {
         </ScrollView>
       )}
     </View>
-  );
-};
+  )
+}
 
-export default NotificationsScreen;
+export default NotificationsScreen
 
 const styles = StyleSheet.create({
   titleContainer: {
-    position: "absolute",
-    alignContent: "center",
-    justifyContent: "center",
-    width: "100%",
+    position: 'absolute',
+    alignContent: 'center',
+    justifyContent: 'center',
+    width: '100%',
     paddingTop: 50,
     borderBottomWidth: 1,
-    borderColor: "#64C5F0",
-    backgroundColor: "white",
+    borderColor: '#64C5F0',
+    backgroundColor: 'white',
     zIndex: 1,
-    flexDirection: "row",
+    flexDirection: 'row',
   },
   titleText: {
-    alignContent: "center",
-    justifyContent: "center",
-    textAlign: "center",
+    alignContent: 'center',
+    justifyContent: 'center',
+    textAlign: 'center',
     fontSize: 20,
-    fontWeight: "500",
+    fontWeight: '500',
     margin: 16,
   },
   scrollViewContainer: {
@@ -210,13 +238,13 @@ const styles = StyleSheet.create({
   },
   notificationContainer: {
     height: 80,
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: "#fff",
-    justifyContent: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    justifyContent: 'center',
     paddingHorizontal: 24,
     borderBottomWidth: 1,
-    borderColor: "#64C5F0",
+    borderColor: '#64C5F0',
     // shadowColor: "#000",
     // shadowOffset: {
     //   width: 0,
@@ -227,32 +255,32 @@ const styles = StyleSheet.create({
     // elevation: 5,
   },
   textContainer: {
-    marginRight: "auto",
+    marginRight: 'auto',
   },
   timeContainer: {
     marginTop: 17,
-    marginBottom: "auto",
-    marginLeft: "auto",
+    marginBottom: 'auto',
+    marginLeft: 'auto',
   },
   notificationTitle: {
     paddingVertical: 4,
     fontSize: 16,
-    fontWeight: "600",
+    fontWeight: '600',
   },
   notificationMessage: {
     paddingVertical: 4,
     fontSize: 16,
   },
   notificationTime: {
-    float: "right",
+    float: 'right',
   },
   rightAction: {
-    backgroundColor: "red",
-    width: "100%",
+    backgroundColor: 'red',
+    width: '100%',
     height: 80,
-    alignItems: "center",
+    alignItems: 'center',
     flex: 1,
-    justifyContent: "center",
+    justifyContent: 'center',
     // shadowColor: "#000",
     // shadowOffset: {
     //   width: 0,
@@ -263,8 +291,8 @@ const styles = StyleSheet.create({
     // elevation: 5,
   },
   rightActionText: {
-    color: "white",
-    fontWeight: "600",
+    color: 'white',
+    fontWeight: '600',
   },
   emergencyModal: {
     flex: 1,
@@ -272,7 +300,7 @@ const styles = StyleSheet.create({
     marginBottom: 40,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: "white",
+    backgroundColor: 'white',
   },
   closeButton: {
     flex: 0.1,
@@ -325,4 +353,8 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: 'white',
   },
-});
+  map: {
+    ...StyleSheet.absoluteFillObject,
+  },
+})
+

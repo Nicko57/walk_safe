@@ -106,7 +106,6 @@ const MapScreen = () => {
           appToken: 'rWR1WMqaI8HcWYDUZQFStS',
           title: `${name} hit SOS!!!`,
           message: 'Get in touch ASAP!!!',
-          location: currentLocation,
         }),
       })
       await fetch(
@@ -123,6 +122,9 @@ const MapScreen = () => {
               timeSent: new Date(),
               name: name,
               phoneNumber: phoneNumber,
+              longitude: currentLocation.coords.longitude,
+              latitude: currentLocation.coords.latitude
+
             },
           }),
         },
