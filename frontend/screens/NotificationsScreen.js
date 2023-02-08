@@ -72,8 +72,8 @@ const NotificationsScreen = () => {
     <View>
       <View style={styles.titleContainer}>
         <Text style={styles.titleText}>Notifications</Text>
-        <TouchableOpacity onPress={handleRefresh}>
-          <Ionicons name="refresh-circle-outline" size={50} />
+        <TouchableOpacity style={styles.refreshButton} onPress={handleRefresh}>
+          <Ionicons name="refresh-circle-outline" size={40}/>
         </TouchableOpacity>
       </View>
       {notifications && (
@@ -218,6 +218,9 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: '500',
     margin: 16,
+  },
+  refreshButton: {
+    marginTop: 6,
   },
   scrollViewContainer: {
     marginTop: 96,
