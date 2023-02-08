@@ -206,7 +206,7 @@ const styles = StyleSheet.create({
     width: '100%',
     paddingTop: 40,
     borderBottomWidth: 1,
-    borderColor: '#64C5F0',
+    borderColor: '#dddddd',
     backgroundColor: 'white',
     zIndex: 1,
     flexDirection: 'row',
@@ -231,7 +231,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingHorizontal: 24,
     borderBottomWidth: 1,
-    borderColor: '#64C5F0',
+    borderColor: '#dddddd',
     // shadowColor: "#000",
     // shadowOffset: {
     //   width: 0,

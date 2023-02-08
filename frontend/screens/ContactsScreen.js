@@ -13,6 +13,7 @@ import {
 } from 'react-native'
 import Contact from '../components/contact'
 import AutoCompleteSearchBox from '../components/emailSearchBox'
+
 const ContactsScreen = () => {
   const [error, setError] = useState(null)
   const [contacts, setContacts] = useState(null)
@@ -34,6 +35,7 @@ const ContactsScreen = () => {
     setContacts(data.emergencyContacts)
     })
   },[updated])
+
   return (
     <View style={styles.container}>
       <View style={styles.titleContainer}>
@@ -60,12 +62,15 @@ const ContactsScreen = () => {
     </View>
   )
 }
+
+export default ContactsScreen;
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#5680E9',
+    backgroundColor: 'white',
     // marginTop: StatusBar.currentHeight || 0,
   },
   titleContainer: {
@@ -74,8 +79,9 @@ const styles = StyleSheet.create({
     width: '100%',
     paddingTop: 40,
     borderBottomWidth: 1,
-    borderColor: '#64C5F0',
+    borderColor: '#dddddd',
     backgroundColor: 'white',
+    marginBottom: 20
   },
   titleText: {
     alignContent: 'center',
@@ -95,12 +101,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   contactsList: {
+    zIndex: -1,
     fontSize: 22,
     fontWeight: '600',
     color: '#FFFFFF',
     flex: 5,
     width: 350,
     alignItems: 'center',
+    justifyContent: 'center',
   },
   title: {
     fontSize: 32,
@@ -109,4 +117,3 @@ const styles = StyleSheet.create({
     flex: 1,
   }
 })
-export default ContactsScreen

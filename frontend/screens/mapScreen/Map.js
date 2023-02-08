@@ -259,6 +259,8 @@ const styles = StyleSheet.create({
     width: '100%',
     paddingTop: 40,
     backgroundColor: 'white',
+    // borderBottomWidth: 1,
+    // borderColor: '#dddddd',
   },
   titleText: {
     alignContent: 'center',
