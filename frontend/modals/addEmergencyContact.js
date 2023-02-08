@@ -9,59 +9,102 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 
 const AddEmergencyContact = ( { setViewModal, handleAdd, newContact } ) => {
   return (
-    <View style={styles.modalContent}>
-      <View style={styles.modalInnerContent}>
-        <Text style={styles.modalText}>
-          Add {newContact} as an emergency contact?
-        </Text>
-        <View style={styles.buttonContainer}>
-          <Pressable onPress={() => handleAdd(newContact)}>
-            <Ionicons name="thumbs-up" style={styles.upButton} />
-          </Pressable>
-          <Pressable onPress={() => setViewModal(false)}>
-            <Ionicons name="thumbs-down" style={styles.downButton} />
-          </Pressable>
+      <View style={styles.addContactModal}>
+        <Pressable style={styles.closeButton} onPress={() => setViewModal(false)}>
+          <Ionicons name={'close'} size={36} color={'black'} />
+        </Pressable>
+        <View style={styles.modalMainContents}>
+          <View style={styles.confirmationContainer}>
+            <Text style={styles.confirmationText}>
+            Add {newContact} as an emergency contact?
+            </Text>
+          </View>
+          <View style={styles.confirmButtonContainer}>
+            <Pressable style={styles.yesButton} onPress={() => handleAdd(newContact)}>
+              <Text style={styles.yesButtonText}>YES</Text>
+            </Pressable>
+          </View>
+          <View style={styles.confirmButtonContainer}>
+            <Pressable style={styles.noButton} onPress={() => setViewModal(false)}>
+              <Text style={styles.noButtonText}>NO</Text>
+            </Pressable>
+          </View>
         </View>
       </View>
-    </View>
+
+
   )
 }
 
 const styles = StyleSheet.create({
-  buttonContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-  },
-  upButton: {
-    fontSize: '100px',
-    color: 'green',
-  },
-  downButton: {
-    fontSize: '100px',
-    color: 'red',
-  },
-  buttonText: {
-    fontWeight: 'bold',
-    color: 'blue',
-  },
-  modalContent: {
+  addContactModal: {
     flex: 1,
+    marginBottom: 100,
+    marginTop: 46,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: "white",
+    position: "relative"
+  },
+  closeButton: {
+    flex: 0.1,
+    justifyContent: 'flex-start',
+    paddingTop: 20,
+    paddingRight: 24,
+    marginLeft: 'auto',
+  },
+  modalMainContents: {
+    flex: 0.9,
+    width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
+    marginBottom: 80,
+  },
+  confirmButtonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  confirmationContainer: {
+    height: 60,
+    width: 250,
+  },
+  confirmationText: {
+    fontSize: 20,
+    fontWeight: '500',
+    color: 'black',
+    marginBottom: 10,
+    textAlign: 'center',
+  },
+  noButton: {
+    height: 44,
+    width: "75%",
+    marginVertical: 16,
     backgroundColor: 'white',
-    padding: 20,
-    borderRadius: 10,
-    marginTop: 100,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: "#FF5151",
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  modalText: {
-    fontSize: 25,
-    fontWeight: 'bold',
-    color: '#525252',
+  noButtonText: {
+    color: '#FF5151',
+    fontSize: 16,
+    fontWeight: '600',
   },
-  modalInnerContent: {
-    backgroundColor: '#64C5F0',
-    borderRadius: 10,
-    padding: 10,
+  yesButton: {
+    height: 44,
+    width: "75%",
+    marginVertical: 16,
+    borderColor: 'green',
+    borderWidth: 1,
+    borderRadius: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  yesButtonText: {
+    color: 'green',
+    fontSize: 16,
+    fontWeight: '600',
   },
 })
 

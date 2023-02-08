@@ -13,6 +13,7 @@ import {
 } from 'react-native'
 import Contact from '../components/contact'
 import AutoCompleteSearchBox from '../components/emailSearchBox'
+
 const ContactsScreen = () => {
   const [error, setError] = useState(null)
   const [contacts, setContacts] = useState(null)
@@ -34,8 +35,12 @@ const ContactsScreen = () => {
     setContacts(data.emergencyContacts)
     })
   },[updated])
+
   return (
     <View style={styles.container}>
+      <View style={styles.titleContainer}>
+        <Text style={styles.titleText}>Emergency contacts</Text>
+      </View>
       <View style={styles.searchBar}>
         <AutoCompleteSearchBox userId={userId} setUpdated={setUpdated}/>
         {/* <TextInput
@@ -57,14 +62,34 @@ const ContactsScreen = () => {
     </View>
   )
 }
+
+export default ContactsScreen;
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 60,
-    backgroundColor: '#5680E9',
-    marginTop: StatusBar.currentHeight || 0,
+    backgroundColor: 'white',
+    // marginTop: StatusBar.currentHeight || 0,
+  },
+  titleContainer: {
+    alignContent: 'center',
+    justifyContent: 'center',
+    width: '100%',
+    paddingTop: 40,
+    borderBottomWidth: 1,
+    borderColor: '#dddddd',
+    backgroundColor: 'white',
+    marginBottom: 20
+  },
+  titleText: {
+    alignContent: 'center',
+    justifyContent: 'center',
+    textAlign: 'center',
+    fontSize: 20,
+    fontWeight: '500',
+    margin: 16,
   },
   searchBar: {
     padding: 10,
@@ -76,12 +101,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   contactsList: {
+    zIndex: -1,
     fontSize: 22,
     fontWeight: '600',
     color: '#FFFFFF',
     flex: 5,
     width: 350,
     alignItems: 'center',
+    justifyContent: 'center',
   },
   title: {
     fontSize: 32,
@@ -90,4 +117,3 @@ const styles = StyleSheet.create({
     flex: 1,
   }
 })
-export default ContactsScreen

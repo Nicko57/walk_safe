@@ -24,7 +24,7 @@ function NavbarContainer() {
           if (rn === "Home") {
             iconName = focused ? "map" : "map-outline";
           } else if (rn === "Notifications") {
-            iconName = focused ? "notifications-outline" : "notifications";
+            iconName = focused ? "notifications" : "notifications-outline";
           } else if (rn === "Auth") {
             iconName = focused ? "person-circle" : "person-circle-outline";
           } else if (rn === "Settings") {
@@ -36,8 +36,8 @@ function NavbarContainer() {
           // You can return any component that you like here!
           return <Ionicons name={iconName} size={40} color={color} />;
         },
-        tabBarActiveTintColor: "#348EC5",
-        tabBarInactiveTintColor: "grey",
+        tabBarActiveTintColor: "black",
+        tabBarInactiveTintColor: "#cccccc",
         // tabBarLabelStyle: { paddingBottom: 10, fontSize: 10 },
         tabBarStyle: [{ display: "flex", height: 110, padding: 10 }, null],
       })}

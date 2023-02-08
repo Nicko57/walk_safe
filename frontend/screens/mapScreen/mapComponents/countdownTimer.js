@@ -44,7 +44,7 @@ const Timer = ({ isRunning, setIsRunning, duration, setStarted, setViewTimeOut, 
           duration * 15,
         ]}
         updateInterval={1}
-        size={100}
+        size={90}
       >
         {({ remainingTime, color }) => {
           if (remainingTime === 0 && isRunning) {
@@ -56,7 +56,7 @@ const Timer = ({ isRunning, setIsRunning, duration, setStarted, setViewTimeOut, 
           }
 
           return (
-            <Text style={{ color: "white", fontSize: 20 }}>
+            <Text style={{ color: "black", fontSize: 20 }}>
               {timeFormatter({ remainingTime })}
             </Text>
           );

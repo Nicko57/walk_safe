@@ -232,7 +232,7 @@ const getSearchResults = async (req, res) => {
   const query = req.params.query
   const emailList = await User.find({
     email: { $regex: `.*${query}.*`, $options: 'i' },
-  }).limit(3)
+  }).limit(1)
   res.status(200).json({ data: emailList })
 }
 const updateWalkingSpeed = async (req, res) => {

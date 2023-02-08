@@ -22,11 +22,11 @@ const Contact = ({ item, setUpdated, userId }) => {
     <View style={styles.contactContainer}>
       <View style={styles.contactDetails}>
         <Text style={styles.contactName}>{item.name}</Text>
-        <Text>{item.email}</Text>
+        <Text style={styles.contactEmail}>{item.email}</Text>
       </View>
       <View>
-        <Pressable onPress={() => handleDelete(item.email)}>
-          <Ionicons name="trash-outline" style={styles.deleteButton} />
+        <Pressable style={styles.closeButton} onPress={() => handleDelete(item.email)}>
+          <Ionicons name={'close'} size={36} color={'#aaaaaa'} />
         </Pressable>
       </View>
     </View>
@@ -35,23 +35,31 @@ const Contact = ({ item, setUpdated, userId }) => {
 const styles = StyleSheet.create({
   contactContainer: {
     padding: 10,
-    backgroundColor: 'white',
-    borderRadius: 15,
+    bordeColor: 'black',
+    borderWidth: 1,
+    borderRadius: 6,
     margin: 10,
     width: 320,
     flexDirection: 'row',
   },
-  contactName: {
-    fontWeight: 'bold',
-    fontSize: 25,
-  },
-  deleteButton: {
-    flex: 1,
-    fontSize: '40px',
-    color: 'red',
-  },
   contactDetails: {
     flex: 5,
+    paddingHorizontal: 8,
+    paddingVertical: 2
+  },
+  contactName: {
+    fontWeight: 'bold',
+    fontSize: 18,
+  },
+  contactEmail: {
+    marginTop: 4,
+  },
+  closeButton: {
+    // flex: 0.1,
+    justifyContent: 'flex-start',
+    marginLeft: 'auto',
+    paddingTop: 5,
+    paddingRight: 5,
   },
 })
 export default Contact
