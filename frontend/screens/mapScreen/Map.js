@@ -29,6 +29,7 @@ const MapScreen = () => {
   const [viewHomeSafe, setViewHomeSafe] = useState(false)
   const [viewTimeOut, setViewTimeOut] = useState(false)
   const [name, setName] = useState(null)
+  const [phoneNumber, setPhoneNumber] = useState(null)
 
   const calculateDuration = async (time) => {
     const speed = await AsyncStorage.getItem('walkingSpeed')
@@ -49,6 +50,8 @@ const MapScreen = () => {
       }
       const userName = await AsyncStorage.getItem('name')
       setName(userName)
+      const phone = await AsyncStorage.getItem('phoneNumber')
+      setPhoneNumber(phone)
       let currentLocation = await Location.getCurrentPositionAsync({})
       setLocation(currentLocation)
       const { width, height } = Dimensions.get('window')
@@ -118,7 +121,8 @@ const MapScreen = () => {
               title: `${name} hit SOS!`,
               message: `Tap here to see more info`,
               timeSent: new Date(),
-              name: name
+              name: name,
+              phoneNumber: phoneNumber,
             },
           }),
         },

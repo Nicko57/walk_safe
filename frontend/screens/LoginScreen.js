@@ -5,8 +5,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { registerIndieID } from "native-notify";
 
 function LoginScreen({ navigation }) {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState(null);
+  const [password, setPassword] = useState(null);
   const [error, setError] = useState(null);
 
   function emailInputHandler(enteredEmail) {
@@ -39,14 +39,17 @@ function LoginScreen({ navigation }) {
     console.log('token:', data.token);
     console.log('user_id:', data.user_id);
     console.log('name: ', data.name);
+    console.log('walkingSpeed: ', data.walkingSpeed);
+    console.log('phoneNumber: ', data.phoneNumber);
     
     if(response.status === 200) {
       AsyncStorage.setItem("token", data.token);
       AsyncStorage.setItem("user_id", data.user_id);
       AsyncStorage.setItem("name", data.name);
-      AsyncStorage.setItem("walkingSpeed", data.walkingSpeed)
-      setEmail('');
-      setPassword('');
+      AsyncStorage.setItem("walkingSpeed", data.walkingSpeed);
+      AsyncStorage.setItem("phoneNumber", data.phoneNumber);
+      setEmail(null);
+      setPassword(null);
       await registerIndieID(`${data.user_id}`, 6193, "rWR1WMqaI8HcWYDUZQFStS");
       navigation.replace('NavbarContainer');
     } else {

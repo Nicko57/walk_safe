@@ -84,6 +84,7 @@ const NotificationsScreen = () => {
                   { !notifications.title.includes('got home safe') &&
                     <TouchableOpacity key={index} style={styles.notificationContainer} onPress={handleNotificationModal}>
                       { console.log('notifications.name: ', notifications.name) }
+                      { console.log('notifications.phoneNumber: ', notifications.phoneNumber) }
                       { console.log('notifications: ', notifications) }
                       <View style={styles.textContainer}>
                         <Text style={styles.notificationTitle}>
@@ -116,7 +117,7 @@ const NotificationsScreen = () => {
                               </View>
                               <TouchableOpacity
                                 style={styles.callButton}
-                                onPress={() => Linking.openURL('tel:07770123456')}
+                                onPress={() => Linking.openURL(`tel:${notifications.phoneNumber}`)}
                               >
                                 <Text style={styles.callButtonText}>Call {notifications.name}</Text>
                               </TouchableOpacity>
