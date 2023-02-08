@@ -66,6 +66,8 @@ const NotificationsScreen = () => {
     setNotificationModalIsVisible(!notificationModalIsVisible);
   }
   
+  let emergencyNotificationsData = [];
+
   return (
     <View>
       <View style={styles.titleContainer}>
@@ -83,9 +85,10 @@ const NotificationsScreen = () => {
                 <View>
                   { !notifications.title.includes('got home safe') &&
                     <TouchableOpacity key={index} style={styles.notificationContainer} onPress={handleNotificationModal}>
-                      { console.log('notifications.name: ', notifications.name) }
+                      {/* { console.log('notifications.name: ', notifications.name) }
                       { console.log('notifications.phoneNumber: ', notifications.phoneNumber) }
-                      { console.log('notifications: ', notifications) }
+                      { console.log('notifications: ', notifications) } */}
+                      {console.log(index)}
                       <View style={styles.textContainer}>
                         <Text style={styles.notificationTitle}>
                           {notifications.title}
@@ -105,6 +108,10 @@ const NotificationsScreen = () => {
                       </View>
                       {notificationModalIsVisible &&
                         <Modal>
+                          {console.log('modal notification index:', index)}
+                          { console.log('notifications.name: ', notifications.name) }
+                          { console.log('notifications.phoneNumber: ', notifications.phoneNumber) }
+                          {/* { console.log('notifications: ', notifications) } */}
                           <View style={styles.emergencyModal}>
                             <Pressable style={styles.closeButton} onPress={handleNotificationModal}>
                               <Ionicons name={'close'} size={36} color={'black'} />
