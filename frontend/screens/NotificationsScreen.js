@@ -17,6 +17,7 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 const NotificationsScreen = () => {
   const [notifications, setNotifications] = useState(null);
   const [notificationModalIsVisible, setNotificationModalIsVisible] = useState(false);
+  const [selectedNotification, setSelectedNotification] = useState(null);
 
   const loadNotifications = async () => {
     const userId = await AsyncStorage.getItem("user_id");
@@ -65,8 +66,6 @@ const NotificationsScreen = () => {
   const handleNotificationModal = () => {
     setNotificationModalIsVisible(!notificationModalIsVisible);
   }
-  
-  let emergencyNotificationsData = [];
 
   return (
     <View>
@@ -84,11 +83,14 @@ const NotificationsScreen = () => {
               renderRightItem={(notifications, index) => (
                 <View>
                   { !notifications.title.includes('got home safe') &&
-                    <TouchableOpacity key={index} style={styles.notificationContainer} onPress={handleNotificationModal}>
-                      {/* { console.log('notifications.name: ', notifications.name) }
-                      { console.log('notifications.phoneNumber: ', notifications.phoneNumber) }
-                      { console.log('notifications: ', notifications) } */}
-                      {console.log(index)}
+                    <TouchableOpacity
+                      key={index}
+                      style={styles.notificationContainer}
+                      onPress={() => {
+                        setSelectedNotification(notifications);
+                        handleNotificationModal();
+                      }}
+                    >
                       <View style={styles.textContainer}>
                         <Text style={styles.notificationTitle}>
                           {notifications.title}
@@ -106,32 +108,27 @@ const NotificationsScreen = () => {
                             .fromNow()}
                         </Text>
                       </View>
-                      {notificationModalIsVisible &&
+                      {notificationModalIsVisible && selectedNotification &&
                         <Modal>
-                          {console.log('modal notification index:', index)}
-                          { console.log('notifications.name: ', notifications.name) }
-                          { console.log('notifications.phoneNumber: ', notifications.phoneNumber) }
-                          {/* { console.log('notifications: ', notifications) } */}
                           <View style={styles.emergencyModal}>
                             <Pressable style={styles.closeButton} onPress={handleNotificationModal}>
                               <Ionicons name={'close'} size={36} color={'black'} />
                             </Pressable>
                             <View style={styles.modalMainContents}>
-                              <Text style={styles.modalText}>{notifications.name} didn't make it home!</Text>
+                              <Text style={styles.modalText}>{selectedNotification.name} didn't make it home!</Text>
                               <Text style={styles.lastLocationText}>Their last location:</Text>
                               <View style={styles.mapContainer}>
                                 <Text>Map with latest location goes here</Text>
                               </View>
                               <TouchableOpacity
                                 style={styles.callButton}
-                                onPress={() => Linking.openURL(`tel:${notifications.phoneNumber}`)}
+                                onPress={() => Linking.openURL(`tel:${selectedNotification.phoneNumber}`)}
                               >
-                                <Text style={styles.callButtonText}>Call {notifications.name}</Text>
+                                <Text style={styles.callButtonText}>Call {selectedNotification.name}</Text>
                               </TouchableOpacity>
                               <TouchableOpacity
                                 style={styles.callButton}
                                 onPress={() => Linking.openURL('tel:999')}
-                                // onPress={() => Linking.openURL('https://www.google.com')}
                               >
                                 <Text style={styles.callButtonText}>Call 999</Text>
                               </TouchableOpacity>
