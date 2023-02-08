@@ -13,6 +13,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import SOS from './mapModals/sos'
 import HomeSafe from './mapModals/homeSafe'
 import TimeOut from './mapModals/timeOut'
+import NotHomeSafe from "./mapModals/NotHomeSafe"
 import Map from './mapComponents/map'
 import MapButtons from './mapComponents/mapButtons'
 
@@ -29,6 +30,7 @@ const MapScreen = () => {
   const [viewSOS, setViewSOS] = useState(false)
   const [viewHomeSafe, setViewHomeSafe] = useState(false)
   const [viewTimeOut, setViewTimeOut] = useState(false)
+  const [viewNotHomeSafe, setViewNotHomeSafe] = useState(false)
   const [name, setName] = useState(null)
   const [phoneNumber, setPhoneNumber] = useState(null)
 
@@ -240,7 +242,12 @@ const MapScreen = () => {
         <TimeOut
           setViewTimeOut={setViewTimeOut}
           handleHomeSafe={handleHomeSafe}
-          setViewSOS={setViewSOS}
+          setViewNotHomeSafe={setViewNotHomeSafe}
+        />
+      </Modal>
+      <Modal visible={viewNotHomeSafe}>
+        <NotHomeSafe
+          setViewNotHomeSafe={setViewNotHomeSafe}
         />
       </Modal>
     </View>
@@ -249,9 +256,10 @@ const MapScreen = () => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#5680E9',
+    backgroundColor: 'white',
     flex: 1,
     width: '100%',
+    backgroundColor: 'white'
   },
   titleContainer: {
     alignContent: 'center',

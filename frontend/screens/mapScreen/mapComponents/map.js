@@ -67,7 +67,12 @@ const styles = StyleSheet.create({
   },
   mapContainer: {
     flex: 3,
-    width: '100%',
+    height: 400,
+    margin: 10,
+    marginTop: 35,
+    borderWidth: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   map: {
     ...StyleSheet.absoluteFillObject,

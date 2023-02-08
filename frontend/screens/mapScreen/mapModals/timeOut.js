@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Location from 'expo-location';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
-const Timeout = ({ setViewTimeOut, setViewSOS, handleHomeSafe }) => {
-  const [timer, setTimer] = useState(10);
+const Timeout = ({ setViewTimeOut, setViewNotHomeSafe, handleHomeSafe }) => {
+  const [timer, setTimer] = useState(60);
   const [name, setName] = useState(null);
   const [phoneNumber, setPhoneNumber] = useState(null);
 
@@ -82,21 +83,23 @@ const Timeout = ({ setViewTimeOut, setViewSOS, handleHomeSafe }) => {
     }
     if (timer === 0) {
       setViewTimeOut(false);
-      setViewSOS(true);
+      setViewNotHomeSafe(true);
       sendNotification();
     }
     return () => clearInterval(interval);
   }, [timer]);
 
   return (
-    <View style={styles.modalContent}>
-      <Text>{timer}</Text>
+     <View style={styles.modalContainer}> 
       <TouchableOpacity
         style={styles.closeButton}
         onPress={() => setViewTimeOut(false)}
-      >
-        <Text>Close</Text>
+        >
+        <Ionicons name="close" size={40} color={"black"} />
       </TouchableOpacity>
+      <View style={styles.modalMainContents}>
+      <Text style={styles.warningText}>Click below or your emergency contacts will be notified in:</Text>
+      <Text style={styles.timerText}>{timer} seconds</Text>
       <TouchableOpacity
         style={styles.homeSafeButton}
         onPress={() => {
@@ -105,32 +108,60 @@ const Timeout = ({ setViewTimeOut, setViewSOS, handleHomeSafe }) => {
           handleHomeSafe()
         }}
       >
-        <Text>Home Safe</Text>
+        <Text style={styles.buttonText}>Home Safe</Text>
       </TouchableOpacity>
+      </View>
     </View>
   )
 }
 
 const styles = StyleSheet.create({
-  modalContent: {
-    backgroundColor: 'amber',
+  modalContainer: {
+    backgroundColor: 'white',
     color: "black",
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    paddingTop: 46,
   },
   closeButton: {
-    position: "absolute",
-    top: 50,
-    right: 20,
-    color: 'white',
-    backgroundColor: 'red',
+    flex: 0.1,
+    justifyContent: 'flex-start',
+    paddingTop: 20,
+    paddingRight: 24,
+    marginLeft: 'auto',
+  },
+  modalMainContents: {
+    color: "black",
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingBottom: 90,
+  
+  },
+  warningText: {
+    fontSize: 22,
+    textAlign: "center",
+    paddingHorizontal: 30,
+    marginBottom: 12,
+  },
+  timerText: {
+    fontSize: 22,
+    textAlign: "center",
+    paddingHorizontal: 30,
+    marginBottom: 16
   },
   homeSafeButton: {
     padding: 10,
-    color: 'white',
-    backgroundColor: 'green',
-    marginTop: 20,
+    backgroundColor: 'white',
+    borderColor: "green",
+    borderWidth: 1,
+    borderRadius: 8,
+    marginTop: 12,
+  },
+  buttonText: {
+    fontSize: 20,
+    color: 'green',
   },
 })
 

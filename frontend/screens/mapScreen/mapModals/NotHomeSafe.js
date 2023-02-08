@@ -2,17 +2,17 @@ import React, { useState, useEffect } from 'react'
 import { View, Text, TouchableOpacity, StyleSheet, Linking } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
-const SOS = ({ setViewSOS }) => {
+const NotHomeSafe = ({ setViewNotHomeSafe }) => {
   return (
     <View style={styles.modalContainer}>
       <TouchableOpacity
         style={styles.closeButton}
-        onPress={() => setViewSOS(false)}
+        onPress={() => setViewNotHomeSafe(false)}
       >
         <Ionicons name="close" size={40} color={"white"} />
       </TouchableOpacity>
       <View style={styles.modalMainContents}>
-        <Text style={styles.header}>You hit the SOS button!</Text>
+        <Text style={styles.header}>You didn't make it home!</Text>
         <Text style={styles.subheader}>
           Your emergency contacts have been notified
         </Text>
@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 0,
-    paddingBottom: 90,
+    marginBottom: 70,
   },
   closeButton: {
     flex: 0.1,
@@ -70,4 +70,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default SOS
+export default NotHomeSafe
