@@ -69,7 +69,8 @@ function SignupScreen({ navigation }) {
       AsyncStorage.setItem("token", data.token);
       AsyncStorage.setItem("user_id", data.user_id);
       AsyncStorage.setItem("name", data.name);
-      AsyncStorage.setItem("walkingSpeed", data.walkingSpeed)
+      AsyncStorage.setItem("walkingSpeed", data.walkingSpeed);
+      AsyncStorage.setItem("phoneNumber", data.phoneNumber);
       setName(null);
       setEmail(null);
       setPassword(null);

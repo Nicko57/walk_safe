@@ -10,19 +10,41 @@ describe("User model", () => {
     await User.deleteMany({});
   });
 
+  it("has a name", () => {
+    const user = new User({
+      name: "Will Jones",
+      email: "someone@example.com",
+      phoneNumber: "07771777888",
+      password: "ABCabc123!",
+    });
+    expect(user.name).toEqual("Will Jones");
+  });
+
   it("has an email address", () => {
     const user = new User({
       name: "Will Jones",
       email: "someone@example.com",
+      phoneNumber: "07771777888",
       password: "ABCabc123!",
     });
     expect(user.email).toEqual("someone@example.com");
+  });
+
+  it("has a phone number", () => {
+    const user = new User({
+      name: "Will Jones",
+      email: "someone@example.com",
+      phoneNumber: "07771777888",
+      password: "ABCabc123!",
+    });
+    expect(user.phoneNumber).toEqual("07771777888");
   });
 
   it("has a password", () => {
     const user = new User({
       name: "Will Jones",
       email: "someone@example.com",
+      phoneNumber: "07771777888",
       password: "ABCabc123!",
     });
     expect(user.password).toEqual("ABCabc123!");
@@ -40,7 +62,8 @@ describe("User model", () => {
     const user = new User({
       name: "Will Jones",
       email: "someone@example.com",
-      password: "password",
+      phoneNumber: "07771777888",
+      password: "ABCabc123!",
     });
 
     user.save((err) => {
@@ -52,7 +75,8 @@ describe("User model", () => {
         expect(users[0]).toMatchObject({
           name: "Will Jones",
           email: "someone@example.com",
-          password: "password",
+          phoneNumber: "07771777888",
+          password: "ABCabc123!",
         });
         done();
       });
@@ -73,6 +97,7 @@ describe("User model", () => {
         await User.signup(
           "John Doe",
           "johndoe@example",
+          "07771777888",
           "ABCabc123!",
         );
       } catch (err) {
@@ -84,12 +109,14 @@ describe("User model", () => {
       await User.signup(
         "Will Jones",
         "will@will.com",
+        "07771777888",
         "ABCabc123!",
       );
       try {
         await User.signup(
           "John Doe",
           "will@will.com",
+          "07771777888",
           "ABCabc123!",
         );
       } catch (err) {
@@ -97,9 +124,22 @@ describe("User model", () => {
       }
     });
 
+    it("should throw an error if the phone number is not a valid UK mobile number", async () => {
+      try {
+        await User.signup(
+          "John Doe",
+          "will@will.com",
+          "12345123123",
+          "ABCabc123!",
+        );
+      } catch (err) {
+        expect(err).toEqual(Error("Must be a valid UK mobile number"));
+      }
+    })
+
     it("should throw an error if the password is too weak", async () => {
       try {
-        await User.signup("Will Jones", "will@will.com", "1234");
+        await User.signup("Will Jones", "will@will.com", "07771777888", "1234");
       } catch (err) {
         expect(err).toEqual(
           Error(
@@ -113,6 +153,7 @@ describe("User model", () => {
       const user = await User.signup(
         "Will Jones",
         "will@will.com",
+        "07771777888",
         "ABCabc123!"
       );
 
@@ -131,7 +172,7 @@ describe("User model", () => {
     });
 
     it("should throw an error if invalid email", async () => {
-      await User.signup("Will Jones", "will@will.com", "ABCabc123!");
+      await User.signup("Will Jones", "will@will.com", "07771777888", "ABCabc123!");
       try {
         await User.login("bob@bob.com", "1234");
       } catch (err) {
@@ -140,7 +181,7 @@ describe("User model", () => {
     });
 
     it("should throw an error if invalid password", async () => {
-      await User.signup("Will Jones", "will@will.com", "ABCabc123!");
+      await User.signup("Will Jones", "will@will.com", "07771777888", "ABCabc123!");
       try {
         await User.login("will@will.com", "1234");
       } catch (err) {
@@ -149,7 +190,7 @@ describe("User model", () => {
     });
 
     it("should return the user if no errors thrown", async () => {
-      await User.signup("Will Jones", "will@will.com", "ABCabc123!");
+      await User.signup("Will Jones", "will@will.com", "07771777888", "ABCabc123!");
       const user = await User.login("will@will.com", "ABCabc123!");
 
       expect(user).not.toBeNull();

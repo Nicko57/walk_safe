@@ -17,7 +17,13 @@ const loginUser = async (req, res) => {
     // create a token
     const token = createToken(user._id)
 
-    res.status(200).json({ user_id: user._id, name: user.name, token, walkingSpeed: user.walkingSpeed});  
+    res.status(200).json({
+      user_id: user._id,
+      name: user.name,
+      token,
+      walkingSpeed: user.walkingSpeed,
+      phoneNumber: user.phoneNumber
+    });  
   } catch (error) {
     res.status(400).json({ error: error.message })
   }
@@ -37,7 +43,12 @@ const signupUser = async (req, res) => {
 
     console.log(userWithId);
 
-    res.status(200).json({ user_id: userWithId._id, name: userWithId.name, token, walkingSpeed: userWithId.walkingSpeed });
+    res.status(200).json({
+      user_id: userWithId._id,
+      name: userWithId.name, token,
+      walkingSpeed: userWithId.walkingSpeed,
+      phoneNumber: user.phoneNumber
+    });
     } catch (error) {
     res.status(400).json({ error: error.message })
   }
@@ -50,7 +61,12 @@ const getUser = async (req, res) => {
   try {
     const user = await User.findById(id)
 
-    res.status(200).json({ id: user._id, walkingSpeed: user.walkingSpeed, name: user.name })
+    res.status(200).json({
+      id: user._id,
+      walkingSpeed: user.walkingSpeed,
+      name: user.name,
+      phoneNumber: user.phoneNumber
+    })
   } catch (error) {
     res.status(404).json({ error: 'This user does not exist' })
   }

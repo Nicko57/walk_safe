@@ -17,6 +17,7 @@ const SplashScreen = ({ navigation }) => {
         let data = await response.json();
         await AsyncStorage.setItem("walkingSpeed", data.walkingSpeed)
         await AsyncStorage.setItem("name", data.name);
+        await AsyncStorage.setItem("phoneNumber", data.phoneNumber);
       }
       AsyncStorage.getItem('user_id').then((value) =>
         navigation.replace(value === null ? 'Auth' : 'NavbarContainer'),

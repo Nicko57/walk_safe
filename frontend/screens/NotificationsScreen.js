@@ -16,10 +16,9 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps'
 
 const NotificationsScreen = () => {
-  const [notifications, setNotifications] = useState(null)
-  const [notificationModalIsVisible, setNotificationModalIsVisible] = useState(
-    false,
-  )
+  const [notifications, setNotifications] = useState(null);
+  const [notificationModalIsVisible, setNotificationModalIsVisible] = useState(false);
+  const [selectedNotification, setSelectedNotification] = useState(null);
 
   const loadNotifications = async () => {
     const userId = await AsyncStorage.getItem('user_id')
@@ -84,14 +83,16 @@ const NotificationsScreen = () => {
               data={notifications}
               renderRightItem={(notifications, index) => (
                 <View>
-                  {!notifications.title.includes('got home safe') && (
+                  { !notifications.title.includes('got home safe') &&
                     <TouchableOpacity
                       key={index}
                       style={styles.notificationContainer}
-                      onPress={handleNotificationModal}
+                      onPress={() => {
+                        setSelectedNotification(notifications);
+                        handleNotificationModal();
+                      }}
                     >
-                      {console.log('notifications.name: ', notifications.name)}
-                      {console.log('notifications: ', notifications)}
+
                       <View style={styles.textContainer}>
                         <Text style={styles.notificationTitle}>
                           {notifications.title}
@@ -112,7 +113,7 @@ const NotificationsScreen = () => {
                             .fromNow()}
                         </Text>
                       </View>
-                      {notificationModalIsVisible && (
+                      {notificationModalIsVisible && selectedNotification &&
                         <Modal>
                           <View style={styles.emergencyModal}>
                             <Pressable
@@ -126,43 +127,34 @@ const NotificationsScreen = () => {
                               />
                             </Pressable>
                             <View style={styles.modalMainContents}>
-                              <Text style={styles.modalText}>
-                                {notifications.name} didn't make it home!
-                              </Text>
-                              <Text style={styles.lastLocationText}>
-                                Their last location:
-                              </Text>
+                              <Text style={styles.modalText}>{selectedNotification.name} didn't make it home!</Text>
+                              <Text style={styles.lastLocationText}>Their last location:</Text>
                               <View style={styles.mapContainer}>
                                 <MapView
                                 style={styles.map}
                                 provider={PROVIDER_GOOGLE}
                                   initialRegion={{
-                                    latitude: notifications.latitude,
-                                    longitude: notifications.longitude,
+                                    latitude: selectedNotification.latitude,
+                                    longitude: selectedNotification.longitude,
                                     latitudeDelta: 0.01,
                                     longitudeDelta: 0.01,
                                   }}
                                 >
-                                <Marker coordinate = {{latitude: notifications.latitude,longitude: notifications.longitude}}
+                                <Marker coordinate = {{latitude: selectedNotification.latitude,longitude: selectedNotification.longitude}}
          pinColor = {"purple"} // any color
-         title={`${notifications.name}`}
+         title={`${selectedNotification.name}`}
          />
          </MapView>
                               </View>
                               <TouchableOpacity
                                 style={styles.callButton}
-                                onPress={() =>
-                                  Linking.openURL('tel:07770123456')
-                                }
+                                onPress={() => Linking.openURL(`tel:${selectedNotification.phoneNumber}`)}
                               >
-                                <Text style={styles.callButtonText}>
-                                  Call {notifications.name}
-                                </Text>
+                                <Text style={styles.callButtonText}>Call {selectedNotification.name}</Text>
                               </TouchableOpacity>
                               <TouchableOpacity
                                 style={styles.callButton}
                                 onPress={() => Linking.openURL('tel:999')}
-                                // onPress={() => Linking.openURL('https://www.google.com')}
                               >
                                 <Text style={styles.callButtonText}>
                                   Call 999
@@ -366,65 +358,3 @@ const styles = StyleSheet.create({
   },
 })
 
-// const data = [
-//   {
-//     title: "Will is walking home",
-//     message: "30 minutes until Will should arrive home",
-//     timeSent: "2023-02-02 16:00:24"
-//   },
-//   {
-//     title: "Will is home safe",
-//     message: "Will is home with 5 minutes to spare",
-//     timeSent: "2023-02-02 13:00:24"
-//   },
-//   {
-//     title: "Andy is walking home",
-//     message: "45 minutes until Andy should arrive home",
-//     timeSent: "2023-02-02 12:00:24"
-//   },
-//   {
-//     title: "SOS: Andy is in trouble",
-//     message: "Andy pressed the SOS button, they need help!",
-//     timeSent: "2023-02-02 11:00:24"
-//   },
-//   {
-//     title: "Will is walking home",
-//     message: "30 minutes until Will should arrive home",
-//     timeSent: "2023-02-01 12:00:24"
-//   },
-//   {
-//     title: "Will is home safe",
-//     message: "Will is home with 5 minutes to spare",
-//     timeSent: "2023-02-01 10:00:24"
-//   },
-//   {
-//     title: "Andy is walking home",
-//     message: "45 minutes until Andy should arrive home",
-//     timeSent: "2023-01-28 12:00:24"
-//   },
-//   {
-//     title: "SOS: Andy is in trouble",
-//     message: "Andy pressed the SOS button, they need help!",
-//     timeSent: "2023-01-25 12:00:24"
-//   },
-//   {
-//     title: "Will is walking home",
-//     message: "30 minutes until Will should arrive home",
-//     timeSent: "2023-01-23 12:00:24"
-//   },
-//   {
-//     title: "Will is home safe",
-//     message: "Will is home with 5 minutes to spare",
-//     timeSent: "2023-01-17 12:00:24"
-//   },
-//   {
-//     title: "Andy is walking home",
-//     message: "45 minutes until Andy should arrive home",
-//     timeSent: "2023-01-16 12:00:24"
-//   },
-//   {
-//     title: "SOS: Andy is in trouble",
-//     message: "Andy pressed the SOS button, they need help!",
-//     timeSent: "2023-01-05 12:00:24"
-//   },
-// ];
