@@ -204,7 +204,7 @@ const styles = StyleSheet.create({
     alignContent: 'center',
     justifyContent: 'center',
     width: '100%',
-    paddingTop: 50,
+    paddingTop: 40,
     borderBottomWidth: 1,
     borderColor: '#64C5F0',
     backgroundColor: 'white',
@@ -220,7 +220,7 @@ const styles = StyleSheet.create({
     margin: 16,
   },
   scrollViewContainer: {
-    marginTop: 106,
+    marginTop: 96,
     zIndex: 0,
   },
   notificationContainer: {

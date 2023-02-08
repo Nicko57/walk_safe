@@ -36,6 +36,9 @@ const ContactsScreen = () => {
   },[updated])
   return (
     <View style={styles.container}>
+      <View style={styles.titleContainer}>
+        <Text style={styles.titleText}>Emergency contacts</Text>
+      </View>
       <View style={styles.searchBar}>
         <AutoCompleteSearchBox userId={userId} setUpdated={setUpdated}/>
         {/* <TextInput
@@ -62,9 +65,25 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 60,
     backgroundColor: '#5680E9',
-    marginTop: StatusBar.currentHeight || 0,
+    // marginTop: StatusBar.currentHeight || 0,
+  },
+  titleContainer: {
+    alignContent: 'center',
+    justifyContent: 'center',
+    width: '100%',
+    paddingTop: 40,
+    borderBottomWidth: 1,
+    borderColor: '#64C5F0',
+    backgroundColor: 'white',
+  },
+  titleText: {
+    alignContent: 'center',
+    justifyContent: 'center',
+    textAlign: 'center',
+    fontSize: 20,
+    fontWeight: '500',
+    margin: 16,
   },
   searchBar: {
     padding: 10,

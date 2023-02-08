@@ -4,6 +4,7 @@ import {
   StyleSheet,
   View,
   Modal,
+  Text
 } from 'react-native'
 import * as Location from 'expo-location'
 import Constant from 'expo-constants'
@@ -195,6 +196,9 @@ const MapScreen = () => {
 
   return (
     <View style={styles.container}>
+      <View style={styles.titleContainer}>
+        <Text style={styles.titleText}>Get Home Safe</Text>
+      </View>
       <View style={styles.searchContainer}>
         <Search
           setDestination={setDestination}
@@ -248,11 +252,24 @@ const styles = StyleSheet.create({
     backgroundColor: '#5680E9',
     flex: 1,
     width: '100%',
+  },
+  titleContainer: {
+    alignContent: 'center',
+    justifyContent: 'center',
+    width: '100%',
     paddingTop: 40,
+    backgroundColor: 'white',
+  },
+  titleText: {
+    alignContent: 'center',
+    justifyContent: 'center',
+    textAlign: 'center',
+    fontSize: 20,
+    fontWeight: '500',
+    margin: 16,
   },
   searchContainer: {
     height: Constant.statusBarHeight,
-    marginTop: 10,
     width: '100%',
     zIndex: 1,
   },
