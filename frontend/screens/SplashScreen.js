@@ -35,7 +35,7 @@ const SplashScreen = ({ navigation }) => {
       /> */}
       <ActivityIndicator
         animating={animating}
-        color="#FFFFFF"
+        // color="#black"
         size="large"
         style={styles.activityIndicator}
       />
@@ -50,11 +50,12 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#64C5F0',
+    backgroundColor: 'white',
   },
   title: {
-    color: 'white',
-    fontSize: 20,
+    color: 'black',
+    fontSize: 40,
+    fontWeight: '500'
   },
   activityIndicator: {
     alignItems: 'center',
