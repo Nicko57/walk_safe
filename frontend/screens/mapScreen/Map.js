@@ -124,7 +124,6 @@ const MapScreen = () => {
               phoneNumber: phoneNumber,
               longitude: currentLocation.coords.longitude,
               latitude: currentLocation.coords.latitude
-
             },
           }),
         },

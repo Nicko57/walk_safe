@@ -92,7 +92,6 @@ const NotificationsScreen = () => {
                         handleNotificationModal();
                       }}
                     >
-
                       <View style={styles.textContainer}>
                         <Text style={styles.notificationTitle}>
                           {notifications.title}
@@ -100,31 +99,21 @@ const NotificationsScreen = () => {
                         <Text style={styles.notificationMessage}>
                           {notifications.message}
                         </Text>
-                        <Text style={styles.notificationMessage}>
-                          {notifications.location}
-                        </Text>
                       </View>
                       <View style={styles.timeContainer}>
                         <Text style={styles.notificationTime}>
                           {moment
                             .utc(notifications.timeSent)
                             .local()
-                            .startOf('seconds')
+                            .startOf("seconds")
                             .fromNow()}
                         </Text>
                       </View>
                       {notificationModalIsVisible && selectedNotification &&
                         <Modal>
                           <View style={styles.emergencyModal}>
-                            <Pressable
-                              style={styles.closeButton}
-                              onPress={handleNotificationModal}
-                            >
-                              <Ionicons
-                                name={'close'}
-                                size={36}
-                                color={'black'}
-                              />
+                            <Pressable style={styles.closeButton} onPress={handleNotificationModal}>
+                              <Ionicons name={'close'} size={36} color={'black'} />
                             </Pressable>
                             <View style={styles.modalMainContents}>
                               <Text style={styles.modalText}>{selectedNotification.name} didn't make it home!</Text>
@@ -141,10 +130,10 @@ const NotificationsScreen = () => {
                                   }}
                                 >
                                 <Marker coordinate = {{latitude: selectedNotification.latitude,longitude: selectedNotification.longitude}}
-         pinColor = {"purple"} // any color
-         title={`${selectedNotification.name}`}
-         />
-         </MapView>
+                                  pinColor = {"purple"} // any color
+                                  title={`${selectedNotification.name}`}
+                                />
+                                </MapView>
                               </View>
                               <TouchableOpacity
                                 style={styles.callButton}
@@ -156,17 +145,15 @@ const NotificationsScreen = () => {
                                 style={styles.callButton}
                                 onPress={() => Linking.openURL('tel:999')}
                               >
-                                <Text style={styles.callButtonText}>
-                                  Call 999
-                                </Text>
+                                <Text style={styles.callButtonText}>Call 999</Text>
                               </TouchableOpacity>
                             </View>
                           </View>
                         </Modal>
-                      )}
+                      }
                     </TouchableOpacity>
-                  )}
-                  {notifications.title.includes('got home safe') && (
+                  }
+                  { notifications.title.includes('got home safe') &&
                     <View key={index} style={styles.notificationContainer}>
                       <View style={styles.textContainer}>
                         <Text style={styles.notificationTitle}>
@@ -181,19 +168,19 @@ const NotificationsScreen = () => {
                           {moment
                             .utc(notifications.timeSent)
                             .local()
-                            .startOf('seconds')
+                            .startOf("seconds")
                             .fromNow()}
                         </Text>
                       </View>
                     </View>
-                  )}
+                  }
                 </View>
               )}
               renderHiddenItem={(notifications, index) => (
                 <View style={styles.rightAction}>
                   <TouchableOpacity
                     onPress={() => {
-                      deleteNotification(index)
+                      deleteNotification(index);
                     }}
                   >
                     <Text style={styles.rightActionText}>Delete</Text>
@@ -206,8 +193,8 @@ const NotificationsScreen = () => {
         </ScrollView>
       )}
     </View>
-  )
-}
+  );
+};
 
 export default NotificationsScreen
 
