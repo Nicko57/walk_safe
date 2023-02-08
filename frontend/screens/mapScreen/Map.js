@@ -103,7 +103,6 @@ const MapScreen = () => {
           appToken: 'rWR1WMqaI8HcWYDUZQFStS',
           title: `${name} hit SOS!!!`,
           message: 'Get in touch ASAP!!!',
-          location: currentLocation,
         }),
       })
       await fetch(
@@ -118,7 +117,9 @@ const MapScreen = () => {
               title: `${name} hit SOS!`,
               message: `Tap here to see more info`,
               timeSent: new Date(),
-              name: name
+              name: name,
+              longitude: currentLocation.coords.longitude,
+              latitude: currentLocation.coords.latitude
             },
           }),
         },

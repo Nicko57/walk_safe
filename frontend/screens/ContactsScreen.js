@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     padding: 60,
-    backgroundColor: '#64C5F0',
+    backgroundColor: '#5680E9',
     marginTop: StatusBar.currentHeight || 0,
   },
   searchBar: {
