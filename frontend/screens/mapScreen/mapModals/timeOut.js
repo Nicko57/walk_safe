@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react'
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as Location from 'expo-location';
 
 const Timeout = ({ setViewTimeOut, setViewSOS, handleHomeSafe }) => {
   const [timer, setTimer] = useState(10);
@@ -31,6 +32,7 @@ const Timeout = ({ setViewTimeOut, setViewSOS, handleHomeSafe }) => {
   };
 
   const sendTimer0Notification = async (userId, data) => {
+    let currentLocation = await Location.getCurrentPositionAsync({});
     for (const contact of data.emergencyContacts) {
       await fetch("https://app.nativenotify.com/api/indie/notification", {
         method: "POST",
@@ -59,6 +61,8 @@ const Timeout = ({ setViewTimeOut, setViewSOS, handleHomeSafe }) => {
               timeSent: new Date(),
               name: name,
               phoneNumber: phoneNumber,
+              longitude: currentLocation.coords.longitude,
+              latitude: currentLocation.coords.latitude
             },
           }),
         }
