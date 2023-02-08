@@ -66,33 +66,35 @@ const ChangePasswordModal = ({ userId, changePasswordModalVisible, setChangePass
     <Modal>
       <View style={styles.changePasswordModal}>
         <Pressable style={styles.closeButton} onPress={handleModal}>
-          <Ionicons name={'close'} size={36} color={'white'} />
+          <Ionicons name={'close'} size={36} color={'black'} />
         </Pressable>
         <View style={styles.modalMainContents}>
-          <Text style={styles.passwordLabel}>New password:</Text>
+          {/* <Text style={styles.passwordLabel}>New password:</Text> */}
           <TextInput
-            style={styles.passwordInput}
+            style={styles.textInput}
+            placeholder="New password"
             secureTextEntry={true}
             onChangeText={passwordInputHandler}
             value={newPassword}
           />
-          <Text style={styles.passwordLabel}>Re-type password:</Text>
+          {/* <Text style={styles.passwordLabel}>Re-type password:</Text> */}
           <TextInput
-            style={styles.passwordInput}
+            style={styles.textInput}
+            placeholder="Confirm new password"
             secureTextEntry={true}
             onChangeText={retypedPasswordInputHandler}
             value={retypedPassword}
           />
+          <View style={styles.confirmButtonContainer}>
+            <Pressable style={styles.confirmButton} onPress={handleChangePassword}>
+              <Text style={styles.confirmButtonText}>CHANGE PASSWORD</Text>
+            </Pressable>
+          </View>
           {error &&
             <View style={styles.errorContainer}>
               <Text style={styles.errorText}>{error}</Text>
             </View>
           }
-          <View style={styles.confirmButtonContainer}>
-            <Pressable style={styles.confirmButton} onPress={handleChangePassword}>
-              <Text style={styles.confirmButtonText}>Confirm</Text>
-            </Pressable>
-          </View>
         </View>
       </View>
     </Modal>
@@ -105,69 +107,69 @@ const styles = StyleSheet.create({
   changePasswordModal: {
     flex: 1,
     marginBottom: 100,
-    marginTop: 106,
+    marginTop: 46,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: "#64C5F0",
+    backgroundColor: "white",
+    position: "relative"
   },
   closeButton: {
     flex: 0.1,
     justifyContent: 'flex-start',
-    padding: 20,
+    paddingTop: 20,
+    paddingRight: 24,
     marginLeft: 'auto',
   },
   modalMainContents: {
     flex: 0.9,
+    width: '100%',
     justifyContent: 'center',
+    alignItems: 'center',
     marginBottom: 80,
   },
-  passwordLabel: {
-    fontSize: 20,
-    fontWeight: '500',
-    color: 'white',
-    marginBottom: 10,
-    alignSelf: 'center',
-  },
-  passwordInput: {
-    alignSelf: 'center',
-    backgroundColor: 'white',
+  textInput: {
     borderWidth: 1,
-    borderColor: '#dddddd',
+    borderColor: "black",
+    backgroundColor: "#ebe6ef",
+    color: "black",
     borderRadius: 8,
-    height: 40,
-    width: 200,
-    paddingHorizontal: 10,
-    marginBottom: 30,
-    fontSize: 20,
+    width: "75%",
+    margin: 18,
+    padding: 16,
   },
-  errorContainer: {
-    marginBottom: 20,
-    padding: 8,
-    borderWidth: 1,
-    borderColor: '#dddddd',
+  confirmButton: {
+    width: "75%",
+    marginTop: 18,
+    marginHorizontal: 12,
+    backgroundColor: "black",
     borderRadius: 8,
-    backgroundColor: '#eeeeee'
+    alignItems: "center",
+    justifyContent: "center",
   },
-  errorText: {
+  confirmButtonText: {
+    padding: 14,
     fontSize: 18,
-    fontWeight: '600',
-    color: '#D238FF',
+    color: "white",
+    fontWeight: "bold"
   },
   confirmButtonContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
   },
-  confirmButton: {
-    height: 44,
-    width: 120,
-    marginTop: 10,
-    backgroundColor: '#348EC5',
+    errorContainer: {
+    position: "absolute",
+    width: "75%",
+    marginTop: 24,
+    padding: 16,
+    borderWidth: 1,
+    borderColor: "red",
     borderRadius: 8,
-    alignItems: 'center',
-    justifyContent: 'center'
+    bottom: 50
   },
-  confirmButtonText: {
-    color: 'white',
-    fontSize: 16,
+  errorText: {
+    fontSize: 18,
+    fontWeight: "600",
+    color: "red",
+    alignSelf: "center",
   },
 });

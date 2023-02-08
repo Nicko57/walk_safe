@@ -37,7 +37,7 @@ const DeleteAccountModal = ({
     <Modal>
     <View style={styles.deleteAccountModal}>
       <Pressable style={styles.closeButton} onPress={handleModal}>
-        <Ionicons name={'close'} size={36} color={'white'} />
+        <Ionicons name={'close'} size={36} color={'black'} />
       </Pressable>
       <View style={styles.modalMainContents}>
         <View style={styles.warningMessageContainer}>
@@ -47,12 +47,12 @@ const DeleteAccountModal = ({
         </View>
         <View style={styles.confirmButtonContainer}>
           <Pressable style={styles.yesButton} onPress={handleDeleteAccount}>
-            <Text style={styles.yesNoButtonText}>Yes</Text>
+            <Text style={styles.yesButtonText}>YES</Text>
           </Pressable>
         </View>
         <View style={styles.confirmButtonContainer}>
           <Pressable style={styles.noButton} onPress={handleModal}>
-            <Text style={styles.yesNoButtonText}>No</Text>
+            <Text style={styles.noButtonText}>NO</Text>
           </Pressable>
         </View>
       </View>
@@ -67,20 +67,24 @@ const styles = StyleSheet.create({
   deleteAccountModal: {
     flex: 1,
     marginBottom: 100,
-    marginTop: 106,
+    marginTop: 46,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: "#64C5F0",
+    backgroundColor: "white",
+    position: "relative"
   },
   closeButton: {
     flex: 0.1,
     justifyContent: 'flex-start',
-    padding: 20,
+    paddingTop: 20,
+    paddingRight: 24,
     marginLeft: 'auto',
   },
   modalMainContents: {
     flex: 0.9,
+    width: '100%',
     justifyContent: 'center',
+    alignItems: 'center',
     marginBottom: 80,
   },
   confirmButtonContainer: {
@@ -94,30 +98,38 @@ const styles = StyleSheet.create({
   warningText: {
     fontSize: 20,
     fontWeight: '500',
-    color: 'white',
+    color: 'black',
     marginBottom: 10,
     textAlign: 'center',
   },
   yesButton: {
     height: 44,
-    width: 120,
-    marginVertical: 10,
-    backgroundColor: '#FF5151',
+    width: "75%",
+    marginVertical: 16,
+    backgroundColor: 'white',
     borderRadius: 8,
+    borderWidth: 1,
+    borderColor: "#FF5151",
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  yesButtonText: {
+    color: '#FF5151',
+    fontSize: 16,
+    fontWeight: '600',
   },
   noButton: {
     height: 44,
-    width: 120,
-    marginTop: 10,
-    backgroundColor: '#33F18A',
+    width: "75%",
+    marginVertical: 16,
+    borderColor: 'green',
+    borderWidth: 1,
     borderRadius: 8,
     alignItems: 'center',
     justifyContent: 'center',
   },
-  yesNoButtonText: {
-    color: 'white',
+  noButtonText: {
+    color: 'green',
     fontSize: 16,
     fontWeight: '600',
   },

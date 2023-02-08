@@ -114,12 +114,6 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     color: "black",
   },
-  loginButtonText: {
-    padding: 14,
-    fontSize: 18,
-    color: "white",
-    fontWeight: "bold"
-  },
   textInput: {
     borderWidth: 1,
     borderColor: "black",
@@ -141,6 +135,12 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     alignItems: "center",
     justifyContent: "center",
+  },
+  loginButtonText: {
+    padding: 14,
+    fontSize: 18,
+    color: "white",
+    fontWeight: "bold"
   },
   orText: {
     marginVertical: 16
