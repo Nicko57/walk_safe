@@ -87,19 +87,19 @@ function SignupScreen({ navigation }) {
       <Text style={styles.title}>SIGNUP</Text>
       <TextInput
         style={styles.textInput}
-        placeholder="Full Name"
+        placeholder="Full name"
         onChangeText={nameInputHandler}
         value={name}
       />
       <TextInput
         style={styles.textInput}
-        placeholder="Email Address"
+        placeholder="Email address"
         onChangeText={emailInputHandler}
         value={email}
       />
       <TextInput
         style={styles.textInput}
-        placeholder="Contact Phone Number"
+        placeholder="Mobile number"
         onChangeText={phoneNumberInputHandler}
         value={phoneNumber}
       />
