@@ -92,9 +92,9 @@ function SettingsScreen({ navigation }) {
       <View style={styles.titleContainer}>
         <Text style={styles.titleText}>Settings</Text>
       </View>
-      <View style={styles.nameContainer}>
+      <View style={styles.logoContainer}>
         {/* Add logo instead of text below once finalised */}
-        <Text style={styles.nameText}>Get Home Safe</Text>
+        <Text style={styles.logoText}>Get Home Safe</Text>
       </View>
       <View style={styles.aboutUsContainer}>
         <Text style={styles.aboutUsTitle}>About the app</Text>
@@ -103,14 +103,15 @@ function SettingsScreen({ navigation }) {
           eiusmod tempor incididunt ut labore et dolore magna aliqua. Congue
           mauris rhoncus aenean vel elit scelerisque mauris. Risus nec feugiat
           in fermentum posuere urna. Id nibh tortor id aliquet lectus proin.
-          Nisl purus in mollis nunc sed id. Neque vitae tempus quam pellentesque
-          nec nam aliquam.
+          Nisl purus in mollis nunc sed id. Id nibh tortor id aliquet lectus proin.
+          Id nibh tortor id aliquet lectus proin. Id nibh tortor id aliquet lectus proin.
+          Id nibh tortor id.
         </Text>
       </View>
       <View style={styles.container}>
         {speed && (
           <View>
-            <Text style={styles.text}>Walking Speed:</Text>
+            <Text style={styles.text}>WALKING SPEED:</Text>
             <View style={styles.buttonContainer}>
               <TouchableOpacity
                 style={
@@ -126,7 +127,7 @@ function SettingsScreen({ navigation }) {
                     speed === 'slow' ? styles.activeText : styles.inactiveText
                   }
                 >
-                  Slow
+                  SLOW
                 </Text>
               </TouchableOpacity>
               <TouchableOpacity
@@ -145,7 +146,7 @@ function SettingsScreen({ navigation }) {
                     speed === 'normal' ? styles.activeText : styles.inactiveText
                   }
                 >
-                  Normal
+                  NORMAL
                 </Text>
               </TouchableOpacity>
               <TouchableOpacity
@@ -162,7 +163,7 @@ function SettingsScreen({ navigation }) {
                     speed === 'fast' ? styles.activeText : styles.inactiveText
                   }
                 >
-                  Fast
+                  FAST
                 </Text>
               </TouchableOpacity>
             </View>
@@ -170,10 +171,10 @@ function SettingsScreen({ navigation }) {
         )}
       </View>
       <Pressable style={styles.button} onPress={handleChangePasswordModal}>
-        <Text style={styles.buttonText}>Change password</Text>
+        <Text style={styles.buttonText}>CHANGE PASSWORD</Text>
       </Pressable>
       <Pressable style={styles.button} onPress={handleLogout}>
-        <Text style={styles.buttonText}>Log out</Text>
+        <Text style={styles.buttonText}>LOG OUT</Text>
       </Pressable>
       <Pressable onPress={handleDeleteAccountModal}>
         <Text style={styles.deleteAccountText}>Delete Account</Text>
@@ -190,7 +191,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingBottom: 40,
-    backgroundColor: '#5680E9',
+    backgroundColor: 'white',
   },
   titleContainer: {
     alignContent: 'center',
@@ -198,7 +199,7 @@ const styles = StyleSheet.create({
     width: '100%',
     paddingTop: 40,
     borderBottomWidth: 1,
-    borderColor: '#64C5F0',
+    borderColor: '#dddddd',
     backgroundColor: 'white',
   },
   titleText: {
@@ -209,20 +210,20 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     margin: 16,
   },
-  nameContainer: {},
-  nameText: {
+  logoContainer: {},
+  logoText: {
     fontSize: 38,
     fontWeight: '600',
-    color: '#ffffff',
+    color: 'black',
   },
   aboutUsContainer: {
-    height: 300,
+    height: 250,
     width: 300,
-    padding: 20,
-    borderWidth: 1,
-    borderColor: '#dddddd',
+    // padding: 20,
+    // borderWidth: 1,
+    borderColor: 'black',
     backgroundColor: '#ffffff',
-    borderRadius: 30,
+    borderRadius: 12,
   },
   aboutUsTitle: {
     alignSelf: 'center',
@@ -235,7 +236,7 @@ const styles = StyleSheet.create({
   button: {
     width: 300,
     height: 44,
-    backgroundColor: '#348EC5',
+    backgroundColor: 'black',
     borderRadius: 8,
     alignItems: 'center',
     justifyContent: 'center',
@@ -243,6 +244,7 @@ const styles = StyleSheet.create({
   buttonText: {
     color: 'white',
     fontSize: 16,
+    fontWeight: '600',
   },
   deleteAccountText: {
     color: 'salmon',
@@ -260,30 +262,39 @@ const styles = StyleSheet.create({
     marginRight: 10,
     marginBottom: 10,
     backgroundColor: "white",
-    padding: 5
+    padding: 5,
+    alignSelf: "center",
+    fontWeight: "bold"
   },
   buttonContainer: {
     flexDirection: 'row',
+    width: "75%"
   },
   activeButton: {
     paddingVertical: 10,
-    paddingHorizontal: 20,
-    backgroundColor: '#348EC5',
-    borderRadius: 20,
-    marginHorizontal: 5,
+    paddingHorizontal: 12,
+    backgroundColor: 'white',
+    borderWidth: 1,
+    borderColor: "black",
+    borderRadius: 8,
+    marginHorizontal: 8,
+    width: 89
   },
   inactiveButton: {
     paddingVertical: 10,
-    paddingHorizontal: 20,
-    backgroundColor: '#ffffff',
-    borderRadius: 20,
-    marginHorizontal: 5,
+    paddingHorizontal: 12,
+    backgroundColor: 'black',
+    borderRadius: 8,
+    marginHorizontal: 8,
+    width: 89
   },
   activeText: {
-    color: '#fff',
-    fontWeight: 'bold',
+    color: 'black',
+    textAlign: "center"
   },
   inactiveText: {
-    color: '#333',
+    color: 'white',
+    fontWeight: "600",
+    textAlign: "center"
   },
 })
