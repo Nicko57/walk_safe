@@ -17,7 +17,7 @@ import NotHomeSafe from "./mapModals/NotHomeSafe"
 import Map from './mapComponents/map'
 import MapButtons from './mapComponents/mapButtons'
 
-const GOOGLE_MAPS_APIKEY = 'AIzaSyB01WnR0NuaVmUBTY-897JYHHizmMUc0ek'
+const GOOGLE_MAPS_APIKEY = 'AIzaSyDWAjYtvhI6SV-unnKj7Q-iqOB10OhUxXQ'
 
 const MapScreen = () => {
   const [destination, setDestination] = useState(null)

@@ -11,7 +11,7 @@ const GooglePlacesInput = ({setDestination, setStarted, setIsRunning}) => {
         fetchDetails={true} // you need this to fetch the details object onPress
         placeholder="Search"
         query={{
-          key: 'AIzaSyB01WnR0NuaVmUBTY-897JYHHizmMUc0ek',
+          key: 'AIzaSyDWAjYtvhI6SV-unnKj7Q-iqOB10OhUxXQ',
           language: "en", // language of the results
         }}
         onPress={(data, details = null) => {
