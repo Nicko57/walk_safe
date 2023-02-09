@@ -106,7 +106,15 @@ const deleteUser = async (req, res) => {
   const user = await User.findByIdAndDelete({ _id: id })
 
   const token = createToken(user._id)
-
+  await User.updateMany(
+    {},
+    { $pull: { emergencyContacts: {
+      id: user._id,
+      name: user.name,
+      email: user.email,
+      phoneNumber: user.phoneNumber
+    } } }
+  );
   // maybe delete the token from below response
   res.status(200).json({ message: 'User deleted successfully', token: token })
 }
