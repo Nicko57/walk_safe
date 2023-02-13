@@ -47,15 +47,16 @@ const MapScreen = () => {
 
   useEffect(() => {
     const getPermissions = async () => {
-      let { status } = await Location.requestForegroundPermissionsAsync()
-      if (status !== 'granted') {
-        return
-      }
+      // let { status } = await Location.requestForegroundPermissionsAsync()
+      // if (status !== 'granted') {
+      //   return
+      // }
       const userName = await AsyncStorage.getItem('name')
       setName(userName)
       const phone = await AsyncStorage.getItem('phoneNumber')
       setPhoneNumber(phone)
-      let currentLocation = await Location.getCurrentPositionAsync({})
+      let currentLocationString = await AsyncStorage.getItem("currentLocation")
+      let currentLocation = JSON.parse(currentLocationString)
       setLocation(currentLocation)
       const { width, height } = Dimensions.get('window')
       const ASPECT_RATIO = width / height
@@ -171,7 +172,6 @@ const MapScreen = () => {
   const handleSOSbutton = async () => {
     const userId = await AsyncStorage.getItem('user_id')
     setDestination(null)
-    setViewSOS(true)
     let response = await fetch(
       `http://localhost:8080/api/user/contacts/${userId}`,
     )
@@ -179,13 +179,13 @@ const MapScreen = () => {
     if (response.status === 200) {
       sendSOSNotification(userId, data)
       setStarted(false)
+      setViewSOS(true)
     }
   }
 
   const handleHomeSafe = async () => {
     const userId = await AsyncStorage.getItem('user_id')
     setDestination(null)
-    setViewHomeSafe(true)
     let response = await fetch(
       `http://localhost:8080/api/user/contacts/${userId}`,
     )
@@ -193,6 +193,7 @@ const MapScreen = () => {
     if (response.status === 200) {
       sendSafeNotification(userId, data)
       setStarted(false)
+      setViewHomeSafe(true)
     }
   }
 

@@ -3,7 +3,14 @@ import { CountdownCircleTimer } from "react-native-countdown-circle-timer";
 import { useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const Timer = ({ isRunning, setIsRunning, duration, setStarted, setViewTimeOut, setDestination }) => {
+const Timer = ({
+  isRunning,
+  setIsRunning,
+  duration,
+  setStarted,
+  setViewTimeOut,
+  setDestination,
+}) => {
   const timeFormatter = ({ remainingTime }) => {
     const hours = Math.floor(remainingTime / 3600);
     const minutes = Math.floor((remainingTime % 3600) / 60)
@@ -18,19 +25,28 @@ const Timer = ({ isRunning, setIsRunning, duration, setStarted, setViewTimeOut, 
   const sendUserNotification = async () => {
     const userId = await AsyncStorage.getItem("user_id");
     await fetch("https://app.nativenotify.com/api/indie/notification", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          subID: `${userId}`,
-          appId: 6193,
-          appToken: "rWR1WMqaI8HcWYDUZQFStS",
-          title: `You have 1 minute to click home safe!!`,
-          message: "If you do not your emergency contacts will be notified.",
-        }),
-      });
-  }
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        subID: `${userId}`,
+        appId: 6193,
+        appToken: "rWR1WMqaI8HcWYDUZQFStS",
+        title: `You have 1 minute to click home safe!!`,
+        message: "If you do not your emergency contacts will be notified.",
+      }),
+    });
+  };
+
+  const finishFunction = () => {
+    setStarted(false);
+    sendUserNotification();
+    setDestination(null);
+    setViewTimeOut(true);
+    setIsRunning(false);
+  };
+
   return (
     <View style={styles.timerContainer}>
       <CountdownCircleTimer
@@ -45,15 +61,10 @@ const Timer = ({ isRunning, setIsRunning, duration, setStarted, setViewTimeOut, 
         ]}
         updateInterval={1}
         size={90}
+        onComplete={finishFunction}
       >
         {({ remainingTime, color }) => {
-          if (remainingTime === 0 && isRunning) {
-            setStarted(false);
-            sendUserNotification();
-            setViewTimeOut(true);
-            setIsRunning(false);
-            setDestination(null)
-          }
+          
 
           return (
             <Text style={{ color: "black", fontSize: 20 }}>

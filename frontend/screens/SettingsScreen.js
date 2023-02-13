@@ -6,6 +6,7 @@ import {
   View,
   Pressable,
   TouchableOpacity,
+  Image
 } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import ChangePasswordModal from '../components/ChangePasswordModal'
@@ -39,7 +40,7 @@ function SettingsScreen({ navigation }) {
 
   const handleLogout = () => {
     AsyncStorage.clear()
-    navigation.navigate('Auth')
+    navigation.navigate('SplashScreen')
   }
 
   const handleSpeedChange = async (speed) => {      
@@ -92,12 +93,12 @@ function SettingsScreen({ navigation }) {
       <View style={styles.titleContainer}>
         <Text style={styles.titleText}>Settings</Text>
       </View>
-      <View style={styles.logoContainer}>
+      {/* <View style={styles.logoContainer}> */}
         {/* Add logo instead of text below once finalised */}
-        <Text style={styles.logoText}>Get Home Safe</Text>
-      </View>
+        {/* <Text style={styles.logoText}>Get Home Safe</Text> */}
+      {/* </View> */}
       <View style={styles.aboutUsContainer}>
-        <Text style={styles.aboutUsTitle}>About the app</Text>
+        {/* <Text style={styles.aboutUsTitle}>About the app</Text>
         <Text style={styles.aboutUsText}>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua. Congue
@@ -106,7 +107,8 @@ function SettingsScreen({ navigation }) {
           Nisl purus in mollis nunc sed id. Id nibh tortor id aliquet lectus proin.
           Id nibh tortor id aliquet lectus proin. Id nibh tortor id aliquet lectus proin.
           Id nibh tortor id.
-        </Text>
+        </Text> */}
+        <Image style={styles.aboutUsContainer} source={require("./logo.png")}></Image>
       </View>
       <View style={styles.container}>
         {speed && (

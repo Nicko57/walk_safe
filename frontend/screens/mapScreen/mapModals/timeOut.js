@@ -82,9 +82,9 @@ const Timeout = ({ setViewTimeOut, setViewNotHomeSafe, handleHomeSafe }) => {
       clearInterval(interval);
     }
     if (timer === 0) {
+      sendNotification();
       setViewTimeOut(false);
       setViewNotHomeSafe(true);
-      sendNotification();
     }
     return () => clearInterval(interval);
   }, [timer]);
@@ -104,8 +104,8 @@ const Timeout = ({ setViewTimeOut, setViewNotHomeSafe, handleHomeSafe }) => {
         style={styles.homeSafeButton}
         onPress={() => {
           setTimer(0)
-          setViewTimeOut(false)
           handleHomeSafe()
+          setViewTimeOut(false)
         }}
       >
         <Text style={styles.buttonText}>Home Safe</Text>

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { ActivityIndicator, View, StyleSheet, Text, Image } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { registerIndieID } from "native-notify";
+import * as Location from 'expo-location'
 
 const SplashScreen = ({ navigation }) => {
   //State for ActivityIndicator animation
@@ -23,22 +24,20 @@ const SplashScreen = ({ navigation }) => {
         navigation.replace(value === null ? 'Auth' : 'NavbarContainer'),
       )
     }, 2000)
+    const getPermissions = async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync()
+      if (status !== 'granted') {
+        return
+      }
+      let currentLocation = await Location.getCurrentPositionAsync({})
+      await AsyncStorage.setItem("currentLocation", JSON.stringify(currentLocation))
+    }
+    getPermissions();
   }, [])
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Get Home Safe</Text>
-      {/* Can add our logo once finalised using code below (and deleting above text) */}
-      {/* <Image
-        source={require('../Image/aboutreact.png')}
-        style={{width: '90%', resizeMode: 'contain', margin: 30}}
-      /> */}
-      <ActivityIndicator
-        animating={animating}
-        // color="#black"
-        size="large"
-        style={styles.activityIndicator}
-      />
+      <Image style={styles.image} source={require("./loadinggif.gif")}></Image>
     </View>
   )
 }
@@ -52,13 +51,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: 'white',
   },
-  title: {
-    color: 'black',
-    fontSize: 40,
-    fontWeight: '500'
-  },
-  activityIndicator: {
-    alignItems: 'center',
-    height: 80,
-  },
+  image: {
+    height: 200,
+    width: 200
+  }
 })

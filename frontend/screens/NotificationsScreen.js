@@ -263,6 +263,7 @@ const styles = StyleSheet.create({
   },
   notificationTime: {
     float: 'right',
+    marginTop: 28
   },
   rightAction: {
     backgroundColor: 'red',
